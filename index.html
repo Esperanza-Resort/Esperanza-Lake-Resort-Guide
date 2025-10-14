@@ -7,13 +7,33 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
+    /* --- Video fono stilius --- */
+    #bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -2;
+    }
+
+    /* Tamsinimo sluoksnis virš video */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.55);
+      z-index: -1;
+    }
+
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
       color: #fff;
-      background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
-                  url('esperanza.jpg') no-repeat center center fixed;
-      background-size: cover;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -33,6 +53,8 @@
       box-shadow: 0 8px 30px rgba(0,0,0,0.6);
       text-align: center;
       animation: fadeIn 1.2s ease forwards;
+      position: relative;
+      z-index: 1;
     }
 
     header h1 {
@@ -52,6 +74,8 @@
       flex-direction: column;
       gap: 10px;
       animation: fadeInUp 1.2s ease forwards;
+      position: relative;
+      z-index: 1;
     }
 
     .pdf-item {
@@ -187,6 +211,12 @@
   </style>
 </head>
 <body>
+  <!-- Video fonas -->
+  <video autoplay muted loop id="bg-video">
+    <source src="Esperanza-video.mp4" type="video/mp4">
+    Tavo naršyklė nepalaiko video.
+  </video>
+
   <header>
     <h1>Esperanza Lake Resort</h1>
   </header>
