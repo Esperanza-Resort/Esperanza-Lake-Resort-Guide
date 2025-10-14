@@ -2,7 +2,7 @@
 <html lang="lt">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Esperanza Lake Resort</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
@@ -18,9 +18,10 @@
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
-    /* --- Viršutinė juosta (tamsi ruda liquid glass) --- */
+    /* --- Viršutinė juosta --- */
     header {
       margin-top: 60px;
       background: linear-gradient(135deg, rgba(25,15,10,0.85), rgba(50,30,20,0.7));
@@ -35,22 +36,21 @@
     }
 
     header h1 {
-      font-size: 2.5rem;
-      letter-spacing: 1px;
+      font-size: 2.4rem;
       text-transform: uppercase;
       margin: 0;
-      color: #e3d7c2; /* švelni šviesi kremo spalva */
+      color: #e3d7c2;
       text-shadow: 0 1px 3px rgba(0,0,0,0.6);
     }
 
     /* --- PDF mygtukai --- */
     .pdf-list {
-      margin-top: 60px;
+      margin-top: 50px;
       width: 90%;
-      max-width: 500px;
+      max-width: 480px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
       animation: fadeInUp 1.2s ease forwards;
     }
 
@@ -102,11 +102,12 @@
       justify-content: center;
       z-index: 10;
       animation: fadeIn 0.4s ease forwards;
+      overflow: hidden;
     }
 
     #pdf-modal {
-      width: 90%;
-      max-width: 1000px;
+      width: 95%;
+      max-width: 900px;
       height: 85vh;
       background: rgba(30,20,10,0.6);
       border-radius: 25px;
@@ -120,7 +121,7 @@
       border: 1px solid rgba(255,255,255,0.15);
     }
 
-    #pdf-frame {
+    #pdf-viewer {
       width: 100%;
       height: 100%;
       border: none;
@@ -128,15 +129,15 @@
 
     #close-btn {
       position: absolute;
-      top: 12px;
-      right: 15px;
+      top: 10px;
+      right: 12px;
       background: rgba(0,0,0,0.5);
       color: #fff;
       border: none;
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       border-radius: 50%;
-      width: 36px;
-      height: 36px;
+      width: 34px;
+      height: 34px;
       cursor: pointer;
       transition: background 0.3s ease, transform 0.2s ease;
       z-index: 20;
@@ -146,16 +147,6 @@
     #close-btn:hover {
       background: rgba(255,255,255,0.3);
       transform: scale(1.1);
-    }
-
-    footer {
-      margin: 50px 0 25px;
-      font-size: 0.9rem;
-      background: rgba(30,20,10,0.5);
-      padding: 10px 25px;
-      border-radius: 15px;
-      backdrop-filter: blur(6px);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
     }
 
     /* --- Animacijos --- */
@@ -173,11 +164,24 @@
     }
 
     @media (max-width: 600px) {
+      header {
+        margin-top: 30px;
+        padding: 18px 30px;
+      }
+
+      header h1 {
+        font-size: 1.8rem;
+      }
+
       .pdf-item {
         font-size: 0.95rem;
+        padding: 10px 14px;
       }
-      header h1 {
-        font-size: 2rem;
+
+      #pdf-modal {
+        width: 98%;
+        height: 80vh;
+        border-radius: 15px;
       }
     }
   </style>
@@ -200,29 +204,27 @@
   <div id="overlay">
     <div id="pdf-modal">
       <button id="close-btn" onclick="closePDF()">✖</button>
-      <iframe id="pdf-frame" src=""></iframe>
+      <embed id="pdf-viewer" type="application/pdf" src="">
     </div>
   </div>
 
-  <footer>
-    © 2025 Esperanza Lake Resort
-  </footer>
-
   <script>
     const overlay = document.getElementById('overlay');
-    const frame = document.getElementById('pdf-frame');
+    const viewer = document.getElementById('pdf-viewer');
 
     function openPDF(file) {
-      frame.src = file;
+      viewer.src = file + "#toolbar=0"; // be įrankių juostos
       overlay.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
     }
 
     function closePDF() {
       overlay.style.display = 'none';
-      frame.src = '';
+      viewer.src = '';
+      document.body.style.overflow = 'auto';
     }
 
-    overlay.addEventListener('click', function (e) {
+    overlay.addEventListener('click', e => {
       if (e.target === overlay) closePDF();
     });
   </script>
