@@ -167,9 +167,14 @@
 
     /* --- Mobile mode stilius --- */
     .mobile-mode header {
+      margin-top: 30px;
       width: 85%;
       max-width: 380px;
       padding: 16px 18px;
+    }
+
+    .mobile-mode header img {
+      max-width: 280px;
     }
 
     .mobile-mode .pdf-item {
@@ -191,17 +196,6 @@
     }
 
     @media (max-width: 600px) {
-      header {
-        margin-top: 30px;
-        padding: 16px 18px;
-        width: 85%;
-        max-width: 380px;
-      }
-
-      header img {
-        max-width: 280px;
-      }
-
       .pdf-item {
         font-size: 0.95rem;
         padding: 10px 14px;
@@ -210,6 +204,12 @@
       .toggle-mode {
         font-size: 0.8rem;
         padding: 6px 10px;
+      }
+
+      #pdf-modal {
+        width: 98%;
+        height: 80vh;
+        border-radius: 15px;
       }
     }
   </style>
