@@ -42,29 +42,21 @@
       height: auto;
     }
 
-    /* --- Toggle mygtukas --- */
-    .toggle-mode {
+    /* --- Mode indikatorius --- */
+    .mode-indicator {
       position: absolute;
-      top: 5px;
+      top: 3px;
       right: 10px;
       background: rgba(255,255,255,0.12);
       border-radius: 14px;
       padding: 8px 12px;
       border: 1px solid rgba(255,255,255,0.2);
       box-shadow: 0 4px 16px rgba(0,0,0,0.25);
-      cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
       color: #fff;
       font-weight: 600;
       font-size: 0.9rem;
       text-align: center;
       text-decoration: none;
-    }
-
-    .toggle-mode:hover {
-      transform: scale(1.02);
-      background: rgba(255,255,255,0.22);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
     }
 
     /* --- PDF mygtukai --- */
@@ -169,12 +161,12 @@
     .mobile-mode header {
       margin-top: 30px;
       width: 85%;
-      max-width: 380px;
-      padding: 16px 18px;
+      max-width: 360px;
+      padding: 14px 16px;
     }
 
     .mobile-mode header img {
-      max-width: 280px;
+      max-width: 260px;
     }
 
     .mobile-mode .pdf-item {
@@ -201,7 +193,7 @@
         padding: 10px 14px;
       }
 
-      .toggle-mode {
+      .mode-indicator {
         font-size: 0.8rem;
         padding: 6px 10px;
       }
@@ -219,7 +211,7 @@
     <img src="logo2.png" alt="">
   </header>
 
-  <button class="toggle-mode" onclick="toggleMode()">Desktop</button>
+  <div class="mode-indicator">Desktop</div>
 
   <div class="pdf-list">
     <a class="pdf-item" href="Room Menu - English.pdf" onclick="openPDF(event, 'Room Menu - English.pdf')">IN-ROOM MENU - EN</a>
@@ -261,19 +253,14 @@
       if (e.target === overlay) closePDF();
     });
 
-    function toggleMode() {
-      document.body.classList.toggle('mobile-mode');
-      const button = document.querySelector('.toggle-mode');
-      button.textContent = document.body.classList.contains('mobile-mode') ? 'Mobile' : 'Desktop';
-    }
-
-    // Set default mode based on screen width
+    // Set mode based on screen width
     window.onload = function() {
+      const indicator = document.querySelector('.mode-indicator');
       if (window.innerWidth <= 600) {
         document.body.classList.add('mobile-mode');
-        document.querySelector('.toggle-mode').textContent = 'Mobile';
+        indicator.textContent = 'Mobile';
       } else {
-        document.querySelector('.toggle-mode').textContent = 'Desktop';
+        indicator.textContent = 'Desktop';
       }
     };
   </script>
