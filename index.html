@@ -103,7 +103,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.7);
+      background: rgba(0,0,0,0.75);
       backdrop-filter: blur(8px);
       display: none;
       align-items: center;
@@ -115,23 +115,32 @@
 
     #pdf-modal {
       width: 95%;
-      max-width: 900px;
-      height: 85vh;
-      background: rgba(30,20,10,0.6);
-      border-radius: 25px;
+      max-width: 950px;
+      height: 90vh;
+      background: linear-gradient(135deg, rgba(30,20,10,0.85), rgba(50,30,20,0.7));
+      border-radius: 30px;
       overflow: hidden;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+      box-shadow: 0 10px 50px rgba(255,255,255,0.15);
       position: relative;
-      transform: translateY(30px);
+      transform: scale(0.9);
       opacity: 0;
-      animation: slideUp 0.5s ease forwards;
+      animation: scaleUp 0.5s ease forwards;
       backdrop-filter: blur(14px) saturate(200%);
-      border: 1px solid rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    #pdf-title {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      padding: 12px 20px;
+      font-size: 1.2rem;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
     }
 
     #pdf-viewer {
       width: 100%;
-      height: 100%;
+      height: calc(100% - 48px); /* Adjust for title bar height */
       border: none;
     }
 
@@ -139,22 +148,23 @@
       position: absolute;
       top: 10px;
       right: 12px;
-      background: rgba(0,0,0,0.5);
+      background: rgba(255,255,255,0.15);
       color: #fff;
       border: none;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       border-radius: 50%;
-      width: 34px;
-      height: 34px;
+      width: 40px;
+      height: 40px;
       cursor: pointer;
-      transition: background 0.3s ease, transform 0.2s ease;
+      transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
       z-index: 20;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.4);
     }
 
     #close-btn:hover {
       background: rgba(255,255,255,0.3);
-      transform: scale(1.1);
+      transform: rotate(90deg) scale(1.1);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.5);
     }
 
     /* --- Mobile mode stilius --- */
@@ -182,9 +192,9 @@
       from { opacity: 0; }
       to { opacity: 1; }
     }
-    @keyframes slideUp {
-      from { transform: translateY(30px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
+    @keyframes scaleUp {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
 
     @media (max-width: 600px) {
@@ -225,17 +235,18 @@
   <div class="mode-indicator">Desktop</div>
 
   <div class="pdf-list">
-    <a class="pdf-item" href="Room Menu - English.pdf" onclick="openPDF(event, 'Room Menu - English.pdf')">IN-ROOM MENU - EN</a>
-    <a class="pdf-item" href="Room Menu - Lithuanian.pdf" onclick="openPDF(event, 'Room Menu - Lithuanian.pdf')">IN-ROOM MENU - LT</a>
-    <a class="pdf-item" href="Beverage List.pdf" onclick="openPDF(event, 'Beverage List.pdf')">BEVERAGE LIST</a>
-    <a class="pdf-item" href="SPA Menu - English.pdf" onclick="openPDF(event, 'SPA Menu - English.pdf')">SPA MENU - EN</a>
-    <a class="pdf-item" href="SPA Menu - Lithuanian.pdf" onclick="openPDF(event, 'SPA Menu - Lithuanian.pdf')">SPA MENU - LT</a>
-    <a class="pdf-item" href="SPA Offers.pdf" onclick="openPDF(event, 'SPA Offers.pdf')">SPA OFFERS</a>
-    <a class="pdf-item" href="TV List.pdf" onclick="openPDF(event, 'TV List.pdf')">TV LIST</a>
+    <a class="pdf-item" href="Room Menu - English.pdf" onclick="openPDF(event, 'Room Menu - English.pdf', 'IN-ROOM MENU - EN')">IN-ROOM MENU - EN</a>
+    <a class="pdf-item" href="Room Menu - Lithuanian.pdf" onclick="openPDF(event, 'Room Menu - Lithuanian.pdf', 'IN-ROOM MENU - LT')">IN-ROOM MENU - LT</a>
+    <a class="pdf-item" href="Beverage List.pdf" onclick="openPDF(event, 'Beverage List.pdf', 'BEVERAGE LIST')">BEVERAGE LIST</a>
+    <a class="pdf-item" href="SPA Menu - English.pdf" onclick="openPDF(event, 'SPA Menu - English.pdf', 'SPA MENU - EN')">SPA MENU - EN</a>
+    <a class="pdf-item" href="SPA Menu - Lithuanian.pdf" onclick="openPDF(event, 'SPA Menu - Lithuanian.pdf', 'SPA MENU - LT')">SPA MENU - LT</a>
+    <a class="pdf-item" href="SPA Offers.pdf" onclick="openPDF(event, 'SPA Offers.pdf', 'SPA OFFERS')">SPA OFFERS</a>
+    <a class="pdf-item" href="TV List.pdf" onclick="openPDF(event, 'TV List.pdf', 'TV LIST')">TV LIST</a>
   </div>
 
   <div id="overlay">
     <div id="pdf-modal">
+      <div id="pdf-title"></div>
       <button id="close-btn" onclick="closePDF()">✖</button>
       <embed id="pdf-viewer" type="application/pdf" src="">
     </div>
@@ -244,11 +255,13 @@
   <script>
     const overlay = document.getElementById('overlay');
     const viewer = document.getElementById('pdf-viewer');
+    const pdfTitle = document.getElementById('pdf-title');
 
-    function openPDF(event, file) {
+    function openPDF(event, file, title) {
       if (!document.body.classList.contains('mobile-mode')) {
         event.preventDefault();
         viewer.src = file + "#toolbar=0";
+        pdfTitle.textContent = title;
         overlay.style.display = 'flex';
         document.body.style.overflow = 'hidden';
       }
@@ -257,6 +270,7 @@
     function closePDF() {
       overlay.style.display = 'none';
       viewer.src = '';
+      pdfTitle.textContent = '';
       document.body.style.overflow = 'auto';
     }
 
