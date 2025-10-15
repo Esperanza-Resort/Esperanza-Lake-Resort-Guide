@@ -45,7 +45,7 @@
     /* --- Toggle mygtukas --- */
     .toggle-mode {
       position: absolute;
-      top: 10px;
+      top: 5px;
       right: 10px;
       background: rgba(255,255,255,0.12);
       border-radius: 14px;
@@ -107,7 +107,7 @@
     /* --- Mobile mode stilius --- */
     .mobile-mode header {
       width: 85%;
-      max-width: 450px;
+      max-width: 400px;
       padding: 18px 20px;
     }
 
@@ -126,7 +126,7 @@
         margin-top: 30px;
         padding: 18px 20px;
         width: 85%;
-        max-width: 450px;
+        max-width: 400px;
       }
 
       header img {
@@ -150,7 +150,7 @@
     <img src="logo2.png" alt="">
   </header>
 
-  <button class="toggle-mode" onclick="toggleMode()">Mode</button>
+  <button class="toggle-mode" onclick="toggleMode()">Desktop</button>
 
   <div class="pdf-list">
     <a class="pdf-item" href="Room Menu - English.pdf">IN-ROOM MENU - EN</a>
@@ -165,12 +165,17 @@
   <script>
     function toggleMode() {
       document.body.classList.toggle('mobile-mode');
+      const button = document.querySelector('.toggle-mode');
+      button.textContent = document.body.classList.contains('mobile-mode') ? 'Mobile' : 'Desktop';
     }
 
     // Set default mode based on screen width
     window.onload = function() {
       if (window.innerWidth <= 600) {
         document.body.classList.add('mobile-mode');
+        document.querySelector('.toggle-mode').textContent = 'Mobile';
+      } else {
+        document.querySelector('.toggle-mode').textContent = 'Desktop';
       }
     };
   </script>
