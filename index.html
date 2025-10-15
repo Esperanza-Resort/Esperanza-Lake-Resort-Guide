@@ -104,11 +104,76 @@
       box-shadow: 0 8px 24px rgba(0,0,0,0.4);
     }
 
+    /* --- Modal PDF viewer --- */
+    #overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      animation: fadeIn 0.4s ease forwards;
+      overflow: hidden;
+    }
+
+    #pdf-modal {
+      width: 95%;
+      max-width: 900px;
+      height: 85vh;
+      background: rgba(30,20,10,0.6);
+      border-radius: 25px;
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+      position: relative;
+      transform: translateY(30px);
+      opacity: 0;
+      animation: slideUp 0.5s ease forwards;
+      backdrop-filter: blur(14px) saturate(200%);
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    #pdf-viewer {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    #close-btn {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      background: rgba(0,0,0,0.5);
+      color: #fff;
+      border: none;
+      font-size: 1.3rem;
+      border-radius: 50%;
+      width: 34px;
+      height: 34px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+      z-index: 20;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    #close-btn:hover {
+      background: rgba(255,255,255,0.3);
+      transform: scale(1.1);
+    }
+
     /* --- Mobile mode stilius --- */
     .mobile-mode header {
       width: 85%;
-      max-width: 400px;
-      padding: 18px 20px;
+      max-width: 380px;
+      padding: 16px 18px;
+    }
+
+    .mobile-mode .pdf-item {
+      pointer-events: auto;
     }
 
     /* --- Animacijos --- */
@@ -120,17 +185,21 @@
       from { opacity: 0; }
       to { opacity: 1; }
     }
+    @keyframes slideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
 
     @media (max-width: 600px) {
       header {
         margin-top: 30px;
-        padding: 18px 20px;
+        padding: 16px 18px;
         width: 85%;
-        max-width: 400px;
+        max-width: 380px;
       }
 
       header img {
-        max-width: 300px;
+        max-width: 280px;
       }
 
       .pdf-item {
@@ -153,16 +222,45 @@
   <button class="toggle-mode" onclick="toggleMode()">Desktop</button>
 
   <div class="pdf-list">
-    <a class="pdf-item" href="Room Menu - English.pdf">IN-ROOM MENU - EN</a>
-    <a class="pdf-item" href="Room Menu - Lithuanian.pdf">IN-ROOM MENU - LT</a>
-    <a class="pdf-item" href="Beverage List.pdf">BEVERAGE LIST</a>
-    <a class="pdf-item" href="SPA Menu - English.pdf">SPA MENU - EN</a>
-    <a class="pdf-item" href="SPA Menu - Lithuanian.pdf">SPA MENU - LT</a>
-    <a class="pdf-item" href="SPA Offers.pdf">SPA OFFERS</a>
-    <a class="pdf-item" href="TV List.pdf">TV LIST</a>
+    <a class="pdf-item" href="Room Menu - English.pdf" onclick="openPDF(event, 'Room Menu - English.pdf')">IN-ROOM MENU - EN</a>
+    <a class="pdf-item" href="Room Menu - Lithuanian.pdf" onclick="openPDF(event, 'Room Menu - Lithuanian.pdf')">IN-ROOM MENU - LT</a>
+    <a class="pdf-item" href="Beverage List.pdf" onclick="openPDF(event, 'Beverage List.pdf')">BEVERAGE LIST</a>
+    <a class="pdf-item" href="SPA Menu - English.pdf" onclick="openPDF(event, 'SPA Menu - English.pdf')">SPA MENU - EN</a>
+    <a class="pdf-item" href="SPA Menu - Lithuanian.pdf" onclick="openPDF(event, 'SPA Menu - Lithuanian.pdf')">SPA MENU - LT</a>
+    <a class="pdf-item" href="SPA Offers.pdf" onclick="openPDF(event, 'SPA Offers.pdf')">SPA OFFERS</a>
+    <a class="pdf-item" href="TV List.pdf" onclick="openPDF(event, 'TV List.pdf')">TV LIST</a>
+  </div>
+
+  <div id="overlay">
+    <div id="pdf-modal">
+      <button id="close-btn" onclick="closePDF()">✖</button>
+      <embed id="pdf-viewer" type="application/pdf" src="">
+    </div>
   </div>
 
   <script>
+    const overlay = document.getElementById('overlay');
+    const viewer = document.getElementById('pdf-viewer');
+
+    function openPDF(event, file) {
+      if (!document.body.classList.contains('mobile-mode')) {
+        event.preventDefault();
+        viewer.src = file + "#toolbar=0";
+        overlay.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closePDF() {
+      overlay.style.display = 'none';
+      viewer.src = '';
+      document.body.style.overflow = 'auto';
+    }
+
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) closePDF();
+    });
+
     function toggleMode() {
       document.body.classList.toggle('mobile-mode');
       const button = document.querySelector('.toggle-mode');
