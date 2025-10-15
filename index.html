@@ -20,6 +20,7 @@
       align-items: center;
       min-height: 100vh;
       overflow-x: hidden;
+      position: relative;
     }
 
     /* --- Viršutinė juosta --- */
@@ -29,7 +30,7 @@
       backdrop-filter: blur(14px) saturate(180%);
       -webkit-backdrop-filter: blur(14px) saturate(180%);
       border: 1px solid rgba(255,255,255,0.1);
-      padding: 22px 60px;
+      padding: 22px 100px;
       border-radius: 25px;
       box-shadow: 0 8px 30px rgba(0,0,0,0.6);
       text-align: center;
@@ -39,6 +40,31 @@
     header img {
       max-width: 300px;
       height: auto;
+    }
+
+    /* --- Toggle mygtukas --- */
+    .toggle-mode {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 14px;
+      padding: 8px 12px;
+      border: 1px solid rgba(255,255,255,0.2);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .toggle-mode:hover {
+      transform: scale(1.02);
+      background: rgba(255,255,255,0.22);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
     }
 
     /* --- PDF mygtukai --- */
@@ -78,6 +104,13 @@
       box-shadow: 0 8px 24px rgba(0,0,0,0.4);
     }
 
+    /* --- Mobile mode stilius --- */
+    .mobile-mode header {
+      width: 85%;
+      max-width: 450px;
+      padding: 18px 20px;
+    }
+
     /* --- Animacijos --- */
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(20px); }
@@ -92,6 +125,8 @@
       header {
         margin-top: 30px;
         padding: 18px 20px;
+        width: 85%;
+        max-width: 450px;
       }
 
       header img {
@@ -102,6 +137,11 @@
         font-size: 0.95rem;
         padding: 10px 14px;
       }
+
+      .toggle-mode {
+        font-size: 0.8rem;
+        padding: 6px 10px;
+      }
     }
   </style>
 </head>
@@ -109,6 +149,8 @@
   <header>
     <img src="logo2.png" alt="">
   </header>
+
+  <button class="toggle-mode" onclick="toggleMode()">Mode</button>
 
   <div class="pdf-list">
     <a class="pdf-item" href="Room Menu - English.pdf">IN-ROOM MENU - EN</a>
@@ -120,5 +162,17 @@
     <a class="pdf-item" href="TV List.pdf">TV LIST</a>
   </div>
 
+  <script>
+    function toggleMode() {
+      document.body.classList.toggle('mobile-mode');
+    }
+
+    // Set default mode based on screen width
+    window.onload = function() {
+      if (window.innerWidth <= 600) {
+        document.body.classList.add('mobile-mode');
+      }
+    };
+  </script>
 </body>
 </html>
