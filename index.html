@@ -21,6 +21,7 @@
       min-height: 100vh;
       overflow-x: hidden;
       position: relative;
+      animation: fadeInBackground 1.5s ease forwards;
     }
 
     /* --- Viršutinė juosta --- */
@@ -34,12 +35,17 @@
       border-radius: 25px;
       box-shadow: 0 8px 30px rgba(0,0,0,0.6);
       text-align: center;
-      animation: fadeIn 1.2s ease forwards;
+      animation: slideInFromTop 1.2s ease forwards;
+      animation-delay: 0.3s;
+      opacity: 0;
     }
 
     header img {
       max-width: 300px;
       height: auto;
+      animation: zoomIn 1.5s ease forwards;
+      animation-delay: 0.5s;
+      opacity: 0;
     }
 
     /* --- Mode indikatorius --- */
@@ -57,6 +63,9 @@
       font-size: 0.9rem;
       text-align: center;
       text-decoration: none;
+      animation: fadeInRight 1s ease forwards;
+      animation-delay: 0.7s;
+      opacity: 0;
     }
 
     /* --- PDF mygtukai --- */
@@ -68,6 +77,8 @@
       flex-direction: column;
       gap: 10px;
       animation: fadeInUp 1.2s ease forwards;
+      animation-delay: 0.9s;
+      opacity: 0;
     }
 
     .pdf-item {
@@ -88,10 +99,13 @@
       letter-spacing: 0.4px;
       text-align: center;
       text-decoration: none;
+      animation: slideInFromLeft 0.8s ease forwards;
+      animation-delay: calc(var(--index) * 0.1s + 1s);
+      opacity: 0;
     }
 
     .pdf-item:hover {
-      transform: scale(1.02);
+      transform: scale(1.02) translateY(-3px);
       background: rgba(255,255,255,0.22);
       box-shadow: 0 8px 24px rgba(0,0,0,0.4);
     }
@@ -109,8 +123,12 @@
       align-items: center;
       justify-content: center;
       z-index: 10;
-      animation: fadeIn 0.4s ease forwards;
+      animation: fadeIn 0.6s ease forwards;
       overflow: hidden;
+    }
+
+    #overlay.closing {
+      animation: fadeOut 0.6s ease forwards;
     }
 
     #pdf-modal {
@@ -122,11 +140,15 @@
       overflow: hidden;
       box-shadow: 0 10px 50px rgba(255,255,255,0.15);
       position: relative;
-      transform: scale(0.9);
+      transform: scale(0.8) rotateX(10deg);
       opacity: 0;
-      animation: scaleUp 0.5s ease forwards;
+      animation: modalPop 0.7s ease forwards;
       backdrop-filter: blur(14px) saturate(200%);
       border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    #pdf-modal.closing {
+      animation: modalPopOut 0.7s ease forwards;
     }
 
     #pdf-title {
@@ -136,12 +158,22 @@
       font-size: 1.2rem;
       text-align: center;
       border-bottom: 1px solid rgba(255,255,255,0.2);
+      animation: slideDown 0.5s ease forwards;
+    }
+
+    #pdf-title.closing {
+      animation: slideUp 0.5s ease forwards;
     }
 
     #pdf-viewer {
       width: 100%;
-      height: calc(100% - 48px); /* Adjust for title bar height */
+      height: calc(100% - 48px);
       border: none;
+      animation: fadeIn 0.8s ease forwards;
+    }
+
+    #pdf-viewer.closing {
+      animation: fadeOut 0.6s ease forwards;
     }
 
     #close-btn {
@@ -159,6 +191,11 @@
       transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
       z-index: 20;
       box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+      animation: bounceIn 0.6s ease forwards;
+    }
+
+    #close-btn.closing {
+      animation: bounceOut 0.6s ease forwards;
     }
 
     #close-btn:hover {
@@ -184,17 +221,76 @@
     }
 
     /* --- Animacijos --- */
+    @keyframes fadeInBackground {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideInFromTop {
+      from { opacity: 0; transform: translateY(-50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes zoomIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes fadeInRight {
+      from { opacity: 0; transform: translateX(30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
+    @keyframes slideInFromLeft {
+      from { opacity: 0; transform: translateX(-30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes modalPop {
+      from { transform: scale(0.8) rotateX(10deg); opacity: 0; }
+      to { transform: scale(1) rotateX(0); opacity: 1; }
+    }
+
+    @keyframes modalPopOut {
+      from { transform: scale(1) rotateX(0); opacity: 1; }
+      to { transform: scale(0.8) rotateX(10deg); opacity: 0; }
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 1; transform: translateY(0); }
+      to { opacity: 0; transform: translateY(-20px); }
+    }
+
+    @keyframes bounceIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      50% { transform: scale(1.2); opacity: 0.7; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes bounceOut {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0.7; }
+      100% { transform: scale(0.5); opacity: 0; }
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
     }
-    @keyframes scaleUp {
-      from { transform: scale(0.9); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
     }
 
     @media (max-width: 600px) {
@@ -235,13 +331,13 @@
   <div class="mode-indicator">Desktop</div>
 
   <div class="pdf-list">
-    <a class="pdf-item" href="Room Menu - English.pdf" onclick="openPDF(event, 'Room Menu - English.pdf', 'IN-ROOM MENU - EN')">IN-ROOM MENU - EN</a>
-    <a class="pdf-item" href="Room Menu - Lithuanian.pdf" onclick="openPDF(event, 'Room Menu - Lithuanian.pdf', 'IN-ROOM MENU - LT')">IN-ROOM MENU - LT</a>
-    <a class="pdf-item" href="Beverage List.pdf" onclick="openPDF(event, 'Beverage List.pdf', 'BEVERAGE LIST')">BEVERAGE LIST</a>
-    <a class="pdf-item" href="SPA Menu - English.pdf" onclick="openPDF(event, 'SPA Menu - English.pdf', 'SPA MENU - EN')">SPA MENU - EN</a>
-    <a class="pdf-item" href="SPA Menu - Lithuanian.pdf" onclick="openPDF(event, 'SPA Menu - Lithuanian.pdf', 'SPA MENU - LT')">SPA MENU - LT</a>
-    <a class="pdf-item" href="SPA Offers.pdf" onclick="openPDF(event, 'SPA Offers.pdf', 'SPA OFFERS')">SPA OFFERS</a>
-    <a class="pdf-item" href="TV List.pdf" onclick="openPDF(event, 'TV List.pdf', 'TV LIST')">TV LIST</a>
+    <a class="pdf-item" href="Room Menu - English.pdf" onclick="openPDF(event, 'Room Menu - English.pdf', 'IN-ROOM MENU - EN')" style="--index: 0;">IN-ROOM MENU - EN</a>
+    <a class="pdf-item" href="Room Menu - Lithuanian.pdf" onclick="openPDF(event, 'Room Menu - Lithuanian.pdf', 'IN-ROOM MENU - LT')" style="--index: 1;">IN-ROOM MENU - LT</a>
+    <a class="pdf-item" href="Beverage List.pdf" onclick="openPDF(event, 'Beverage List.pdf', 'BEVERAGE LIST')" style="--index: 2;">BEVERAGE LIST</a>
+    <a class="pdf-item" href="SPA Menu - English.pdf" onclick="openPDF(event, 'SPA Menu - English.pdf', 'SPA MENU - EN')" style="--index: 3;">SPA MENU - EN</a>
+    <a class="pdf-item" href="SPA Menu - Lithuanian.pdf" onclick="openPDF(event, 'SPA Menu - Lithuanian.pdf', 'SPA MENU - LT')" style="--index: 4;">SPA MENU - LT</a>
+    <a class="pdf-item" href="SPA Offers.pdf" onclick="openPDF(event, 'SPA Offers.pdf', 'SPA OFFERS')" style="--index: 5;">SPA OFFERS</a>
+    <a class="pdf-item" href="TV List.pdf" onclick="openPDF(event, 'TV List.pdf', 'TV LIST')" style="--index: 6;">TV LIST</a>
   </div>
 
   <div id="overlay">
@@ -256,6 +352,8 @@
     const overlay = document.getElementById('overlay');
     const viewer = document.getElementById('pdf-viewer');
     const pdfTitle = document.getElementById('pdf-title');
+    const pdfModal = document.getElementById('pdf-modal');
+    const closeBtn = document.getElementById('close-btn');
 
     function openPDF(event, file, title) {
       if (!document.body.classList.contains('mobile-mode')) {
@@ -264,21 +362,41 @@
         pdfTitle.textContent = title;
         overlay.style.display = 'flex';
         document.body.style.overflow = 'hidden';
+        // Remove closing class if present
+        overlay.classList.remove('closing');
+        pdfModal.classList.remove('closing');
+        pdfTitle.classList.remove('closing');
+        viewer.classList.remove('closing');
+        closeBtn.classList.remove('closing');
       }
     }
 
     function closePDF() {
-      overlay.style.display = 'none';
-      viewer.src = '';
-      pdfTitle.textContent = '';
-      document.body.style.overflow = 'auto';
+      // Add closing class to trigger exit animations
+      overlay.classList.add('closing');
+      pdfModal.classList.add('closing');
+      pdfTitle.classList.add('closing');
+      viewer.classList.add('closing');
+      closeBtn.classList.add('closing');
+      // Wait for animations to complete before hiding
+      setTimeout(() => {
+        overlay.style.display = 'none';
+        viewer.src = '';
+        pdfTitle.textContent = '';
+        document.body.style.overflow = 'auto';
+        // Clean up closing classes
+        overlay.classList.remove('closing');
+        pdfModal.classList.remove('closing');
+        pdfTitle.classList.remove('closing');
+        viewer.classList.remove('closing');
+        closeBtn.classList.remove('closing');
+      }, 700); // Match the longest animation duration
     }
 
     overlay.addEventListener('click', e => {
       if (e.target === overlay) closePDF();
     });
 
-    // Set mode based on screen width
     window.onload = function() {
       const indicator = document.querySelector('.mode-indicator');
       if (window.innerWidth <= 600) {
