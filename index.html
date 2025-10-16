@@ -50,22 +50,7 @@
 
     /* --- Mode indikatorius --- */
     .mode-indicator {
-      position: absolute;
-      top: 3px;
-      right: 10px;
-      background: rgba(255,255,255,0.12);
-      border-radius: 14px;
-      padding: 8px 12px;
-      border: 1px solid rgba(255,255,255,0.2);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
-      color: #fff;
-      font-weight: 600;
-      font-size: 0.9rem;
-      text-align: center;
-      text-decoration: none;
-      animation: fadeInRight 1s ease forwards;
-      animation-delay: 0.7s;
-      opacity: 0;
+      display: none;
     }
 
     /* --- PDF mygtukai --- */
@@ -310,11 +295,6 @@
         padding: 10px 14px;
       }
 
-      .mode-indicator {
-        font-size: 0.8rem;
-        padding: 6px 10px;
-      }
-
       #pdf-modal {
         width: 98%;
         height: 80vh;
@@ -327,8 +307,6 @@
   <header>
     <img src="logo2.png" alt="">
   </header>
-
-  <div class="mode-indicator">Desktop</div>
 
   <div class="pdf-list">
     <a class="pdf-item" href="Room Menu - English.pdf" onclick="openPDF(event, 'Room Menu - English.pdf', 'IN-ROOM MENU - EN')" style="--index: 0;">IN-ROOM MENU - EN</a>
@@ -398,12 +376,8 @@
     });
 
     window.onload = function() {
-      const indicator = document.querySelector('.mode-indicator');
       if (window.innerWidth <= 600) {
         document.body.classList.add('mobile-mode');
-        indicator.textContent = 'Mobile';
-      } else {
-        indicator.textContent = 'Desktop';
       }
     };
   </script>
