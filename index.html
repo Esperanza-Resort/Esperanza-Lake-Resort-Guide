@@ -198,7 +198,7 @@
     }
 
     .mobile-mode header img {
-      max-width: 182px;
+      max-width: 205px;
     }
 
     .mobile-mode .pdf-item {
@@ -287,7 +287,7 @@
       }
 
       header img {
-        max-width: 182px;
+        max-width: 205px;
       }
 
       .pdf-item {
@@ -338,7 +338,7 @@
     function openPDF(event, file, title) {
       if (!document.body.classList.contains('mobile-mode')) {
         event.preventDefault();
-        viewer.src = file + "#toolbar=0";
+        viewer.src = file + '?_=' + Date.now() + '#toolbar=0&page=1';
         pdfTitle.textContent = title;
         overlay.style.display = 'flex';
         document.body.style.overflow = 'hidden';
