@@ -120,6 +120,8 @@
       animation: modalPop 0.7s ease forwards;
       backdrop-filter: blur(14px) saturate(200%);
       border: 1px solid rgba(255,255,255,0.2);
+      display: flex;
+      flex-direction: column;
     }
     #pdf-modal.closing {
       animation: modalPopOut 0.7s ease forwards;
@@ -132,6 +134,7 @@
       text-align: center;
       border-bottom: 1px solid rgba(255,255,255,0.2);
       animation: slideDown 0.5s ease forwards;
+      flex-shrink: 0;
     }
     #pdf-title.closing {
       animation: slideUp 0.5s ease forwards;
@@ -144,6 +147,7 @@
       padding: 10px;
       background: rgba(255,255,255,0.05);
       border-bottom: 1px solid rgba(255,255,255,0.1);
+      flex-shrink: 0;
     }
     #pdf-selector button {
       background: rgba(255,255,255,0.2);
@@ -162,15 +166,33 @@
     }
     #pdf-viewer {
       width: 100%;
-      height: calc(100% - 48px);
+      flex: 1;
       border: none;
       animation: fadeIn 0.8s ease forwards;
+    }
+    .mobile-mode #pdf-viewer {
+      display: none;
     }
     #pdf-modal.kids-mode #pdf-viewer {
       height: calc(100% - 118px);
     }
     #pdf-viewer.closing {
       animation: fadeOut 0.6s ease forwards;
+    }
+    #mobile-instruction {
+      display: none;
+      padding: 20px;
+      text-align: center;
+      font-size: 1rem;
+      color: #fff;
+      flex: 1;
+      justify-content: center;
+      align-items: center;
+    }
+    .mobile-mode #mobile-instruction {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
     }
     #close-btn {
       position: absolute;
@@ -303,6 +325,10 @@
         font-size: 1rem;
         padding: 10px 15px;
       }
+      #mobile-instruction {
+        font-size: 0.9rem;
+        padding: 15px;
+      }
     }
   </style>
 </head>
@@ -326,6 +352,9 @@
     <div id="pdf-modal">
       <div id="pdf-title"></div>
       <div id="pdf-selector"></div>
+      <div id="mobile-instruction">
+        <p>Pasirinkite kalbą, kad atidarytumėte Vaikų meniu naujoje kortelėje:</p>
+      </div>
       <button id="close-btn" onclick="closePDF()">✖</button>
       <embed id="pdf-viewer" type="application/pdf" src="">
     </div>
@@ -337,8 +366,9 @@
     const pdfModal = document.getElementById('pdf-modal');
     const closeBtn = document.getElementById('close-btn');
     const pdfSelector = document.getElementById('pdf-selector');
+    const isMobile = document.body.classList.contains('mobile-mode');
     function openPDF(event, file, title) {
-      if (!document.body.classList.contains('mobile-mode')) {
+      if (!isMobile) {
         event.preventDefault();
         viewer.src = file + '?_=' + Date.now() + '#toolbar=0&page=1';
         pdfTitle.textContent = title;
@@ -357,15 +387,13 @@
     }
     function openKidsMenus(event) {
       event.preventDefault();
-      // Visada atidaro modal su perjungimu, net ant mobiliaus
-      pdfTitle.textContent = 'KIDS MENU - EN';
+      pdfTitle.textContent = 'KIDS MENU';
       pdfSelector.innerHTML = `
-        <button id="en-btn" onclick="switchPDF('Kids Menu - English.pdf', 'EN')">EN</button>
-        <button id="lt-btn" onclick="switchPDF('Kids Menu - Lithuanian.pdf', 'LT')">LT</button>
+        <button id="en-btn" onclick="switchPDF('Kids Menu - English.jpg', 'EN')">EN</button>
+        <button id="lt-btn" onclick="switchPDF('Kids Menu - Lithuanian.jpg', 'LT')">LT</button>
       `;
       pdfSelector.style.display = 'flex';
       pdfModal.classList.add('kids-mode');
-      viewer.src = 'Kids Menu - English.pdf?_=' + Date.now() + '#toolbar=0&page=1';
       overlay.style.display = 'flex';
       document.body.style.overflow = 'hidden';
       // Remove closing class if present
@@ -374,15 +402,27 @@
       pdfTitle.classList.remove('closing');
       viewer.classList.remove('closing');
       closeBtn.classList.remove('closing');
-      // Pridėti aktyvų mygtuką EN
-      document.getElementById('en-btn').classList.add('active');
+      if (!isMobile) {
+        // Ant kompo - iškart rodyti EN (bet dabar JPG, tad pakeisti embed į img jei reikia, bet kol kas laikom PDF viewer, jei JPG neveiks - pakeisk į <img>)
+        viewer.src = 'Kids Menu - English.jpg?_=' + Date.now();
+        document.getElementById('en-btn').classList.add('active');
+      } else {
+        // Ant telefono - slėpti viewer, rodyti instrukciją
+        viewer.src = '';
+      }
     }
     function switchPDF(file, lang) {
-      viewer.src = file + '?_=' + Date.now() + '#toolbar=0&page=1';
-      pdfTitle.textContent = `KIDS MENU - ${lang}`;
-      // Pašalinti aktyvų iš abiejų ir pridėti naujam
-      document.querySelectorAll('#pdf-selector button').forEach(btn => btn.classList.remove('active'));
-      event.target.classList.add('active');
+      if (isMobile) {
+        // Ant telefono - atidaryti JPG naujoje kortelėje
+        window.open(file, '_blank');
+      } else {
+        // Ant kompo - perjungti embed (dabar JPG)
+        viewer.src = file + '?_=' + Date.now();
+        pdfTitle.textContent = `KIDS MENU - ${lang}`;
+        // Pašalinti aktyvų ir pridėti naujam
+        document.querySelectorAll('#pdf-selector button').forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+      }
     }
     function closePDF() {
       // Add closing class to trigger exit animations
