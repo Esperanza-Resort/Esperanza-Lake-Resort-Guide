@@ -385,7 +385,7 @@
       const enFile = `Kids Menu - English${ext}`;
       const ltFile = `Kids Menu - Lithuanian${ext}`;
       const isPDF = !isMobile;
-      pdfTitle.textContent = 'KIDS MENU - EN';
+      pdfTitle.textContent = 'KIDS ACTIVITIES PROGRAM EN';
       pdfSelector.innerHTML = `
         <button id="en-btn" onclick="switchPDF(event, '${enFile}', 'EN', ${isPDF})">EN</button>
         <button id="lt-btn" onclick="switchPDF(event, '${ltFile}', 'LT', ${isPDF})">LT</button>
@@ -406,7 +406,7 @@
     }
     function switchPDF(event, file, lang, isPDF) {
       loadViewer(file, isPDF);
-      pdfTitle.textContent = `KIDS MENU - ${lang}`;
+      pdfTitle.textContent = `KIDS ACTIVITIES PROGRAM - ${lang}`;
       // Pašalinti aktyvų iš abiejų ir pridėti naujam
       document.querySelectorAll('#pdf-selector button').forEach(btn => btn.classList.remove('active'));
       event.target.classList.add('active');
