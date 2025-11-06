@@ -20,7 +20,7 @@
       min-height: 100vh;
       overflow-x: hidden;
       position: relative;
-      animation: fadeInBackground 1.5s ease forwards;
+      /* Pakeista: animacija perkelta i JS, kad pradetu po load */
     }
     /* --- Viršutinė juosta --- */
     header {
@@ -33,16 +33,16 @@
       border-radius: 25px;
       box-shadow: 0 8px 30px rgba(0,0,0,0.6);
       text-align: center;
-      animation: slideInFromTop 1.2s ease forwards;
-      animation-delay: 0.3s;
+      /* Pakeista: pradinė būsena */
       opacity: 0;
+      transform: translateY(-50px);
     }
     header img {
       max-width: 300px;
       height: auto;
-      animation: zoomIn 1.5s ease forwards;
-      animation-delay: 0.5s;
+      /* Pakeista: pradinė būsena */
       opacity: 0;
+      transform: scale(0.8);
     }
     /* --- Mode indikatorius --- */
     .mode-indicator {
@@ -56,9 +56,9 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
-      animation: fadeInUp 1.2s ease forwards;
-      animation-delay: 0.9s;
+      /* Pakeista: pradinė būsena */
       opacity: 0;
+      transform: translateY(20px);
     }
     .pdf-item {
       display: flex;
@@ -78,9 +78,9 @@
       letter-spacing: 0.4px;
       text-align: center;
       text-decoration: none;
-      animation: slideInFromLeft 0.8s ease forwards;
-      animation-delay: calc(var(--index) * 0.1s + 1s);
+      /* Pakeista: pradinė būsena */
       opacity: 0;
+      transform: translateX(-30px);
     }
     .pdf-item:hover {
       transform: scale(1.02) translateY(-3px);
@@ -165,6 +165,9 @@
       height: calc(100% - 48px);
       border: none;
       animation: fadeIn 0.8s ease forwards;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     #pdf-modal.kids-mode #pdf-viewer {
       height: calc(100% - 118px);
@@ -318,7 +321,7 @@
     <a class="pdf-item" href="SPA Menu - Lithuanian.pdf" onclick="openPDF(event, 'SPA Menu - Lithuanian.pdf', 'SPA MENU - LT')" style="--index: 4;">SPA MENU - LT</a>
     <a class="pdf-item" href="SPA Offers.pdf" onclick="openPDF(event, 'SPA Offers.pdf', 'SPA OFFERS')" style="--index: 5;">SPA OFFERS</a>
     <a class="pdf-item" href="TV List.pdf" onclick="openPDF(event, 'TV List.pdf', 'TV LIST')" style="--index: 6;">TV LIST</a>
-    <a class="pdf-item" href="#" onclick="openKidsMenus(event)" style="--index: 7;">KIDS ACTIVITIES PROGRAM EN/LT</a>
+    <a class="pdf-item" href="#" onclick="openKidsMenus(event)" style="--index: 7;">KIDS MENU</a>
     <a class="pdf-item" href="https://wa.me/+37066272700" style="--index: 8;">CONCIERGE</a>
     <a class="pdf-item" href="https://heji.lt/" style="--index: 9;">HEJI RESTAURANT</a>
   </div>
@@ -327,7 +330,7 @@
       <div id="pdf-title"></div>
       <div id="pdf-selector"></div>
       <button id="close-btn" onclick="closePDF()">✖</button>
-      <embed id="pdf-viewer" type="application/pdf" src="">
+      <div id="pdf-viewer"></div>
     </div>
   </div>
   <script>
@@ -337,9 +340,30 @@
     const pdfModal = document.getElementById('pdf-modal');
     const closeBtn = document.getElementById('close-btn');
     const pdfSelector = document.getElementById('pdf-selector');
+    function loadViewer(file, isPDF) {
+      viewer.innerHTML = '';
+      const cacheBust = '?_=' + Date.now();
+      if (isPDF) {
+        const embed = document.createElement('embed');
+        embed.type = 'application/pdf';
+        embed.src = file + cacheBust + '#toolbar=0&page=1';
+        embed.style.width = '100%';
+        embed.style.height = '100%';
+        embed.style.border = 'none';
+        viewer.appendChild(embed);
+      } else {
+        const img = document.createElement('img');
+        img.src = file + cacheBust;
+        img.style.width = '100%';
+        img.style.height = '100%';
+        img.style.objectFit = 'contain';
+        img.style.display = 'block';
+        viewer.appendChild(img);
+      }
+    }
     function openPDF(event, file, title) {
       event.preventDefault();
-      viewer.src = file + '?_=' + Date.now() + '#toolbar=0&page=1';
+      loadViewer(file, true);
       pdfTitle.textContent = title;
       pdfSelector.style.display = 'none';
       pdfSelector.innerHTML = '';
@@ -360,18 +384,15 @@
       const ext = isMobile ? '.jpg' : '.pdf';
       const enFile = `Kids Menu - English${ext}`;
       const ltFile = `Kids Menu - Lithuanian${ext}`;
+      const isPDF = !isMobile;
       pdfTitle.textContent = 'KIDS MENU - EN';
       pdfSelector.innerHTML = `
-        <button id="en-btn" onclick="switchPDF(event, '${enFile}', 'EN')">EN</button>
-        <button id="lt-btn" onclick="switchPDF(event, '${ltFile}', 'LT')">LT</button>
+        <button id="en-btn" onclick="switchPDF(event, '${enFile}', 'EN', ${isPDF})">EN</button>
+        <button id="lt-btn" onclick="switchPDF(event, '${ltFile}', 'LT', ${isPDF})">LT</button>
       `;
       pdfSelector.style.display = 'flex';
       pdfModal.classList.add('kids-mode');
-      let src = enFile + '?_=' + Date.now();
-      if (!isMobile) {
-        src += '#toolbar=0&page=1';
-      }
-      viewer.src = src;
+      loadViewer(enFile, isPDF);
       overlay.style.display = 'flex';
       document.body.style.overflow = 'hidden';
       // Remove closing class if present
@@ -383,12 +404,8 @@
       // Pridėti aktyvų mygtuką EN
       document.getElementById('en-btn').classList.add('active');
     }
-    function switchPDF(event, file, lang) {
-      let src = file + '?_=' + Date.now();
-      if (file.endsWith('.pdf')) {
-        src += '#toolbar=0&page=1';
-      }
-      viewer.src = src;
+    function switchPDF(event, file, lang, isPDF) {
+      loadViewer(file, isPDF);
       pdfTitle.textContent = `KIDS MENU - ${lang}`;
       // Pašalinti aktyvų iš abiejų ir pridėti naujam
       document.querySelectorAll('#pdf-selector button').forEach(btn => btn.classList.remove('active'));
@@ -404,7 +421,7 @@
       // Wait for animations to complete before hiding
       setTimeout(() => {
         overlay.style.display = 'none';
-        viewer.src = '';
+        viewer.innerHTML = '';
         pdfTitle.textContent = '';
         pdfSelector.style.display = 'none';
         pdfSelector.innerHTML = '';
@@ -421,11 +438,33 @@
     overlay.addEventListener('click', e => {
       if (e.target === overlay) closePDF();
     });
-    window.onload = function() {
+    window.addEventListener('load', function() {
       if (window.innerWidth <= 600) {
         document.body.classList.add('mobile-mode');
       }
-    };
+      // Pakeista: paleisti animacijas po load, kad isvengti bugu
+      document.body.style.animation = 'fadeInBackground 1.5s ease forwards';
+      
+      setTimeout(() => {
+        document.querySelector('header').style.animation = 'slideInFromTop 1.2s ease forwards';
+      }, 100);
+      
+      setTimeout(() => {
+        document.querySelector('header img').style.animation = 'zoomIn 1.5s ease forwards';
+      }, 400);
+      
+      setTimeout(() => {
+        document.querySelector('.pdf-list').style.animation = 'fadeInUp 1.2s ease forwards';
+      }, 700);
+      
+      setTimeout(() => {
+        document.querySelectorAll('.pdf-item').forEach((item, index) => {
+          setTimeout(() => {
+            item.style.animation = 'slideInFromLeft 0.8s ease forwards';
+          }, index * 100);
+        });
+      }, 1000);
+    });
   </script>
 </body>
 </html>
