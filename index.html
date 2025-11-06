@@ -356,14 +356,22 @@
     function openKidsMenus(event) {
       event.preventDefault();
       // Visada atidaro modal su perjungimu, net ant mobiliaus
+      const isMobile = document.body.classList.contains('mobile-mode');
+      const ext = isMobile ? '.jpg' : '.pdf';
+      const enFile = `Kids Menu - English${ext}`;
+      const ltFile = `Kids Menu - Lithuanian${ext}`;
       pdfTitle.textContent = 'KIDS MENU - EN';
       pdfSelector.innerHTML = `
-        <button id="en-btn" onclick="switchPDF('Kids Menu - English.pdf', 'EN')">EN</button>
-        <button id="lt-btn" onclick="switchPDF('Kids Menu - Lithuanian.pdf', 'LT')">LT</button>
+        <button id="en-btn" onclick="switchPDF(event, '${enFile}', 'EN')">EN</button>
+        <button id="lt-btn" onclick="switchPDF(event, '${ltFile}', 'LT')">LT</button>
       `;
       pdfSelector.style.display = 'flex';
       pdfModal.classList.add('kids-mode');
-      viewer.src = 'Kids Menu - English.pdf?_=' + Date.now() + '#toolbar=0&page=1';
+      let src = enFile + '?_=' + Date.now();
+      if (!isMobile) {
+        src += '#toolbar=0&page=1';
+      }
+      viewer.src = src;
       overlay.style.display = 'flex';
       document.body.style.overflow = 'hidden';
       // Remove closing class if present
@@ -375,8 +383,12 @@
       // Pridėti aktyvų mygtuką EN
       document.getElementById('en-btn').classList.add('active');
     }
-    function switchPDF(file, lang) {
-      viewer.src = file + '?_=' + Date.now() + '#toolbar=0&page=1';
+    function switchPDF(event, file, lang) {
+      let src = file + '?_=' + Date.now();
+      if (file.endsWith('.pdf')) {
+        src += '#toolbar=0&page=1';
+      }
+      viewer.src = src;
       pdfTitle.textContent = `KIDS MENU - ${lang}`;
       // Pašalinti aktyvų iš abiejų ir pridėti naujam
       document.querySelectorAll('#pdf-selector button').forEach(btn => btn.classList.remove('active'));
