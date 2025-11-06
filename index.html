@@ -6,7 +6,6 @@
   <title>Esperanza Lake Resort</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
-
     body {
       margin: 0;
       font-family: 'Montserrat', sans-serif;
@@ -23,7 +22,6 @@
       position: relative;
       animation: fadeInBackground 1.5s ease forwards;
     }
-
     /* --- Viršutinė juosta --- */
     header {
       margin-top: 60px;
@@ -39,7 +37,6 @@
       animation-delay: 0.3s;
       opacity: 0;
     }
-
     header img {
       max-width: 300px;
       height: auto;
@@ -47,12 +44,10 @@
       animation-delay: 0.5s;
       opacity: 0;
     }
-
     /* --- Mode indikatorius --- */
     .mode-indicator {
       display: none;
     }
-
     /* --- PDF mygtukai --- */
     .pdf-list {
       margin-top: 50px;
@@ -65,7 +60,6 @@
       animation-delay: 0.9s;
       opacity: 0;
     }
-
     .pdf-item {
       display: flex;
       align-items: center;
@@ -88,13 +82,11 @@
       animation-delay: calc(var(--index) * 0.1s + 1s);
       opacity: 0;
     }
-
     .pdf-item:hover {
       transform: scale(1.02) translateY(-3px);
       background: rgba(255,255,255,0.22);
       box-shadow: 0 8px 24px rgba(0,0,0,0.4);
     }
-
     /* --- Modal PDF viewer --- */
     #overlay {
       position: fixed;
@@ -111,11 +103,9 @@
       animation: fadeIn 0.6s ease forwards;
       overflow: hidden;
     }
-
     #overlay.closing {
       animation: fadeOut 0.6s ease forwards;
     }
-
     #pdf-modal {
       width: 95%;
       max-width: 950px;
@@ -131,11 +121,9 @@
       backdrop-filter: blur(14px) saturate(200%);
       border: 1px solid rgba(255,255,255,0.2);
     }
-
     #pdf-modal.closing {
       animation: modalPopOut 0.7s ease forwards;
     }
-
     #pdf-title {
       background: rgba(255,255,255,0.1);
       color: #fff;
@@ -145,22 +133,44 @@
       border-bottom: 1px solid rgba(255,255,255,0.2);
       animation: slideDown 0.5s ease forwards;
     }
-
     #pdf-title.closing {
       animation: slideUp 0.5s ease forwards;
     }
-
+    #pdf-selector {
+      display: none;
+      flex-direction: row;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px;
+      background: rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    #pdf-selector button {
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    #pdf-selector button:hover {
+      background: rgba(255,255,255,0.3);
+    }
     #pdf-viewer {
       width: 100%;
       height: calc(100% - 48px);
       border: none;
       animation: fadeIn 0.8s ease forwards;
     }
-
+    #pdf-modal.kids-mode #pdf-viewer {
+      height: calc(100% - 118px);
+    }
     #pdf-viewer.closing {
       animation: fadeOut 0.6s ease forwards;
     }
-
     #close-btn {
       position: absolute;
       top: 10px;
@@ -178,17 +188,14 @@
       box-shadow: 0 2px 12px rgba(0,0,0,0.4);
       animation: bounceIn 0.6s ease forwards;
     }
-
     #close-btn.closing {
       animation: bounceOut 0.6s ease forwards;
     }
-
     #close-btn:hover {
       background: rgba(255,255,255,0.3);
       transform: rotate(90deg) scale(1.1);
       box-shadow: 0 4px 16px rgba(0,0,0,0.5);
     }
-
     /* --- Mobile mode stilius --- */
     .mobile-mode header {
       margin-top: 30px;
@@ -196,88 +203,71 @@
       max-width: 290px;
       padding: 14px 16px;
     }
-
     .mobile-mode header img {
       max-width: 205px;
     }
-
     .mobile-mode .pdf-item {
       pointer-events: auto;
     }
-
     /* --- Animacijos --- */
     @keyframes fadeInBackground {
       from { opacity: 0; }
       to { opacity: 1; }
     }
-
     @keyframes slideInFromTop {
       from { opacity: 0; transform: translateY(-50px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
     @keyframes zoomIn {
       from { opacity: 0; transform: scale(0.8); }
       to { opacity: 1; transform: scale(1); }
     }
-
     @keyframes fadeInRight {
       from { opacity: 0; transform: translateX(30px); }
       to { opacity: 1; transform: translateX(0); }
     }
-
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
     @keyframes slideInFromLeft {
       from { opacity: 0; transform: translateX(-30px); }
       to { opacity: 1; transform: translateX(0); }
     }
-
     @keyframes modalPop {
       from { transform: scale(0.8) rotateX(10deg); opacity: 0; }
       to { transform: scale(1) rotateX(0); opacity: 1; }
     }
-
     @keyframes modalPopOut {
       from { transform: scale(1) rotateX(0); opacity: 1; }
       to { transform: scale(0.8) rotateX(10deg); opacity: 0; }
     }
-
     @keyframes slideDown {
       from { opacity: 0; transform: translateY(-20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
     @keyframes slideUp {
       from { opacity: 1; transform: translateY(0); }
       to { opacity: 0; transform: translateY(-20px); }
     }
-
     @keyframes bounceIn {
       0% { transform: scale(0.5); opacity: 0; }
       50% { transform: scale(1.2); opacity: 0.7; }
       100% { transform: scale(1); opacity: 1; }
     }
-
     @keyframes bounceOut {
       0% { transform: scale(1); opacity: 1; }
       50% { transform: scale(1.2); opacity: 0.7; }
       100% { transform: scale(0.5); opacity: 0; }
     }
-
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
     }
-
     @keyframes fadeOut {
       from { opacity: 1; }
       to { opacity: 0; }
     }
-
     @media (max-width: 600px) {
       header {
         margin-top: 30px;
@@ -285,20 +275,21 @@
         max-width: 290px;
         padding: 14px 16px;
       }
-
       header img {
         max-width: 205px;
       }
-
       .pdf-item {
         font-size: 0.95rem;
         padding: 10px 14px;
       }
-
       #pdf-modal {
         width: 98%;
         height: 80vh;
         border-radius: 15px;
+      }
+      #pdf-selector button {
+        padding: 6px 12px;
+        font-size: 0.85rem;
       }
     }
   </style>
@@ -307,7 +298,6 @@
   <header>
     <img src="logo2.png" alt="">
   </header>
-
   <div class="pdf-list">
     <a class="pdf-item" href="Room Menu - English.pdf" onclick="openPDF(event, 'Room Menu - English.pdf', 'IN-ROOM MENU - EN')" style="--index: 0;">IN-ROOM MENU - EN</a>
     <a class="pdf-item" href="Room Menu - Lithuanian.pdf" onclick="openPDF(event, 'Room Menu - Lithuanian.pdf', 'IN-ROOM MENU - LT')" style="--index: 1;">IN-ROOM MENU - LT</a>
@@ -316,30 +306,33 @@
     <a class="pdf-item" href="SPA Menu - Lithuanian.pdf" onclick="openPDF(event, 'SPA Menu - Lithuanian.pdf', 'SPA MENU - LT')" style="--index: 4;">SPA MENU - LT</a>
     <a class="pdf-item" href="SPA Offers.pdf" onclick="openPDF(event, 'SPA Offers.pdf', 'SPA OFFERS')" style="--index: 5;">SPA OFFERS</a>
     <a class="pdf-item" href="TV List.pdf" onclick="openPDF(event, 'TV List.pdf', 'TV LIST')" style="--index: 6;">TV LIST</a>
-    <a class="pdf-item" href="https://wa.me/+37066272700" style="--index: 7;">CONCIERGE</a>
-    <a class="pdf-item" href="https://heji.lt/" style="--index: 8;">HEJI RESTAURANT</a>
+    <a class="pdf-item" href="#" onclick="openKidsMenus(event)" style="--index: 7;">KIDS MENU</a>
+    <a class="pdf-item" href="https://wa.me/+37066272700" style="--index: 8;">CONCIERGE</a>
+    <a class="pdf-item" href="https://heji.lt/" style="--index: 9;">HEJI RESTAURANT</a>
   </div>
-
   <div id="overlay">
     <div id="pdf-modal">
       <div id="pdf-title"></div>
+      <div id="pdf-selector"></div>
       <button id="close-btn" onclick="closePDF()">✖</button>
       <embed id="pdf-viewer" type="application/pdf" src="">
     </div>
   </div>
-
   <script>
     const overlay = document.getElementById('overlay');
     const viewer = document.getElementById('pdf-viewer');
     const pdfTitle = document.getElementById('pdf-title');
     const pdfModal = document.getElementById('pdf-modal');
     const closeBtn = document.getElementById('close-btn');
-
+    const pdfSelector = document.getElementById('pdf-selector');
     function openPDF(event, file, title) {
       if (!document.body.classList.contains('mobile-mode')) {
         event.preventDefault();
         viewer.src = file + '?_=' + Date.now() + '#toolbar=0&page=1';
         pdfTitle.textContent = title;
+        pdfSelector.style.display = 'none';
+        pdfSelector.innerHTML = '';
+        pdfModal.classList.remove('kids-mode');
         overlay.style.display = 'flex';
         document.body.style.overflow = 'hidden';
         // Remove closing class if present
@@ -350,7 +343,48 @@
         closeBtn.classList.remove('closing');
       }
     }
+    function openKidsMenus(event) {
+      event.preventDefault();
+      const isMobile = document.body.classList.contains('mobile-mode');
+      if (!isMobile) {
+        // Modal su perjungimu tarp EN ir LT
+        pdfTitle.textContent = 'KIDS MENU - EN';
+        pdfSelector.innerHTML = `
+          <button onclick="switchPDF('Kids Menu - English.pdf', 'EN')">EN</button>
+          <button onclick="switchPDF('Kids Menu - Lithuanian.pdf', 'LT')">LT</button>
+        `;
+        pdfSelector.style.display = 'flex';
+        pdfModal.classList.add('kids-mode');
+        viewer.src = 'Kids Menu - English.pdf?_=' + Date.now() + '#toolbar=0&page=1';
+        overlay.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        // Remove closing class if present
+        overlay.classList.remove('closing');
+        pdfModal.classList.remove('closing');
+        pdfTitle.classList.remove('closing');
+        viewer.classList.remove('closing');
+        closeBtn.classList.remove('closing');
+      } else {
+        // Mobiliame - atsisiunčia abu
+        const link1 = document.createElement('a');
+        link1.href = 'Kids Menu - English.pdf';
+        link1.download = 'Kids Menu - EN.pdf';
+        document.body.appendChild(link1);
+        link1.click();
+        document.body.removeChild(link1);
 
+        const link2 = document.createElement('a');
+        link2.href = 'Kids Menu - Lithuanian.pdf';
+        link2.download = 'Kids Menu - LT.pdf';
+        document.body.appendChild(link2);
+        link2.click();
+        document.body.removeChild(link2);
+      }
+    }
+    function switchPDF(file, lang) {
+      viewer.src = file + '?_=' + Date.now() + '#toolbar=0&page=1';
+      pdfTitle.textContent = `KIDS MENU - ${lang}`;
+    }
     function closePDF() {
       // Add closing class to trigger exit animations
       overlay.classList.add('closing');
@@ -363,6 +397,9 @@
         overlay.style.display = 'none';
         viewer.src = '';
         pdfTitle.textContent = '';
+        pdfSelector.style.display = 'none';
+        pdfSelector.innerHTML = '';
+        pdfModal.classList.remove('kids-mode');
         document.body.style.overflow = 'auto';
         // Clean up closing classes
         overlay.classList.remove('closing');
@@ -372,11 +409,9 @@
         closeBtn.classList.remove('closing');
       }, 700); // Match the longest animation duration
     }
-
     overlay.addEventListener('click', e => {
       if (e.target === overlay) closePDF();
     });
-
     window.onload = function() {
       if (window.innerWidth <= 600) {
         document.body.classList.add('mobile-mode');
