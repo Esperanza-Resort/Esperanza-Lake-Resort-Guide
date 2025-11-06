@@ -338,22 +338,20 @@
     const closeBtn = document.getElementById('close-btn');
     const pdfSelector = document.getElementById('pdf-selector');
     function openPDF(event, file, title) {
-      if (!document.body.classList.contains('mobile-mode')) {
-        event.preventDefault();
-        viewer.src = file + '?_=' + Date.now() + '#toolbar=0&page=1';
-        pdfTitle.textContent = title;
-        pdfSelector.style.display = 'none';
-        pdfSelector.innerHTML = '';
-        pdfModal.classList.remove('kids-mode');
-        overlay.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-        // Remove closing class if present
-        overlay.classList.remove('closing');
-        pdfModal.classList.remove('closing');
-        pdfTitle.classList.remove('closing');
-        viewer.classList.remove('closing');
-        closeBtn.classList.remove('closing');
-      }
+      event.preventDefault();
+      viewer.src = file + '?_=' + Date.now() + '#toolbar=0&page=1';
+      pdfTitle.textContent = title;
+      pdfSelector.style.display = 'none';
+      pdfSelector.innerHTML = '';
+      pdfModal.classList.remove('kids-mode');
+      overlay.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      // Remove closing class if present
+      overlay.classList.remove('closing');
+      pdfModal.classList.remove('closing');
+      pdfTitle.classList.remove('closing');
+      viewer.classList.remove('closing');
+      closeBtn.classList.remove('closing');
     }
     function openKidsMenus(event) {
       event.preventDefault();
