@@ -340,17 +340,28 @@
     const pdfModal = document.getElementById('pdf-modal');
     const closeBtn = document.getElementById('close-btn');
     const pdfSelector = document.getElementById('pdf-selector');
+    function isMobile() {
+      return document.body.classList.contains('mobile-mode');
+    }
     function loadViewer(file, isPDF) {
+      // Aiškus valymas prieš naują įkėlimą (padeda ant mobilaus)
       viewer.innerHTML = '';
+      // Jei yra senas iframe/embed, nustatome src='' prieš šalinimą (ekstra saugumui)
+      const oldViewer = document.querySelector('#pdf-viewer embed, #pdf-viewer iframe');
+      if (oldViewer) {
+        oldViewer.src = '';
+        oldViewer.remove();
+      }
       const cacheBust = '?_=' + Date.now();
       if (isPDF) {
-        const embed = document.createElement('embed');
-        embed.type = 'application/pdf';
-        embed.src = file + cacheBust + '#toolbar=0&page=1';
-        embed.style.width = '100%';
-        embed.style.height = '100%';
-        embed.style.border = 'none';
-        viewer.appendChild(embed);
+        const iframe = document.createElement('iframe');
+        // Geresni parametrai PDF peržiūrai (slėpia toolbar, navigaciją, rodo nuo 1 puslapio)
+        iframe.src = file + cacheBust + '#toolbar=0&navpanes=0&scrollbar=0&page=1';
+        iframe.style.width = '100%';
+        iframe.style.height = '100%';
+        iframe.style.border = 'none';
+        iframe.frameBorder = '0';
+        viewer.appendChild(iframe);
       } else {
         const img = document.createElement('img');
         img.src = file + cacheBust;
@@ -362,14 +373,21 @@
       }
     }
     function openPDF(event, file, title) {
+      // Ant mobilaus tiesiogiai atidaryti PDF per href (ne modalą)
+      if (isMobile()) {
+        return; // Leisti natūralų <a> veikimą
+      }
       event.preventDefault();
+      // Jei modal jau atidarytas, tiesiog pakeičiame turinį (be uždarymo)
+      if (overlay.style.display !== 'flex') {
+        overlay.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
       loadViewer(file, true);
       pdfTitle.textContent = title;
       pdfSelector.style.display = 'none';
       pdfSelector.innerHTML = '';
       pdfModal.classList.remove('kids-mode');
-      overlay.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
       // Remove closing class if present
       overlay.classList.remove('closing');
       pdfModal.classList.remove('closing');
@@ -379,7 +397,7 @@
     }
     function openKidsMenus(event) {
       event.preventDefault();
-      // Visada atidaro modal su perjungimu, net ant mobiliaus
+      // Visada atidaro modal su perjungimu, net ant mobiliaus (kaip prašyta)
       const isMobile = document.body.classList.contains('mobile-mode');
       const ext = isMobile ? '.jpg' : '.pdf';
       const enFile = `Kids Menu - English${ext}`;
@@ -393,8 +411,10 @@
       pdfSelector.style.display = 'flex';
       pdfModal.classList.add('kids-mode');
       loadViewer(enFile, isPDF);
-      overlay.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
+      if (overlay.style.display !== 'flex') {
+        overlay.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
       // Remove closing class if present
       overlay.classList.remove('closing');
       pdfModal.classList.remove('closing');
@@ -418,9 +438,15 @@
       pdfTitle.classList.add('closing');
       viewer.classList.add('closing');
       closeBtn.classList.add('closing');
-      // Wait for animations to complete before hiding
+      // Wait for animations to complete before hiding (padidintas iki 800ms stabilumui)
       setTimeout(() => {
         overlay.style.display = 'none';
+        // Aiškus valymas
+        const oldViewer = document.querySelector('#pdf-viewer embed, #pdf-viewer iframe');
+        if (oldViewer) {
+          oldViewer.src = '';
+          oldViewer.remove();
+        }
         viewer.innerHTML = '';
         pdfTitle.textContent = '';
         pdfSelector.style.display = 'none';
@@ -433,7 +459,7 @@
         pdfTitle.classList.remove('closing');
         viewer.classList.remove('closing');
         closeBtn.classList.remove('closing');
-      }, 700); // Match the longest animation duration
+      }, 800);
     }
     overlay.addEventListener('click', e => {
       if (e.target === overlay) closePDF();
@@ -444,19 +470,19 @@
       }
       // Pakeista: paleisti animacijas po load, kad isvengti bugu
       document.body.style.animation = 'fadeInBackground 1.5s ease forwards';
-      
+     
       setTimeout(() => {
         document.querySelector('header').style.animation = 'slideInFromTop 1.2s ease forwards';
       }, 100);
-      
+     
       setTimeout(() => {
         document.querySelector('header img').style.animation = 'zoomIn 1.5s ease forwards';
       }, 400);
-      
+     
       setTimeout(() => {
         document.querySelector('.pdf-list').style.animation = 'fadeInUp 1.2s ease forwards';
       }, 700);
-      
+     
       setTimeout(() => {
         document.querySelectorAll('.pdf-item').forEach((item, index) => {
           setTimeout(() => {
