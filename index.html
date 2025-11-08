@@ -319,11 +319,11 @@
     <a class="pdf-item" href="Beverage List.pdf" onclick="openPDF(event, 'Beverage List.pdf', 'BEVERAGE LIST')" style="--index: 2;">BEVERAGE LIST</a>
     <a class="pdf-item" href="SPA Menu - English.pdf" onclick="openPDF(event, 'SPA Menu - English.pdf', 'SPA MENU - EN')" style="--index: 3;">SPA MENU - EN</a>
     <a class="pdf-item" href="SPA Menu - Lithuanian.pdf" onclick="openPDF(event, 'SPA Menu - Lithuanian.pdf', 'SPA MENU - LT')" style="--index: 4;">SPA MENU - LT</a>
-    <a class="pdf-item" href="SPA Offers.pdf" onclick="openPDF(event, 'SPA Offers.pdf', 'SPA OFFERS')" style="--index: 5;">SPA OFFERS</a>
     <a class="pdf-item" href="TV List.pdf" onclick="openPDF(event, 'TV List.pdf', 'TV LIST')" style="--index: 6;">TV LIST</a>
     <a class="pdf-item" href="#" onclick="openKidsMenus(event)" style="--index: 7;">KIDS ACTIVITIES PROGRAM EN/LT</a>
     <a class="pdf-item" href="https://wa.me/+37066272700" style="--index: 8;">CONCIERGE</a>
     <a class="pdf-item" href="https://heji.lt/" style="--index: 9;">HEJI RESTAURANT</a>
+    <a class="pdf-item" href="Christmas.pdf" onclick="openPDF(event, 'Christmas.pdf', 'CHRISTMAS PROGRAM')" style="--index: 5;">CHRISTMAS PROGRAM</a>
   </div>
   <div id="overlay">
     <div id="pdf-modal">
@@ -470,19 +470,19 @@
       }
       // Pakeista: paleisti animacijas po load, kad isvengti bugu
       document.body.style.animation = 'fadeInBackground 1.5s ease forwards';
-     
+    
       setTimeout(() => {
         document.querySelector('header').style.animation = 'slideInFromTop 1.2s ease forwards';
       }, 100);
-     
+    
       setTimeout(() => {
         document.querySelector('header img').style.animation = 'zoomIn 1.5s ease forwards';
       }, 400);
-     
+    
       setTimeout(() => {
         document.querySelector('.pdf-list').style.animation = 'fadeInUp 1.2s ease forwards';
       }, 700);
-     
+    
       setTimeout(() => {
         document.querySelectorAll('.pdf-item').forEach((item, index) => {
           setTimeout(() => {
