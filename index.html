@@ -169,9 +169,6 @@
       align-items: center;
       justify-content: center;
     }
-    #pdf-modal.kids-mode #pdf-viewer {
-      height: calc(100% - 118px);
-    }
     #pdf-viewer.closing {
       animation: fadeOut 0.6s ease forwards;
     }
@@ -320,7 +317,6 @@
     <a class="pdf-item" href="SPA Menu - English.pdf" onclick="openPDF(event, 'SPA Menu - English.pdf', 'SPA MENU - EN')" style="--index: 3;">SPA MENU - EN</a>
     <a class="pdf-item" href="SPA Menu - Lithuanian.pdf" onclick="openPDF(event, 'SPA Menu - Lithuanian.pdf', 'SPA MENU - LT')" style="--index: 4;">SPA MENU - LT</a>
     <a class="pdf-item" href="TV List.pdf" onclick="openPDF(event, 'TV List.pdf', 'TV LIST')" style="--index: 6;">TV LIST</a>
-    <a class="pdf-item" href="#" onclick="openKidsMenus(event)" style="--index: 7;">KIDS ACTIVITIES PROGRAM EN/LT</a>
     <a class="pdf-item" href="https://wa.me/+37066272700" style="--index: 8;">CONCIERGE</a>
     <a class="pdf-item" href="https://heji.lt/" style="--index: 9;">HEJI RESTAURANT</a>
     <a class="pdf-item" href="Christmas.pdf" onclick="openPDF(event, 'Christmas.pdf', 'CHRISTMAS PROGRAM')" style="--index: 5;">CHRISTMAS PROGRAM</a>
@@ -387,49 +383,12 @@
       pdfTitle.textContent = title;
       pdfSelector.style.display = 'none';
       pdfSelector.innerHTML = '';
-      pdfModal.classList.remove('kids-mode');
       // Remove closing class if present
       overlay.classList.remove('closing');
       pdfModal.classList.remove('closing');
       pdfTitle.classList.remove('closing');
       viewer.classList.remove('closing');
       closeBtn.classList.remove('closing');
-    }
-    function openKidsMenus(event) {
-      event.preventDefault();
-      // Visada atidaro modal su perjungimu, net ant mobiliaus (kaip prašyta)
-      const isMobile = document.body.classList.contains('mobile-mode');
-      const ext = isMobile ? '.jpg' : '.pdf';
-      const enFile = `Kids Menu - English${ext}`;
-      const ltFile = `Kids Menu - Lithuanian${ext}`;
-      const isPDF = !isMobile;
-      pdfTitle.textContent = 'KIDS ACTIVITIES PROGRAM EN';
-      pdfSelector.innerHTML = `
-        <button id="en-btn" onclick="switchPDF(event, '${enFile}', 'EN', ${isPDF})">EN</button>
-        <button id="lt-btn" onclick="switchPDF(event, '${ltFile}', 'LT', ${isPDF})">LT</button>
-      `;
-      pdfSelector.style.display = 'flex';
-      pdfModal.classList.add('kids-mode');
-      loadViewer(enFile, isPDF);
-      if (overlay.style.display !== 'flex') {
-        overlay.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-      }
-      // Remove closing class if present
-      overlay.classList.remove('closing');
-      pdfModal.classList.remove('closing');
-      pdfTitle.classList.remove('closing');
-      viewer.classList.remove('closing');
-      closeBtn.classList.remove('closing');
-      // Pridėti aktyvų mygtuką EN
-      document.getElementById('en-btn').classList.add('active');
-    }
-    function switchPDF(event, file, lang, isPDF) {
-      loadViewer(file, isPDF);
-      pdfTitle.textContent = `KIDS ACTIVITIES PROGRAM - ${lang}`;
-      // Pašalinti aktyvų iš abiejų ir pridėti naujam
-      document.querySelectorAll('#pdf-selector button').forEach(btn => btn.classList.remove('active'));
-      event.target.classList.add('active');
     }
     function closePDF() {
       // Add closing class to trigger exit animations
@@ -451,7 +410,6 @@
         pdfTitle.textContent = '';
         pdfSelector.style.display = 'none';
         pdfSelector.innerHTML = '';
-        pdfModal.classList.remove('kids-mode');
         document.body.style.overflow = 'auto';
         // Clean up closing classes
         overlay.classList.remove('closing');
@@ -470,19 +428,19 @@
       }
       // Pakeista: paleisti animacijas po load, kad isvengti bugu
       document.body.style.animation = 'fadeInBackground 1.5s ease forwards';
-    
+  
       setTimeout(() => {
         document.querySelector('header').style.animation = 'slideInFromTop 1.2s ease forwards';
       }, 100);
-    
+  
       setTimeout(() => {
         document.querySelector('header img').style.animation = 'zoomIn 1.5s ease forwards';
       }, 400);
-    
+  
       setTimeout(() => {
         document.querySelector('.pdf-list').style.animation = 'fadeInUp 1.2s ease forwards';
       }, 700);
-    
+  
       setTimeout(() => {
         document.querySelectorAll('.pdf-item').forEach((item, index) => {
           setTimeout(() => {
