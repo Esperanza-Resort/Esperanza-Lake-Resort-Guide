@@ -320,7 +320,7 @@
     <a class="pdf-item" href="https://wa.me/+37066272700" style="--index: 8;">CONCIERGE</a>
     <a class="pdf-item" href="https://heji.lt/" style="--index: 9;">HEJI RESTAURANT</a>
     <a class="pdf-item" href="Christmas.pdf" onclick="openPDF(event, 'Christmas.pdf', 'CHRISTMAS PROGRAM')" style="--index: 5;">CHRISTMAS PROGRAM</a>
-    <a class="pdf-item" href="NewYear.pdf" onclick="openPDF(event, 'NewYear.pdf', 'NEW YEAR PROGRAM')" style="--index: 7;">New Year Program</a>
+    <a class="pdf-item" href="NewYear.pdf" onclick="openPDF(event, 'NewYear.pdf', 'NEW YEAR PROGRAM')" style="--index: 7;">NEW YEAR PROGRAM</a>
   </div>
   <div id="overlay">
     <div id="pdf-modal">
@@ -429,19 +429,15 @@
       }
       // Pakeista: paleisti animacijas po load, kad isvengti bugu
       document.body.style.animation = 'fadeInBackground 1.5s ease forwards';
- 
       setTimeout(() => {
         document.querySelector('header').style.animation = 'slideInFromTop 1.2s ease forwards';
       }, 100);
- 
       setTimeout(() => {
         document.querySelector('header img').style.animation = 'zoomIn 1.5s ease forwards';
       }, 400);
- 
       setTimeout(() => {
         document.querySelector('.pdf-list').style.animation = 'fadeInUp 1.2s ease forwards';
       }, 700);
- 
       setTimeout(() => {
         document.querySelectorAll('.pdf-item').forEach((item, index) => {
           setTimeout(() => {
