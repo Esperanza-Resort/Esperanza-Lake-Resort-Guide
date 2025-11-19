@@ -21,6 +21,7 @@
       overflow-x: hidden;
       position: relative;
     }
+    /* --- Viršutinė juosta --- */
     header {
       margin-top: 60px;
       background: linear-gradient(135deg, rgba(25,15,10,0.85), rgba(50,30,20,0.7));
@@ -40,6 +41,7 @@
       opacity: 0;
       transform: scale(0.8);
     }
+    /* --- PDF mygtukai --- */
     .pdf-list {
       margin-top: 50px;
       width: 85%;
@@ -66,7 +68,6 @@
       font-weight: 600;
       font-size: 1.05rem;
       letter-spacing: 0.4px;
-      text-align: center;
       text-decoration: none;
       opacity: 0;
       transform: translateX(-30px);
@@ -77,63 +78,33 @@
       box-shadow: 0 8px 24px rgba(0,0,0,0.4);
     }
 
-    /* Modal PDF viewer (pilnai paliktas) */
+    /* Modal PDF viewer – viskas kaip originale */
     #overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.75);
-      backdrop-filter: blur(8px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.75); backdrop-filter: blur(8px);
+      display: none; align-items: center; justify-content: center; z-index: 10;
     }
     #pdf-modal {
-      width: 95%;
-      max-width: 950px;
-      height: 90vh;
+      width: 95%; max-width: 950px; height: 90vh;
       background: linear-gradient(135deg, rgba(30,20,10,0.85), rgba(50,30,20,0.7));
-      border-radius: 30px;
-      overflow: hidden;
-      box-shadow: 0 10px 50px rgba(255,255,255,0.15);
-      position: relative;
-      backdrop-filter: blur(14px) saturate(200%);
+      border-radius: 30px; overflow: hidden; box-shadow: 0 10px 50px rgba(255,255,255,0.15);
+      position: relative; backdrop-filter: blur(14px) saturate(200%);
       border: 1px solid rgba(255,255,255,0.2);
     }
     #pdf-title {
-      background: rgba(255,255,255,0.1);
-      color: #fff;
-      padding: 12px 20px;
-      font-size: 1.2rem;
-      text-align: center;
+      background: rgba(255,255,255,0.1); color: #fff; padding: 12px 20px;
+      font-size: 1.2rem; text-align: center;
       border-bottom: 1px solid rgba(255,255,255,0.2);
     }
     #close-btn {
-      position: absolute;
-      top: 10px;
-      right: 12px;
-      background: rgba(255,255,255,0.15);
-      color: #fff;
-      border: none;
-      font-size: 1.2rem;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      z-index: 20;
+      position: absolute; top: 10px; right: 12px;
+      background: rgba(255,255,255,0.15); color: #fff; border: none;
+      font-size: 1.2rem; border-radius: 50%; width: 40px; height: 40px;
+      cursor: pointer; transition: all 0.3s ease; z-index: 20;
       box-shadow: 0 2px 12px rgba(0,0,0,0.4);
     }
-    #close-btn:hover {
-      background: rgba(255,255,255,0.3);
-      transform: rotate(90deg) scale(1.1);
-    }
-    #pdf-viewer {
-      width: 100%;
-      height: calc(100% - 48px);
-      border: none;
-    }
+    #close-btn:hover { background: rgba(255,255,255,0.3); transform: rotate(90deg) scale(1.1); }
+    #pdf-viewer { width: 100%; height: calc(100% - 48px); border: none; }
 
     /* Mobile */
     @media (max-width: 600px) {
@@ -149,7 +120,8 @@
       #pdf-title { font-size: 1rem; padding: 10px 15px; }
     }
 
-    /* Animacijos (visos originalios) */
+    /* Animacijos (svarbi background animacija!) */
+    @keyframes fadeInBackground { from { opacity: 0; } to { opacity: 1; } }
     @keyframes slideInFromTop { from { opacity: 0; transform: translateY(-50px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes zoomIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
     @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -163,15 +135,14 @@
   </header>
 
   <div class="pdf-list">
-    <a class="pdf-item" href="Esperanzab1.pdf" onclick="openPDF(event, 'Esperanzab1.pdf', 'Festive Season')" style="--index: 0;">
+    <a class="pdf-item" href="Esperanzab1.pdf" onclick="openPDF(event, 'Esperanzab1.pdf', 'Festive Season Program')" style="--index: 0;">
       Festive Season
     </a>
-    <a class="pdf-item" href="Esperanzan1.pdf" onclick="openPDF(event, 'Esperanzan1.pdf', 'New Year’s brochure')" style="--index: 1;">
+    <a class="pdf-item" href="Esperanzan1.pdf" onclick="openPDF(event, 'Esperanzan1.pdf', 'New Years Celebration Offer')" style="--index: 1;">
       New Year’s brochure
     </a>
   </div>
 
-  <!-- Modal -->
   <div id="overlay">
     <div id="pdf-modal">
       <div id="pdf-title"></div>
@@ -186,7 +157,7 @@
     const pdfTitle = document.getElementById('pdf-title');
 
     function openPDF(event, file, title) {
-      if (window.innerWidth <= 600) return; // mobiliajame atsidaro tiesiogiai
+      if (window.innerWidth <= 600) return; // mobile – tiesioginis atsisiuntimas/atidarymas
       event.preventDefault();
       overlay.style.display = 'flex';
       document.body.style.overflow = 'hidden';
@@ -203,15 +174,24 @@
 
     overlay.addEventListener('click', e => { if (e.target === overlay) closePDF(); });
 
-    window.addEventListener('load', () => {
-      if (window.innerWidth <= 600) document.body.classList.add('mobile-mode');
+    // ČIA SVARBU – backgroundo ir visų animacijų paleidimas po load
+    window.addEventListener('load', function() {
+      // Mobile režimas
+      if (window.innerWidth <= 600) {
+        document.body.classList.add('mobile-mode');
+      }
 
-      setTimeout(() => document.querySelector('header').style.animation = 'slideInFromTop 1.2s ease forwards', 100);
-      setTimeout(() => document.querySelector('header img').style.animation = 'zoomIn 1.5s ease forwards', 400);
-      setTimeout(() => document.querySelector('.pdf-list').style.animation = 'fadeInUp 1.2s ease forwards', 700);
+      // Background animacija (dabar vėl veikia!)
+      document.body.style.animation = 'fadeInBackground 1.5s ease forwards';
+
+      setTimeout(() => { document.querySelector('header').style.animation = 'slideInFromTop 1.2s ease forwards'; }, 100);
+      setTimeout(() => { document.querySelector('header img').style.animation = 'zoomIn 1.5s ease forwards'; }, 400);
+      setTimeout(() => { document.querySelector('.pdf-list').style.animation = 'fadeInUp 1.2s ease forwards'; }, 700);
       setTimeout(() => {
-        document.querySelectorAll('.pdf-item').forEach((item, i) => {
-          setTimeout(() => item.style.animation = 'slideInFromLeft 0.8s ease forwards', i * 200);
+        document.querySelectorAll('.pdf-item').forEach((item, index) => {
+          setTimeout(() => {
+            item.style.animation = 'slideInFromLeft 0.8s ease forwards';
+          }, index * 200);
         });
       }, 1000);
     });
