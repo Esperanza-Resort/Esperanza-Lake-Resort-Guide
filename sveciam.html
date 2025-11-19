@@ -336,7 +336,7 @@
     const closeBtn = document.getElementById('close-btn');
     const pdfSelector = document.getElementById('pdf-selector');
     function isMobile() {
-      return document.body.classList.contains('mobile-mode');
+      return ('ontouchstart' in window) || document.body.classList.contains('mobile-mode');
     }
     function loadViewer(file, isPDF) {
       // Aiškus valymas prieš naują įkėlimą (padeda ant mobilaus)
