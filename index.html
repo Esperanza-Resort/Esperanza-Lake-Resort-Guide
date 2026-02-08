@@ -70,28 +70,51 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(255,255,255,0.12);
+      background: transparent; /* Pakeista: transparent, kad matytųsi pseudo */
       border-radius: 14px;
       padding: 12px 18px;
-      backdrop-filter: blur(15px) saturate(160%);
       border: 1px solid rgba(255,255,255,0.2);
       box-shadow: 0 4px 16px rgba(0,0,0,0.25);
       cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       color: #fff;
       font-weight: 600;
       font-size: 1.05rem;
       letter-spacing: 0.4px;
       text-align: center;
       text-decoration: none;
-      /* Pakeista: pradinė būsena */
+      /* Pakeista: pradinė būsena su 3D, anti-flicker ir will-change */
       opacity: 0;
-      transform: translateX(-30px);
+      transform: translate3d(-30px, 0, 0);
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      will-change: transform, box-shadow;
+      -webkit-transform: translateZ(0);
+      position: relative; /* Pridėta pseudo-elementui */
+      overflow: hidden; /* Kad clip'inti pseudo */
+    }
+    .pdf-item::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(15px) saturate(160%);
+      -webkit-backdrop-filter: blur(15px) saturate(160%);
+      z-index: -1;
+      pointer-events: none;
+      border-radius: 20px; /* Šiek tiek didesnis radius, kad blur'as atrodytų sklandžiai */
+      transition: background 0.3s ease; /* Transition ant pseudo background */
     }
     .pdf-item:hover {
-      transform: scale(1.02) translateY(-3px);
-      background: rgba(255,255,255,0.22);
+      transform: scale(1.02) translate3d(0, -3px, 0);
       box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      -webkit-transform: translateZ(0);
+    }
+    .pdf-item:hover::before {
+      background: rgba(255,255,255,0.22);
     }
     /* --- Modal PDF viewer --- */
     #overlay {
@@ -238,8 +261,8 @@
       to { opacity: 1; transform: translateY(0); }
     }
     @keyframes slideInFromLeft {
-      from { opacity: 0; transform: translateX(-30px); }
-      to { opacity: 1; transform: translateX(0); }
+      from { opacity: 0; transform: translate3d(-30px, 0, 0); }
+      to { opacity: 1; transform: translate3d(0, 0, 0); }
     }
     @keyframes modalPop {
       from { transform: scale(0.8) rotateX(10deg); opacity: 0; }
