@@ -15,53 +15,111 @@
             height: 100%;
             overflow: hidden;
             background: #000;
+            font-family: 'Segoe UI', Arial, sans-serif;
         }
         
-        video {
+        iframe {
             width: 100vw;
             height: 100vh;
-            object-fit: cover;           /* Gražiai užpildo ekraną išlaikant proporcijas */
+            border: none;
             display: block;
         }
 
-        /* Jei video neįsijungia, rodomas tekstas */
-        .error {
+        /* Loading ekranas */
+        .loading-screen {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: opacity 0.6s ease;
             color: white;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            display: none;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-top: 4px solid #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        .loading-text {
+            font-size: 22px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            font-size: 15px;
+            opacity: 0.7;
+            margin-top: 8px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Paslėpimas su animacija */
+        .loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
 
-    <video id="hejiVideo" autoplay loop muted playsinline>
-        <source src="https://drive.google.com/uc?export=download&id=1YxEvJVJSvLWybgEbrjTt0kw6WMHp5IVo" type="video/mp4">
-        Jūsų naršyklė nepalaiko video elemento.
-    </video>
+    <iframe id="driveVideo" 
+            src="https://drive.google.com/file/d/1YxEvJVJSvLWybgEbrjTt0kw6WMHp5IVo/preview?autoplay=1&loop=1" 
+            allow="autoplay; fullscreen; encrypted-media" 
+            allowfullscreen>
+    </iframe>
 
-    <div class="error" id="errorMessage">
-        <p>Video neįkeliamas iš Google Drive.</p>
-        <p>Pabandykite atidaryti failą naujame lange ir pasidalinti kaip „Bet kas su nuoroda gali peržiūrėti“.</p>
+    <!-- Gražus loading ekranas -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="spinner"></div>
+        <div class="loading-text">Kraunasi video...</div>
+        <div class="subtitle">HeJi</div>
     </div>
 
     <script>
-        const video = document.getElementById('hejiVideo');
-        const errorMsg = document.getElementById('errorMessage');
+        const iframe = document.getElementById('driveVideo');
+        const loadingScreen = document.getElementById('loadingScreen');
 
-        video.addEventListener('error', () => {
-            errorMsg.style.display = 'block';
-            console.log('Klaida kraunant video iš Google Drive');
-        });
+        // Paslepia loading ekraną po 5 sekundžių arba kai video pradeda groti
+        let loadingTimer = setTimeout(() => {
+            hideLoading();
+        }, 5000);
 
-        // Bandymas paleisti automatiškai
-        video.play().catch(() => {
-            console.log('Autoplay užblokuotas – reikia vartotojo veiksmo');
-        });
+        // Bandymas paslėpti loading ekraną greičiau, jei iframe sureaguoja
+        function hideLoading() {
+            clearTimeout(loadingTimer);
+            loadingScreen.classList.add('hidden');
+            
+            // Pilnai pašaliname po animacijos
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+            }, 600);
+        }
+
+        // Jei vartotojas paspaudžia bet kur – bandome paslėpti loading ir pradėti video
+        document.addEventListener('click', () => {
+            hideLoading();
+        }, { once: true });
+
+        // Jei iframe įkeliamas greičiau – paslepiame loading
+        iframe.addEventListener('load', () => {
+            setTimeout(hideLoading, 800);
+        }, { once: true });
     </script>
 
 </body>
