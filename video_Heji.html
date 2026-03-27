@@ -5,9 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Heji Video</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body, html { height: 100%; overflow: hidden; background: #000; font-family: Arial, sans-serif; }
-
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body, html {
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
         iframe {
             width: 100vw;
             height: 100vh;
@@ -15,46 +25,73 @@
             display: block;
         }
 
+        /* Gražus loading ekranas */
         .loading-screen {
             position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.95);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.92);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            z-index: 30;
-            transition: opacity 1s ease;
+            z-index: 20;
+            transition: opacity 0.9s ease;
+        }
+
+        .spinner-container {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            margin-bottom: 30px;
         }
 
         .spinner {
-            width: 70px;
-            height: 70px;
-            border: 6px solid rgba(255, 204, 0, 0.2);
+            width: 80px;
+            height: 80px;
+            border: 6px solid rgba(255, 255, 255, 0.1);
             border-top: 6px solid #ffcc00;
             border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 25px;
+            animation: spin 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        .spinner-inner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            border: 6px solid transparent;
+            border-bottom: 6px solid #ffcc00;
+            border-radius: 50%;
+            animation: spinInner 1.8s linear infinite;
         }
 
         .loading-text {
-            color: #fff;
-            font-size: 21px;
-            letter-spacing: 1px;
+            font-size: 22px;
+            font-weight: 300;
+            color: #ffffff;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
         }
 
         .heji-logo {
-            margin-top: 25px;
-            font-size: 52px;
+            font-size: 48px;
             font-weight: 700;
-            letter-spacing: 10px;
+            letter-spacing: 8px;
             color: #ffcc00;
-            text-shadow: 0 0 30px rgba(255, 204, 0, 0.8);
+            text-shadow: 0 0 25px rgba(255, 204, 0, 0.7);
         }
 
         @keyframes spin {
             to { transform: rotate(360deg); }
+        }
+
+        @keyframes spinInner {
+            to { transform: translate(-50%, -50%) rotate(-360deg); }
         }
 
         .loading-screen.hidden {
@@ -65,37 +102,58 @@
 </head>
 <body>
 
-    <iframe id="driveVideo"
-            src="https://drive.google.com/file/d/1YxEvJVJSvLWybgEbrjTt0kw6WMHp5IVo/edit"
-            allow="autoplay; fullscreen; encrypted-media"
+    <iframe id="driveVideo" 
+            src="https://drive.google.com/file/d/1YxEvJVJSvLWybgEbrjTt0kw6WMHp5IVo/preview?autoplay=1&loop=1&rel=0" 
+            allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
             allowfullscreen>
     </iframe>
 
+    <!-- Loading ekranas -->
     <div class="loading-screen" id="loadingScreen">
-        <div class="spinner"></div>
+        <div class="spinner-container">
+            <div class="spinner"></div>
+            <div class="spinner-inner"></div>
+        </div>
         <div class="loading-text">Kraunasi video...</div>
         <div class="heji-logo">HEJI</div>
     </div>
 
     <script>
         const iframe = document.getElementById('driveVideo');
-        const loading = document.getElementById('loadingScreen');
+        const loadingScreen = document.getElementById('loadingScreen');
 
+        // Greičiau slepiame loading, kai tik įmanoma
         function hideLoading() {
-            loading.classList.add('hidden');
-            setTimeout(() => loading.style.display = 'none', 1000);
+            loadingScreen.classList.add('hidden');
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+            }, 1000);
         }
 
-        // Bandymas paslėpti loading
+        // Automatinis bandymas paleisti video
+        function tryAutoplay() {
+            hideLoading();
+            
+            // Papildomas bandymas "pažadinti" iframe
+            setTimeout(() => {
+                iframe.focus();
+            }, 500);
+        }
+
+        // Pagrindiniai įvykiai
         iframe.addEventListener('load', () => {
-            setTimeout(hideLoading, 2000);
+            setTimeout(tryAutoplay, 1200);
         });
 
-        // Jei vartotojas paspaudžia – slepiame loading ir bandome paleisti
-        document.addEventListener('click', hideLoading, { once: true });
+        // Paspaudus bet kur puslapyje (jei naršyklė blokuoja autoplay)
+        document.addEventListener('click', () => {
+            tryAutoplay();
+        }, { once: true });
 
-        // Atsarginis laikas
-        setTimeout(hideLoading, 8000);
+        // Jei po 6 sekundžių vis dar kraunasi – slepiame loading
+        setTimeout(() => {
+            hideLoading();
+        }, 6000);
     </script>
 
 </body>
