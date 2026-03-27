@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heji Video</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body, html {
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+        }
+        
+        video {
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;           /* Gražiai užpildo ekraną išlaikant proporcijas */
+            display: block;
+        }
+
+        /* Jei video neįsijungia, rodomas tekstas */
+        .error {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <video id="hejiVideo" autoplay loop muted playsinline>
+        <source src="https://drive.google.com/uc?export=download&id=1YxEvJVJSvLWybgEbrjTt0kw6WMHp5IVo" type="video/mp4">
+        Jūsų naršyklė nepalaiko video elemento.
+    </video>
+
+    <div class="error" id="errorMessage">
+        <p>Video neįkeliamas iš Google Drive.</p>
+        <p>Pabandykite atidaryti failą naujame lange ir pasidalinti kaip „Bet kas su nuoroda gali peržiūrėti“.</p>
+    </div>
+
+    <script>
+        const video = document.getElementById('hejiVideo');
+        const errorMsg = document.getElementById('errorMessage');
+
+        video.addEventListener('error', () => {
+            errorMsg.style.display = 'block';
+            console.log('Klaida kraunant video iš Google Drive');
+        });
+
+        // Bandymas paleisti automatiškai
+        video.play().catch(() => {
+            console.log('Autoplay užblokuotas – reikia vartotojo veiksmo');
+        });
+    </script>
+
+</body>
+</html>
