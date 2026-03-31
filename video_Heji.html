@@ -10,19 +10,32 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body, html {
             height: 100%;
             overflow: hidden;
             background: #000;
             font-family: 'Segoe UI', Arial, sans-serif;
         }
-        
+
+        .video-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            display: block;
+            background: #000;
+        }
+
         iframe {
             width: 100vw;
             height: 100vh;
             border: none;
-            display: block;
+            display: none; /* pradžioje slepiame iframe */
         }
 
         /* Gražus loading ekranas */
@@ -102,11 +115,21 @@
 </head>
 <body>
 
-    <iframe id="driveVideo" 
-            src="https://drive.google.com/file/d/1xgCoB-PonqJYe3QQ2BEMEYbk6WvkumkJ/view" 
-            allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
-            allowfullscreen>
-    </iframe>
+    <div class="video-container">
+        <!-- Pagrindinis variantas: <video> tagas (rekomenduojamas) -->
+        <video id="driveVideo" controls autoplay playsinline>
+            <source src="https://drive.google.com/uc?id=1xgCoB-PonqJYe3QQ2BEMEYbk6WvkumkJ&export=download" type="video/mp4">
+            Jūsų naršyklė nepalaiko video elemento.
+        </video>
+
+        <!-- Atsarginis variantas: iframe (jei video neveiktų) -->
+        <iframe id="driveIframe" 
+            src="https://drive.google.com/file/d/1xgCoB-PonqJYe3QQ2BEMEYbk6WvkumkJ/preview"
+            allow="autoplay; fullscreen; encrypted-media; picture-in-picture; accelerometer; gyroscope"
+            allowfullscreen
+            sandbox="allow-scripts allow-same-origin allow-popups">
+        </iframe>
+    </div>
 
     <!-- Loading ekranas -->
     <div class="loading-screen" id="loadingScreen">
@@ -119,41 +142,56 @@
     </div>
 
     <script>
-        const iframe = document.getElementById('driveVideo');
+        const video = document.getElementById('driveVideo');
+        const iframe = document.getElementById('driveIframe');
         const loadingScreen = document.getElementById('loadingScreen');
 
-        // Greičiau slepiame loading, kai tik įmanoma
         function hideLoading() {
             loadingScreen.classList.add('hidden');
             setTimeout(() => {
                 loadingScreen.style.display = 'none';
-            }, 1000);
+            }, 900);
         }
 
-        // Automatinis bandymas paleisti video
-        function tryAutoplay() {
+        // Video įvykiai
+        video.addEventListener('loadeddata', () => {
             hideLoading();
-            
-            // Papildomas bandymas "pažadinti" iframe
-            setTimeout(() => {
-                iframe.focus();
-            }, 500);
-        }
-
-        // Pagrindiniai įvykiai
-        iframe.addEventListener('load', () => {
-            setTimeout(tryAutoplay, 1200);
         });
 
-        // Paspaudus bet kur puslapyje (jei naršyklė blokuoja autoplay)
+        video.addEventListener('canplay', () => {
+            hideLoading();
+        });
+
+        // Jei video nepavyksta užkrauti (error) – bandome iframe
+        video.addEventListener('error', () => {
+            console.log('Video nepavyko užkrauti, bandome iframe...');
+            video.style.display = 'none';
+            iframe.style.display = 'block';
+            
+            iframe.addEventListener('load', () => {
+                setTimeout(hideLoading, 800);
+            });
+        });
+
+        // Automatinis bandymas paleisti
+        function tryAutoplay() {
+            if (video.style.display !== 'none') {
+                video.play().catch(() => {});
+            }
+            hideLoading();
+        }
+
+        // Paspaudus puslapį (jei autoplay užblokuotas)
         document.addEventListener('click', () => {
             tryAutoplay();
         }, { once: true });
 
-        // Jei po 6 sekundžių vis dar kraunasi – slepiame loading
+        // Timeout saugumui
         setTimeout(() => {
             hideLoading();
-        }, 6000);
+        }, 8000);
+
+        // Jei nori išjungti iframe ir naudoti tik <video> – ištrink visą iframe dalį
     </script>
 
 </body>
