@@ -62,16 +62,22 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
         .loading-screen.hidden { opacity: 0; pointer-events: none; }
+        .error-message {
+            color: #ff6666;
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
+        <!-- Čia įklijuok savo tikrąjį iframe kodą iš Google Drive -->
         <iframe id="driveVideo" 
-            src="https://drive.google.com/file/d/1xgCoB-PonqJYe3QQ2BEMEYbk6WvkumkJ/preview?autoplay=1" 
-            allow="autoplay; fullscreen; encrypted-media; picture-in-picture; accelerometer; gyroscope; clipboard-write"
-            allowfullscreen
-            sandbox="allow-scripts allow-same-origin allow-popups">
+            src="https://drive.google.com/file/d/1xgCoB-PonqJYe3QQ2BEMEYbk6WvkumkJ/preview" 
+            allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+            allowfullscreen>
         </iframe>
 
         <!-- Loading ekranas -->
@@ -82,11 +88,19 @@
             <div class="loading-text">Kraunasi video...</div>
             <div class="heji-logo">HEJI</div>
         </div>
+
+        <!-- Klaidos pranešimas (jei neveikia) -->
+        <div class="error-message" id="errorMsg">
+            <p>Video neįkeliamas.<br>
+            Patikrink, ar failas tikrai nustatytas „Anyone with the link“ → Viewer.<br><br>
+            Išbandyk atidaryti video tiesiogiai naršyklėje.</p>
+        </div>
     </div>
 
     <script>
         const iframe = document.getElementById('driveVideo');
         const loadingScreen = document.getElementById('loadingScreen');
+        const errorMsg = document.getElementById('errorMsg');
 
         function hideLoading() {
             loadingScreen.classList.add('hidden');
@@ -95,31 +109,25 @@
             }, 800);
         }
 
-        // Kai iframe užsikrauna – bandome paleisti video
+        // Kai iframe užsikrauna
         iframe.addEventListener('load', () => {
-            hideLoading();
-
-            // Papildomas bandymas autoplay per JS (po 1–2 sek.)
             setTimeout(() => {
-                try {
-                    // Bandome „pažadinti“ iframe turinį
-                    iframe.contentWindow.postMessage('autoplay', '*');
-                } catch(e) {}
-                
-                // Jei vis tiek nepasileido – paspaudimo simuliacija (veikia ne visada)
-                iframe.focus();
-            }, 1500);
+                hideLoading();
+            }, 1200);
         });
 
-        // Paspaudus puslapį (jei naršyklė blokuoja autoplay)
+        // Jei po 10 sekundžių vis dar kraunasi – rodom klaidą
+        setTimeout(() => {
+            if (loadingScreen.style.display !== 'none') {
+                hideLoading();
+                errorMsg.style.display = 'block';
+            }
+        }, 10000);
+
+        // Paspaudus bet kur – bandome "pažadinti" video
         document.addEventListener('click', () => {
             hideLoading();
         }, { once: true });
-
-        // Saugus timeout
-        setTimeout(() => {
-            hideLoading();
-        }, 9000);
     </script>
 
 </body>
