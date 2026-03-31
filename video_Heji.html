@@ -5,92 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Heji Video</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body, html {
             height: 100%;
             overflow: hidden;
             background: #000;
             font-family: 'Segoe UI', Arial, sans-serif;
         }
-
-        .video-container {
+        .container {
             width: 100vw;
             height: 100vh;
             position: relative;
         }
-
-        video {
+        iframe {
             width: 100%;
             height: 100%;
-            display: block;
-            background: #000;
-        }
-
-        iframe {
-            width: 100vw;
-            height: 100vh;
             border: none;
-            display: none; /* pradžioje slepiame iframe */
+            display: block;
         }
-
-        /* Gražus loading ekranas */
         .loading-screen {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.92);
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.95);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            z-index: 20;
-            transition: opacity 0.9s ease;
+            z-index: 30;
+            transition: opacity 0.8s ease;
         }
-
         .spinner-container {
             position: relative;
-            width: 80px;
-            height: 80px;
+            width: 80px; height: 80px;
             margin-bottom: 30px;
         }
-
         .spinner {
-            width: 80px;
-            height: 80px;
-            border: 6px solid rgba(255, 255, 255, 0.1);
+            width: 80px; height: 80px;
+            border: 6px solid rgba(255,255,255,0.1);
             border-top: 6px solid #ffcc00;
             border-radius: 50%;
             animation: spin 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
         }
-
-        .spinner-inner {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 40px;
-            height: 40px;
-            border: 6px solid transparent;
-            border-bottom: 6px solid #ffcc00;
-            border-radius: 50%;
-            animation: spinInner 1.8s linear infinite;
-        }
-
         .loading-text {
             font-size: 22px;
-            font-weight: 300;
-            color: #ffffff;
+            color: #fff;
             letter-spacing: 2px;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
-
         .heji-logo {
             font-size: 48px;
             font-weight: 700;
@@ -98,100 +60,74 @@
             color: #ffcc00;
             text-shadow: 0 0 25px rgba(255, 204, 0, 0.7);
         }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes spinInner {
-            to { transform: translate(-50%, -50%) rotate(-360deg); }
-        }
-
-        .loading-screen.hidden {
-            opacity: 0;
-            pointer-events: none;
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-screen.hidden { opacity: 0; pointer-events: none; }
+        .error-message {
+            color: #ff6666;
+            text-align: center;
+            padding: 20px;
+            display: none;
         }
     </style>
 </head>
 <body>
 
-    <div class="video-container">
-        <!-- Pagrindinis variantas: <video> tagas (rekomenduojamas) -->
-        <video id="driveVideo" controls autoplay playsinline>
-            <source src="https://drive.google.com/uc?id=1xgCoB-PonqJYe3QQ2BEMEYbk6WvkumkJ&export=download" type="video/mp4">
-            Jūsų naršyklė nepalaiko video elemento.
-        </video>
-
-        <!-- Atsarginis variantas: iframe (jei video neveiktų) -->
-        <iframe id="driveIframe" 
-            src="https://drive.google.com/file/d/1xgCoB-PonqJYe3QQ2BEMEYbk6WvkumkJ/preview"
-            allow="autoplay; fullscreen; encrypted-media; picture-in-picture; accelerometer; gyroscope"
-            allowfullscreen
-            sandbox="allow-scripts allow-same-origin allow-popups">
+    <div class="container">
+        <!-- Čia įklijuok savo tikrąjį iframe kodą iš Google Drive -->
+        <iframe id="driveVideo" 
+            src="https://drive.google.com/file/d/1xgCoB-PonqJYe3QQ2BEMEYbk6WvkumkJ/preview" 
+            allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+            allowfullscreen>
         </iframe>
-    </div>
 
-    <!-- Loading ekranas -->
-    <div class="loading-screen" id="loadingScreen">
-        <div class="spinner-container">
-            <div class="spinner"></div>
-            <div class="spinner-inner"></div>
+        <!-- Loading ekranas -->
+        <div class="loading-screen" id="loadingScreen">
+            <div class="spinner-container">
+                <div class="spinner"></div>
+            </div>
+            <div class="loading-text">Kraunasi video...</div>
+            <div class="heji-logo">HEJI</div>
         </div>
-        <div class="loading-text">Kraunasi video...</div>
-        <div class="heji-logo">HEJI</div>
+
+        <!-- Klaidos pranešimas (jei neveikia) -->
+        <div class="error-message" id="errorMsg">
+            <p>Video neįkeliamas.<br>
+            Patikrink, ar failas tikrai nustatytas „Anyone with the link“ → Viewer.<br><br>
+            Išbandyk atidaryti video tiesiogiai naršyklėje.</p>
+        </div>
     </div>
 
     <script>
-        const video = document.getElementById('driveVideo');
-        const iframe = document.getElementById('driveIframe');
+        const iframe = document.getElementById('driveVideo');
         const loadingScreen = document.getElementById('loadingScreen');
+        const errorMsg = document.getElementById('errorMsg');
 
         function hideLoading() {
             loadingScreen.classList.add('hidden');
             setTimeout(() => {
                 loadingScreen.style.display = 'none';
-            }, 900);
+            }, 800);
         }
 
-        // Video įvykiai
-        video.addEventListener('loadeddata', () => {
-            hideLoading();
+        // Kai iframe užsikrauna
+        iframe.addEventListener('load', () => {
+            setTimeout(() => {
+                hideLoading();
+            }, 1200);
         });
 
-        video.addEventListener('canplay', () => {
-            hideLoading();
-        });
-
-        // Jei video nepavyksta užkrauti (error) – bandome iframe
-        video.addEventListener('error', () => {
-            console.log('Video nepavyko užkrauti, bandome iframe...');
-            video.style.display = 'none';
-            iframe.style.display = 'block';
-            
-            iframe.addEventListener('load', () => {
-                setTimeout(hideLoading, 800);
-            });
-        });
-
-        // Automatinis bandymas paleisti
-        function tryAutoplay() {
-            if (video.style.display !== 'none') {
-                video.play().catch(() => {});
-            }
-            hideLoading();
-        }
-
-        // Paspaudus puslapį (jei autoplay užblokuotas)
-        document.addEventListener('click', () => {
-            tryAutoplay();
-        }, { once: true });
-
-        // Timeout saugumui
+        // Jei po 10 sekundžių vis dar kraunasi – rodom klaidą
         setTimeout(() => {
-            hideLoading();
-        }, 8000);
+            if (loadingScreen.style.display !== 'none') {
+                hideLoading();
+                errorMsg.style.display = 'block';
+            }
+        }, 10000);
 
-        // Jei nori išjungti iframe ir naudoti tik <video> – ištrink visą iframe dalį
+        // Paspaudus bet kur – bandome "pažadinti" video
+        document.addEventListener('click', () => {
+            hideLoading();
+        }, { once: true });
     </script>
 
 </body>
