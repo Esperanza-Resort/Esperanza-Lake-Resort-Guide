@@ -541,7 +541,7 @@
 
             border:
                 1px solid
-                rgba(201, 185, 138, 0.12);
+                rgba(201, 185, 138, 0.15);
 
             display:
                 flex;
@@ -555,8 +555,31 @@
             margin-right:
                 13px;
 
-            font-size:
-                18px;
+        }
+
+
+        .icon svg {
+
+            width:
+                19px;
+
+            height:
+                19px;
+
+            stroke:
+                #c9b98a;
+
+            stroke-width:
+                1.7;
+
+            fill:
+                none;
+
+            stroke-linecap:
+                round;
+
+            stroke-linejoin:
+                round;
 
         }
 
@@ -617,27 +640,16 @@
 
 
         /* =====================================================
-           MAIN BUTTONS
+           SHARE BUTTON
         ===================================================== */
 
-        .main-actions {
+        .share-button {
 
-            display:
-                grid;
-
-            grid-template-columns:
-                1fr 1fr;
-
-            gap:
-                11px;
-
-            padding:
+            margin:
                 22px 25px 0;
 
-        }
-
-
-        .main-button {
+            width:
+                calc(100% - 50px);
 
             border:
                 none;
@@ -646,40 +658,7 @@
                 15px;
 
             padding:
-                15px 10px;
-
-            font-size:
-                13px;
-
-            font-weight:
-                700;
-
-            cursor:
-                pointer;
-
-            transition:
-                all 0.25s ease;
-
-            display:
-                flex;
-
-            justify-content:
-                center;
-
-            align-items:
-                center;
-
-            gap:
-                7px;
-
-        }
-
-
-        /* =====================================================
-           SAVE CONTACT
-        ===================================================== */
-
-        .save-button {
+                16px;
 
             background:
                 linear-gradient(
@@ -691,14 +670,64 @@
             color:
                 #111111;
 
+            font-size:
+                15px;
+
+            font-weight:
+                700;
+
+            cursor:
+                pointer;
+
+            transition:
+                all 0.25s ease;
+
             box-shadow:
                 0 8px 25px
                 rgba(201, 185, 138, 0.16);
 
+            display:
+                flex;
+
+            justify-content:
+                center;
+
+            align-items:
+                center;
+
+            gap:
+                9px;
+
         }
 
 
-        .save-button:hover {
+        .share-button svg {
+
+            width:
+                18px;
+
+            height:
+                18px;
+
+            stroke:
+                #111111;
+
+            stroke-width:
+                2;
+
+            fill:
+                none;
+
+            stroke-linecap:
+                round;
+
+            stroke-linejoin:
+                round;
+
+        }
+
+
+        .share-button:hover {
 
             transform:
                 translateY(-2px);
@@ -710,35 +739,10 @@
         }
 
 
-        /* =====================================================
-           SHARE
-        ===================================================== */
-
-        .share-button {
-
-            background:
-                rgba(255, 255, 255, 0.06);
-
-            color:
-                #ffffff;
-
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.10);
-
-        }
-
-
-        .share-button:hover {
+        .share-button:active {
 
             transform:
-                translateY(-2px);
-
-            background:
-                rgba(255, 255, 255, 0.10);
-
-            border-color:
-                rgba(201, 185, 138, 0.45);
+                translateY(0);
 
         }
 
@@ -787,6 +791,44 @@
 
             transition:
                 all 0.25s ease;
+
+            display:
+                flex;
+
+            justify-content:
+                center;
+
+            align-items:
+                center;
+
+            gap:
+                8px;
+
+        }
+
+
+        .qr-button svg {
+
+            width:
+                17px;
+
+            height:
+                17px;
+
+            stroke:
+                #c9b98a;
+
+            stroke-width:
+                1.7;
+
+            fill:
+                none;
+
+            stroke-linecap:
+                round;
+
+            stroke-linejoin:
+                round;
 
         }
 
@@ -919,7 +961,7 @@
 
 
         /* =====================================================
-           CLOSE
+           QR CLOSE
         ===================================================== */
 
         .qr-close {
@@ -1038,41 +1080,6 @@
 
 
         /* =====================================================
-           SAVE MESSAGE
-        ===================================================== */
-
-        .save-message {
-
-            text-align:
-                center;
-
-            color:
-                #a8a8a8;
-
-            font-size:
-                12px;
-
-            line-height:
-                1.5;
-
-            margin:
-                12px 25px 0;
-
-            display:
-                none;
-
-        }
-
-
-        .save-message.show {
-
-            display:
-                block;
-
-        }
-
-
-        /* =====================================================
            FOOTER
         ===================================================== */
 
@@ -1158,14 +1165,6 @@
 
             }
 
-
-            .main-button {
-
-                font-size:
-                    12px;
-
-            }
-
         }
 
     </style>
@@ -1191,11 +1190,13 @@
 
             <div class="cover-glow"></div>
 
+
             <img
                 src="./logo.png"
                 class="logo"
                 alt="Esperanza Lake Resort Logo"
             >
+
 
             <div class="cover-line"></div>
 
@@ -1209,21 +1210,27 @@
 
         <div class="profile">
 
+
             <div class="avatar"></div>
+
 
             <div class="name">
                 Aleksandar Simanovic
             </div>
 
+
             <div class="position">
                 Guest Relations
             </div>
+
 
             <div class="company">
                 Esperanza Lake Resort
             </div>
 
+
             <div class="divider"></div>
+
 
         </div>
 
@@ -1231,12 +1238,14 @@
 
         <!-- =================================================
              CONTACT INFORMATION
-        ================================================== -->
+        ================================================= -->
 
         <div class="actions">
 
 
-            <!-- PHONE -->
+            <!-- =================================================
+                 PHONE
+            ================================================= -->
 
             <a
                 class="action"
@@ -1244,8 +1253,31 @@
             >
 
                 <div class="icon">
-                    📞
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+
+                        <path
+                            d="M22 16.92v3a2 2 0 0 1-2.18 2
+                               19.79 19.79 0 0 1-8.63-3.07
+                               19.5 19.5 0 0 1-6-6
+                               19.79 19.79 0 0 1-3.07-8.67
+                               A2 2 0 0 1 4.11 2h3
+                               a2 2 0 0 1 2 1.72
+                               12.84 12.84 0 0 0 .7 2.81
+                               2 2 0 0 1-.45 2.11L8.09 9.91
+                               a16 16 0 0 0 6 6l1.27-1.27
+                               a2 2 0 0 1 2.11-.45
+                               12.84 12.84 0 0 0 2.81.7
+                               A2 2 0 0 1 22 16.92z"
+                        />
+
+                    </svg>
+
                 </div>
+
 
                 <div class="action-text">
 
@@ -1263,7 +1295,9 @@
 
 
 
-            <!-- WEBSITE -->
+            <!-- =================================================
+                 WEBSITE
+            ================================================== -->
 
             <a
                 class="action"
@@ -1273,8 +1307,36 @@
             >
 
                 <div class="icon">
-                    🌐
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+
+                        <circle
+                            cx="12"
+                            cy="12"
+                            r="10"
+                        />
+
+                        <line
+                            x1="2"
+                            y1="12"
+                            x2="22"
+                            y2="12"
+                        />
+
+                        <path
+                            d="M12 2a15.3 15.3 0 0 1 4 10
+                               15.3 15.3 0 0 1-4 10
+                               15.3 15.3 0 0 1-4-10
+                               15.3 15.3 0 0 1 4-10z"
+                        />
+
+                    </svg>
+
                 </div>
+
 
                 <div class="action-text">
 
@@ -1292,7 +1354,9 @@
 
 
 
-            <!-- LOCATION -->
+            <!-- =================================================
+                 LOCATION
+            ================================================== -->
 
             <a
                 class="action"
@@ -1302,8 +1366,27 @@
             >
 
                 <div class="icon">
-                    📍
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+
+                        <path
+                            d="M20 10c0 5-8 12-8 12
+                               S4 15 4 10a8 8 0 1 1 16 0z"
+                        />
+
+                        <circle
+                            cx="12"
+                            cy="10"
+                            r="2.5"
+                        />
+
+                    </svg>
+
                 </div>
+
 
                 <div class="action-text">
 
@@ -1325,40 +1408,57 @@
 
 
         <!-- =================================================
-             MAIN BUTTONS
+             SHARE CONTACT
         ================================================== -->
 
-        <div class="main-actions">
+        <button
+            type="button"
+            class="share-button"
+            onclick="shareContact()"
+        >
 
-
-            <!-- SAVE CONTACT -->
-
-            <button
-                type="button"
-                class="main-button save-button"
-                onclick="saveContact()"
+            <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
             >
 
-                ＋ Save Contact
+                <circle
+                    cx="18"
+                    cy="5"
+                    r="3"
+                />
 
-            </button>
+                <circle
+                    cx="6"
+                    cy="12"
+                    r="3"
+                />
 
+                <circle
+                    cx="18"
+                    cy="19"
+                    r="3"
+                />
 
+                <line
+                    x1="8.59"
+                    y1="13.51"
+                    x2="15.42"
+                    y2="17.49"
+                />
 
-            <!-- SHARE CONTACT -->
+                <line
+                    x1="15.41"
+                    y1="6.51"
+                    x2="8.59"
+                    y2="10.49"
+                />
 
-            <button
-                type="button"
-                class="main-button share-button"
-                onclick="shareContact()"
-            >
+            </svg>
 
-                ↗ Share Contact
+            Share Contact
 
-            </button>
-
-
-        </div>
+        </button>
 
 
 
@@ -1374,22 +1474,58 @@
                 onclick="openQR()"
             >
 
-                ▣ &nbsp; Show QR Code
+                <svg
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                >
+
+                    <rect
+                        x="3"
+                        y="3"
+                        width="6"
+                        height="6"
+                        rx="1"
+                    />
+
+                    <rect
+                        x="15"
+                        y="3"
+                        width="6"
+                        height="6"
+                        rx="1"
+                    />
+
+                    <rect
+                        x="3"
+                        y="15"
+                        width="6"
+                        height="6"
+                        rx="1"
+                    />
+
+                    <path
+                        d="M15 15h3v3h-3z"
+                    />
+
+                    <path
+                        d="M18 18h3v3h-3z"
+                    />
+
+                    <path
+                        d="M21 15h-3"
+                    />
+
+                    <path
+                        d="M15 21h3"
+                    />
+
+                </svg>
+
+                Show QR Code
 
             </button>
 
         </div>
-
-
-
-        <!-- =================================================
-             MESSAGE
-        ================================================== -->
-
-        <div
-            id="saveMessage"
-            class="save-message"
-        ></div>
 
 
 
@@ -1469,241 +1605,6 @@
 
 
         /* =====================================================
-           CONTACT INFORMATION
-        ===================================================== */
-
-        const contact = {
-
-            firstName:
-                "Aleksandar",
-
-            lastName:
-                "Simanovic",
-
-            jobTitle:
-                "Guest Relations",
-
-            company:
-                "Esperanza Lake Resort",
-
-            phone:
-                "+37060000000",
-
-            website:
-                "https://www.esperanzaresort.lt",
-
-            address:
-                "Esperanza Lake Resort, Lithuania"
-
-        };
-
-
-
-        /* =====================================================
-           CREATE VCARD
-        ===================================================== */
-
-        function createVCard() {
-
-            return `BEGIN:VCARD
-VERSION:3.0
-N:${contact.lastName};${contact.firstName};;;
-FN:${contact.firstName} ${contact.lastName}
-ORG:${contact.company}
-TITLE:${contact.jobTitle}
-TEL;TYPE=CELL:${contact.phone}
-URL:${contact.website}
-ADR;TYPE=WORK:;;${contact.address};;;
-END:VCARD`;
-
-        }
-
-
-
-        /* =====================================================
-           SHOW MESSAGE
-        ===================================================== */
-
-        function showMessage(text) {
-
-            const message =
-                document.getElementById(
-                    "saveMessage"
-                );
-
-
-            message.textContent =
-                text;
-
-
-            message.classList.add(
-                "show"
-            );
-
-
-            setTimeout(
-                function () {
-
-                    message.classList.remove(
-                        "show"
-                    );
-
-                },
-                6000
-            );
-
-        }
-
-
-
-        /* =====================================================
-           SAVE CONTACT
-        ===================================================== */
-
-        async function saveContact() {
-
-
-            const vCard =
-                createVCard();
-
-
-            const blob =
-                new Blob(
-                    [vCard],
-                    {
-                        type:
-                            "text/vcard;charset=utf-8"
-                    }
-                );
-
-
-            const file =
-                new File(
-                    [blob],
-                    "Aleksandar_Simanovic.vcf",
-                    {
-                        type:
-                            "text/vcard"
-                    }
-                );
-
-
-            /*
-             * iPhone / Android
-             *
-             * Use native Share menu
-             * with the contact file.
-             */
-
-            if (
-                navigator.share &&
-                navigator.canShare
-            ) {
-
-                try {
-
-                    const canShareFile =
-                        navigator.canShare({
-                            files:
-                                [file]
-                        });
-
-
-                    if (
-                        canShareFile
-                    ) {
-
-                        await navigator.share({
-
-                            files:
-                                [file],
-
-                            title:
-                                "Save Contact"
-
-                        });
-
-                        return;
-
-                    }
-
-                }
-
-                catch (error) {
-
-                    if (
-                        error.name ===
-                        "AbortError"
-                    ) {
-
-                        return;
-
-                    }
-
-                }
-
-            }
-
-
-            /*
-             * Fallback for browsers
-             * that don't support file sharing.
-             */
-
-            const url =
-                URL.createObjectURL(
-                    blob
-                );
-
-
-            const link =
-                document.createElement(
-                    "a"
-                );
-
-
-            link.href =
-                url;
-
-
-            link.download =
-                "Aleksandar_Simanovic.vcf";
-
-
-            document.body.appendChild(
-                link
-            );
-
-
-            link.click();
-
-
-            document.body.removeChild(
-                link
-            );
-
-
-            setTimeout(
-                function () {
-
-                    URL.revokeObjectURL(
-                        url
-                    );
-
-                },
-                1000
-            );
-
-
-            showMessage(
-                "Open the downloaded contact file and choose Add to Contacts."
-            );
-
-        }
-
-
-
-        /* =====================================================
            SHARE CONTACT
         ===================================================== */
 
@@ -1724,6 +1625,10 @@ END:VCARD`;
             };
 
 
+            /*
+             * Native phone sharing
+             */
+
             if (
                 navigator.share
             ) {
@@ -1738,12 +1643,18 @@ END:VCARD`;
 
                 catch (error) {
 
+                    /*
+                     * User pressed Cancel.
+                     * No message needed.
+                     */
+
                     if (
                         error.name !==
                         "AbortError"
                     ) {
 
-                        console.log(
+                        console.error(
+                            "Share failed:",
                             error
                         );
 
@@ -1755,9 +1666,31 @@ END:VCARD`;
 
             else {
 
-                showMessage(
-                    "Sharing is not supported by this browser."
-                );
+                /*
+                 * Fallback for browsers
+                 * without native sharing.
+                 */
+
+                try {
+
+                    await navigator.clipboard.writeText(
+                        window.location.href
+                    );
+
+
+                    alert(
+                        "Link copied to clipboard."
+                    );
+
+                }
+
+                catch (error) {
+
+                    alert(
+                        "Please copy the page link manually."
+                    );
+
+                }
 
             }
 
@@ -1780,6 +1713,10 @@ END:VCARD`;
             modal.classList.add(
                 "active"
             );
+
+
+            document.body.style.overflow =
+                "hidden";
 
         }
 
@@ -1812,6 +1749,10 @@ END:VCARD`;
             modal.classList.remove(
                 "active"
             );
+
+
+            document.body.style.overflow =
+                "";
 
         }
 
