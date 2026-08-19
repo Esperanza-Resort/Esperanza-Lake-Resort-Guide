@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Digital Business Card</title>
+
+    <meta
+        name="description"
+        content="Digital Business Card"
+    >
+
+    <style>
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        /* =====================================================
+           BODY
+        ===================================================== */
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Helvetica,
+                Arial,
+                sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(201, 185, 138, 0.10),
+                    transparent 38%
+                ),
+                #080808;
+
+            color: #ffffff;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding: 20px;
+
+        }
+
+
+        /* =====================================================
+           MAIN CARD
+        ===================================================== */
+
+        .card {
+
+            width: 100%;
+
+            max-width: 440px;
+
+            background:
+                #141414;
+
+            border:
+                1px solid rgba(255, 255, 255, 0.10);
+
+            border-radius: 28px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.65),
+                0 0 0 1px rgba(255, 255, 255, 0.02);
+
+            animation:
+                cardAppear 0.7s ease;
+
+        }
+
+
+        /* =====================================================
+           CARD ANIMATION
+        ===================================================== */
+
+        @keyframes cardAppear {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(25px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           TOP IMAGE / BACKGROUND
+        ===================================================== */
+
+        .cover {
+
+            height: 190px;
+
+            position: relative;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            overflow: hidden;
+
+            /*
+                background.jpg turi būti tame pačiame
+                aplanke kaip index.html
+            */
+
+            background-image:
+                linear-gradient(
+                    to bottom,
+                    rgba(0, 0, 0, 0.20),
+                    rgba(0, 0, 0, 0.72)
+                ),
+                url("./background.jpg");
+
+            background-position:
+                center center;
+
+            background-size:
+                cover;
+
+            background-repeat:
+                no-repeat;
+
+        }
+
+
+        /* =====================================================
+           GOLD GLOW
+        ===================================================== */
+
+        .cover-glow {
+
+            position: absolute;
+
+            width: 260px;
+
+            height: 260px;
+
+            left: 50%;
+
+            top: 50%;
+
+            transform:
+                translate(-50%, -50%);
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(201, 185, 138, 0.18),
+                    transparent 68%
+                );
+
+            z-index: 2;
+
+            pointer-events:
+                none;
+
+        }
+
+
+        /* =====================================================
+           LOGO
+        ===================================================== */
+
+        .logo {
+
+            position: relative;
+
+            z-index: 10;
+
+            display: block;
+
+            width: 180px;
+
+            height: auto;
+
+            max-height: 90px;
+
+            object-fit: contain;
+
+            opacity: 1;
+
+            filter:
+                drop-shadow(
+                    0 5px 15px
+                    rgba(0, 0, 0, 0.75)
+                );
+
+        }
+
+
+        /* =====================================================
+           GOLD LINE UNDER COVER
+        ===================================================== */
+
+        .cover-line {
+
+            position: absolute;
+
+            z-index: 20;
+
+            bottom: 0;
+
+            left: 50%;
+
+            transform:
+                translateX(-50%);
+
+            width: 65px;
+
+            height: 2px;
+
+            background:
+                #c9b98a;
+
+            opacity:
+                0.9;
+
+        }
+
+
+        /* =====================================================
+           PROFILE
+        ===================================================== */
+
+        .profile {
+
+            text-align: center;
+
+            padding:
+                28px 25px 18px;
+
+        }
+
+
+        /* =====================================================
+           PROFILE PHOTO
+        ===================================================== */
+
+        .avatar {
+
+            width: 96px;
+
+            height: 96px;
+
+            margin:
+                0 auto 18px;
+
+            border-radius: 50%;
+
+            border:
+                3px solid
+                #c9b98a;
+
+            background-color:
+                #252525;
+
+            background-image:
+                url("./profile.jpg");
+
+            background-position:
+                center;
+
+            background-size:
+                cover;
+
+            background-repeat:
+                no-repeat;
+
+            box-shadow:
+                0 12px 35px
+                rgba(0, 0, 0, 0.55);
+
+        }
+
+
+        /* =====================================================
+           NAME
+        ===================================================== */
+
+        .name {
+
+            font-size:
+                27px;
+
+            line-height:
+                1.2;
+
+            font-weight:
+                600;
+
+            letter-spacing:
+                -0.5px;
+
+            color:
+                #ffffff;
+
+        }
+
+
+        /* =====================================================
+           POSITION
+        ===================================================== */
+
+        .position {
+
+            margin-top:
+                8px;
+
+            color:
+                #c9b98a;
+
+            font-size:
+                13px;
+
+            font-weight:
+                600;
+
+            letter-spacing:
+                1.6px;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        /* =====================================================
+           COMPANY
+        ===================================================== */
+
+        .company {
+
+            margin-top:
+                8px;
+
+            color:
+                #9d9d9d;
+
+            font-size:
+                14px;
+
+        }
+
+
+        /* =====================================================
+           DIVIDER
+        ===================================================== */
+
+        .divider {
+
+            width:
+                45px;
+
+            height:
+                1px;
+
+            background:
+                #c9b98a;
+
+            margin:
+                22px auto 4px;
+
+            opacity:
+                0.75;
+
+        }
+
+
+        /* =====================================================
+           CONTACT BUTTONS
+        ===================================================== */
+
+        .actions {
+
+            display:
+                grid;
+
+            gap:
+                11px;
+
+            padding:
+                0 25px;
+
+        }
+
+
+        .action {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            text-decoration:
+                none;
+
+            color:
+                #ffffff;
+
+            background:
+                rgba(255, 255, 255, 0.045);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.075);
+
+            border-radius:
+                15px;
+
+            padding:
+                14px 16px;
+
+            transition:
+                all 0.25s ease;
+
+        }
+
+
+        .action:hover {
+
+            background:
+                rgba(255, 255, 255, 0.09);
+
+            border-color:
+                rgba(201, 185, 138, 0.50);
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 8px 25px
+                rgba(0, 0, 0, 0.20);
+
+        }
+
+
+        /* =====================================================
+           ICON
+        ===================================================== */
+
+        .icon {
+
+            width:
+                42px;
+
+            height:
+                42px;
+
+            min-width:
+                42px;
+
+            border-radius:
+                12px;
+
+            background:
+                rgba(201, 185, 138, 0.10);
+
+            border:
+                1px solid
+                rgba(201, 185, 138, 0.12);
+
+            display:
+                flex;
+
+            justify-content:
+                center;
+
+            align-items:
+                center;
+
+            margin-right:
+                13px;
+
+            font-size:
+                18px;
+
+        }
+
+
+        /* =====================================================
+           CONTACT TEXT
+        ===================================================== */
+
+        .action-text {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            text-align:
+                left;
+
+            min-width:
+                0;
+
+        }
+
+
+        .action-label {
+
+            font-size:
+                10px;
+
+            color:
+                #777777;
+
+            margin-bottom:
+                3px;
+
+            text-transform:
+                uppercase;
+
+            letter-spacing:
+                1px;
+
+        }
+
+
+        .action-value {
+
+            font-size:
+                14px;
+
+            color:
+                #eeeeee;
+
+            word-break:
+                break-word;
+
+        }
+
+
+        /* =====================================================
+           SAVE CONTACT BUTTON
+        ===================================================== */
+
+        .save-contact {
+
+            margin:
+                22px 25px 0;
+
+            width:
+                calc(100% - 50px);
+
+            border:
+                none;
+
+            border-radius:
+                15px;
+
+            padding:
+                16px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #dac68f,
+                    #a9925d
+                );
+
+            color:
+                #111111;
+
+            font-size:
+                15px;
+
+            font-weight:
+                700;
+
+            cursor:
+                pointer;
+
+            transition:
+                all 0.25s ease;
+
+            box-shadow:
+                0 8px 25px
+                rgba(201, 185, 138, 0.16);
+
+        }
+
+
+        .save-contact:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 12px 30px
+                rgba(201, 185, 138, 0.30);
+
+        }
+
+
+        .save-contact:active {
+
+            transform:
+                translateY(0);
+
+        }
+
+
+        /* =====================================================
+           QR CODE
+        ===================================================== */
+
+        .qr-section {
+
+            text-align:
+                center;
+
+            padding:
+                30px 25px 10px;
+
+        }
+
+
+        .qr-title {
+
+            font-size:
+                13px;
+
+            color:
+                #a5a5a5;
+
+            margin-bottom:
+                15px;
+
+        }
+
+
+        #qrcode {
+
+            display:
+                inline-block;
+
+            padding:
+                10px;
+
+            background:
+                #ffffff;
+
+            border-radius:
+                14px;
+
+            box-shadow:
+                0 10px 30px
+                rgba(0, 0, 0, 0.30);
+
+        }
+
+
+        #qrcode img {
+
+            display:
+                block;
+
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .footer {
+
+            text-align:
+                center;
+
+            padding:
+                25px;
+
+            color:
+                #555555;
+
+            font-size:
+                10px;
+
+            letter-spacing:
+                0.8px;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 420px) {
+
+            body {
+
+                padding:
+                    12px;
+
+            }
+
+
+            .card {
+
+                border-radius:
+                    22px;
+
+            }
+
+
+            .cover {
+
+                height:
+                    165px;
+
+            }
+
+
+            .logo {
+
+                width:
+                    155px;
+
+                max-height:
+                    75px;
+
+            }
+
+
+            .name {
+
+                font-size:
+                    24px;
+
+            }
+
+
+            .position {
+
+                font-size:
+                    11px;
+
+                letter-spacing:
+                    1.3px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         BUSINESS CARD
+    ===================================================== -->
+
+    <div class="card">
+
+
+        <!-- =================================================
+             BACKGROUND + LOGO
+        ================================================== -->
+
+        <div class="cover">
+
+            <div class="cover-glow"></div>
+
+            <img
+                src="./logo.png"
+                class="logo"
+                alt="Esperanza Lake Resort Logo"
+            >
+
+            <div class="cover-line"></div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             PROFILE
+        ================================================== -->
+
+        <div class="profile">
+
+
+            <div class="avatar"></div>
+
+
+            <div class="name">
+                John Smith
+            </div>
+
+
+            <div class="position">
+                General Manager
+            </div>
+
+
+            <div class="company">
+                Esperanza Lake Resort
+            </div>
+
+
+            <div class="divider"></div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             CONTACT INFORMATION
+        ================================================== -->
+
+        <div class="actions">
+
+
+            <!-- PHONE -->
+
+            <a
+                class="action"
+                href="tel:+37060000000"
+            >
+
+                <div class="icon">
+                    📞
+                </div>
+
+                <div class="action-text">
+
+                    <span class="action-label">
+                        Phone
+                    </span>
+
+                    <span class="action-value">
+                        +370 600 00000
+                    </span>
+
+                </div>
+
+            </a>
+
+
+
+            <!-- EMAIL -->
+
+            <a
+                class="action"
+                href="mailto:john.smith@example.com"
+            >
+
+                <div class="icon">
+                    ✉️
+                </div>
+
+                <div class="action-text">
+
+                    <span class="action-label">
+                        Email
+                    </span>
+
+                    <span class="action-value">
+                        john.smith@example.com
+                    </span>
+
+                </div>
+
+            </a>
+
+
+
+            <!-- WEBSITE -->
+
+            <a
+                class="action"
+                href="https://www.esperanzaresort.lt"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+
+                <div class="icon">
+                    🌐
+                </div>
+
+                <div class="action-text">
+
+                    <span class="action-label">
+                        Website
+                    </span>
+
+                    <span class="action-value">
+                        www.esperanzaresort.lt
+                    </span>
+
+                </div>
+
+            </a>
+
+
+
+            <!-- LOCATION -->
+
+            <a
+                class="action"
+                href="https://maps.google.com/?q=Esperanza+Lake+Resort"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+
+                <div class="icon">
+                    📍
+                </div>
+
+                <div class="action-text">
+
+                    <span class="action-label">
+                        Location
+                    </span>
+
+                    <span class="action-value">
+                        Esperanza Lake Resort
+                    </span>
+
+                </div>
+
+            </a>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             SAVE CONTACT
+        ================================================== -->
+
+        <button
+            type="button"
+            class="save-contact"
+            onclick="saveContact()"
+        >
+
+            ＋&nbsp; Save Contact
+
+        </button>
+
+
+
+        <!-- =================================================
+             QR CODE
+        ================================================== -->
+
+        <div class="qr-section">
+
+            <div class="qr-title">
+
+                Scan to open digital business card
+
+            </div>
+
+
+            <div id="qrcode"></div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             FOOTER
+        ================================================== -->
+
+        <div class="footer">
+
+            Esperanza Hospitality Group
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         QR CODE LIBRARY
+    ===================================================== -->
+
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js">
+    </script>
+
+
+
+    <script>
+
+
+        /* =================================================
+           CONTACT INFORMATION
+        ================================================= */
+
+        const contact = {
+
+            firstName:
+                "Aleksandr",
+
+            lastName:
+                "Simanovič",
+
+            jobTitle:
+                "Guest Relations",
+
+            company:
+                "Esperanza Lake Resort",
+
+            phone:
+                "+37060000000",
+
+            email:
+                "john.smith@example.com",
+
+            website:
+                "https://www.esperanzaresort.lt",
+
+            address:
+                "Esperanza Lake Resort, Lithuania"
+
+        };
+
+
+
+        /* =================================================
+           SAVE CONTACT AS VCARD
+        ================================================= */
+
+        function saveContact() {
+
+            const vCard =
+`BEGIN:VCARD
+VERSION:3.0
+N:${contact.lastName};${contact.firstName};;;
+FN:${contact.firstName} ${contact.lastName}
+ORG:${contact.company}
+TITLE:${contact.jobTitle}
+TEL;TYPE=CELL:${contact.phone}
+EMAIL;TYPE=WORK:${contact.email}
+URL:${contact.website}
+ADR;TYPE=WORK:;;${contact.address};;;
+END:VCARD`;
+
+
+            const blob =
+                new Blob(
+                    [vCard],
+                    {
+                        type:
+                            "text/vcard;charset=utf-8"
+                    }
+                );
+
+
+            const url =
+                URL.createObjectURL(blob);
+
+
+            const link =
+                document.createElement("a");
+
+
+            link.href =
+                url;
+
+
+            link.download =
+                `${contact.firstName}_${contact.lastName}.vcf`;
+
+
+            document.body.appendChild(link);
+
+
+            link.click();
+
+
+            document.body.removeChild(link);
+
+
+            setTimeout(
+                () => URL.revokeObjectURL(url),
+                1000
+            );
+
+        }
+
+
+
+        /* =================================================
+           GENERATE QR CODE
+        ================================================= */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                const qrContainer =
+                    document.getElementById("qrcode");
+
+
+                if (
+                    typeof QRCode !== "undefined" &&
+                    qrContainer
+                ) {
+
+                    new QRCode(
+
+                        qrContainer,
+
+                        {
+
+                            text:
+                                window.location.href,
+
+                            width:
+                                150,
+
+                            height:
+                                150,
+
+                            colorDark:
+                                "#111111",
+
+                            colorLight:
+                                "#ffffff",
+
+                            correctLevel:
+                                QRCode.CorrectLevel.H
+
+                        }
+
+                    );
+
+                }
+
+            }
+        );
+
+
+    </script>
+
+
+</body>
+
+</html>
