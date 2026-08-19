@@ -10,12 +10,18 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Digital Business Card</title>
+    <meta
+        name="theme-color"
+        content="#080808"
+    >
+
+    <title>Aleksandar Simanovic | Esperanza Lake Resort</title>
 
     <meta
         name="description"
-        content="Digital Business Card"
+        content="Digital Business Card - Aleksandar Simanovic, Guest Relations, Esperanza Lake Resort"
     >
+
 
     <style>
 
@@ -84,9 +90,11 @@
             border:
                 1px solid rgba(255, 255, 255, 0.10);
 
-            border-radius: 28px;
+            border-radius:
+                28px;
 
-            overflow: hidden;
+            overflow:
+                hidden;
 
             box-shadow:
                 0 30px 80px rgba(0, 0, 0, 0.65),
@@ -106,7 +114,8 @@
 
             from {
 
-                opacity: 0;
+                opacity:
+                    0;
 
                 transform:
                     translateY(25px);
@@ -115,7 +124,8 @@
 
             to {
 
-                opacity: 1;
+                opacity:
+                    1;
 
                 transform:
                     translateY(0);
@@ -126,22 +136,28 @@
 
 
         /* =====================================================
-           TOP IMAGE / BACKGROUND
+           COVER
         ===================================================== */
 
         .cover {
 
-            height: 190px;
+            height:
+                190px;
 
-            position: relative;
+            position:
+                relative;
 
-            display: flex;
+            display:
+                flex;
 
-            justify-content: center;
+            justify-content:
+                center;
 
-            align-items: center;
+            align-items:
+                center;
 
-            overflow: hidden;
+            overflow:
+                hidden;
 
             background-image:
                 linear-gradient(
@@ -169,15 +185,20 @@
 
         .cover-glow {
 
-            position: absolute;
+            position:
+                absolute;
 
-            width: 260px;
+            width:
+                260px;
 
-            height: 260px;
+            height:
+                260px;
 
-            left: 50%;
+            left:
+                50%;
 
-            top: 50%;
+            top:
+                50%;
 
             transform:
                 translate(-50%, -50%);
@@ -189,7 +210,8 @@
                     transparent 68%
                 );
 
-            z-index: 2;
+            z-index:
+                2;
 
             pointer-events:
                 none;
@@ -203,21 +225,29 @@
 
         .logo {
 
-            position: relative;
+            position:
+                relative;
 
-            z-index: 10;
+            z-index:
+                10;
 
-            display: block;
+            display:
+                block;
 
-            width: 180px;
+            width:
+                180px;
 
-            height: auto;
+            height:
+                auto;
 
-            max-height: 90px;
+            max-height:
+                90px;
 
-            object-fit: contain;
+            object-fit:
+                contain;
 
-            opacity: 1;
+            opacity:
+                1;
 
             filter:
                 drop-shadow(
@@ -229,25 +259,31 @@
 
 
         /* =====================================================
-           GOLD LINE UNDER COVER
+           GOLD LINE
         ===================================================== */
 
         .cover-line {
 
-            position: absolute;
+            position:
+                absolute;
 
-            z-index: 20;
+            z-index:
+                20;
 
-            bottom: 0;
+            bottom:
+                0;
 
-            left: 50%;
+            left:
+                50%;
 
             transform:
                 translateX(-50%);
 
-            width: 65px;
+            width:
+                65px;
 
-            height: 2px;
+            height:
+                2px;
 
             background:
                 #c9b98a;
@@ -264,7 +300,8 @@
 
         .profile {
 
-            text-align: center;
+            text-align:
+                center;
 
             padding:
                 28px 25px 18px;
@@ -278,18 +315,20 @@
 
         .avatar {
 
-            width: 96px;
+            width:
+                96px;
 
-            height: 96px;
+            height:
+                96px;
 
             margin:
                 0 auto 18px;
 
-            border-radius: 50%;
+            border-radius:
+                50%;
 
             border:
-                3px solid
-                #c9b98a;
+                3px solid #c9b98a;
 
             background-color:
                 #252525;
@@ -574,16 +613,27 @@
 
 
         /* =====================================================
-           SAVE CONTACT BUTTON
+           MAIN ACTION BUTTONS
         ===================================================== */
 
-        .save-contact {
+        .main-actions {
 
-            margin:
+            display:
+                grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap:
+                11px;
+
+            padding:
                 22px 25px 0;
 
-            width:
-                calc(100% - 50px);
+        }
+
+
+        .main-button {
 
             border:
                 none;
@@ -592,7 +642,40 @@
                 15px;
 
             padding:
-                16px;
+                15px 10px;
+
+            font-size:
+                13px;
+
+            font-weight:
+                700;
+
+            cursor:
+                pointer;
+
+            transition:
+                all 0.25s ease;
+
+            display:
+                flex;
+
+            justify-content:
+                center;
+
+            align-items:
+                center;
+
+            gap:
+                7px;
+
+        }
+
+
+        /* =====================================================
+           SAVE BUTTON
+        ===================================================== */
+
+        .save-button {
 
             background:
                 linear-gradient(
@@ -604,18 +687,6 @@
             color:
                 #111111;
 
-            font-size:
-                15px;
-
-            font-weight:
-                700;
-
-            cursor:
-                pointer;
-
-            transition:
-                all 0.25s ease;
-
             box-shadow:
                 0 8px 25px
                 rgba(201, 185, 138, 0.16);
@@ -623,7 +694,7 @@
         }
 
 
-        .save-contact:hover {
+        .save-button:hover {
 
             transform:
                 translateY(-2px);
@@ -635,10 +706,329 @@
         }
 
 
-        .save-contact:active {
+        /* =====================================================
+           SHARE BUTTON
+        ===================================================== */
+
+        .share-button {
+
+            background:
+                rgba(255, 255, 255, 0.06);
+
+            color:
+                #ffffff;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.10);
+
+        }
+
+
+        .share-button:hover {
 
             transform:
-                translateY(0);
+                translateY(-2px);
+
+            background:
+                rgba(255, 255, 255, 0.10);
+
+            border-color:
+                rgba(201, 185, 138, 0.45);
+
+        }
+
+
+        /* =====================================================
+           QR BUTTON
+        ===================================================== */
+
+        .qr-button-wrapper {
+
+            padding:
+                11px 25px 0;
+
+        }
+
+
+        .qr-button {
+
+            width:
+                100%;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.10);
+
+            border-radius:
+                15px;
+
+            padding:
+                14px;
+
+            background:
+                rgba(255, 255, 255, 0.035);
+
+            color:
+                #cccccc;
+
+            font-size:
+                13px;
+
+            font-weight:
+                600;
+
+            cursor:
+                pointer;
+
+            transition:
+                all 0.25s ease;
+
+        }
+
+
+        .qr-button:hover {
+
+            background:
+                rgba(255, 255, 255, 0.08);
+
+            border-color:
+                rgba(201, 185, 138, 0.40);
+
+            color:
+                #ffffff;
+
+        }
+
+
+        /* =====================================================
+           QR MODAL
+        ===================================================== */
+
+        .qr-modal {
+
+            position:
+                fixed;
+
+            inset:
+                0;
+
+            background:
+                rgba(0, 0, 0, 0.82);
+
+            backdrop-filter:
+                blur(8px);
+
+            -webkit-backdrop-filter:
+                blur(8px);
+
+            display:
+                none;
+
+            justify-content:
+                center;
+
+            align-items:
+                center;
+
+            padding:
+                20px;
+
+            z-index:
+                9999;
+
+        }
+
+
+        .qr-modal.active {
+
+            display:
+                flex;
+
+        }
+
+
+        /* =====================================================
+           QR MODAL CONTENT
+        ===================================================== */
+
+        .qr-modal-content {
+
+            width:
+                100%;
+
+            max-width:
+                350px;
+
+            background:
+                #151515;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.10);
+
+            border-radius:
+                25px;
+
+            padding:
+                30px 25px;
+
+            text-align:
+                center;
+
+            position:
+                relative;
+
+            box-shadow:
+                0 30px 80px
+                rgba(0, 0, 0, 0.70);
+
+            animation:
+                modalAppear 0.25s ease;
+
+        }
+
+
+        @keyframes modalAppear {
+
+            from {
+
+                opacity:
+                    0;
+
+                transform:
+                    scale(0.94);
+
+            }
+
+            to {
+
+                opacity:
+                    1;
+
+                transform:
+                    scale(1);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           QR CLOSE BUTTON
+        ===================================================== */
+
+        .qr-close {
+
+            position:
+                absolute;
+
+            top:
+                12px;
+
+            right:
+                12px;
+
+            width:
+                35px;
+
+            height:
+                35px;
+
+            border:
+                none;
+
+            border-radius:
+                50%;
+
+            background:
+                rgba(255, 255, 255, 0.08);
+
+            color:
+                #ffffff;
+
+            font-size:
+                20px;
+
+            cursor:
+                pointer;
+
+            display:
+                flex;
+
+            justify-content:
+                center;
+
+            align-items:
+                center;
+
+        }
+
+
+        /* =====================================================
+           QR TITLE
+        ===================================================== */
+
+        .qr-modal-title {
+
+            font-size:
+                21px;
+
+            font-weight:
+                600;
+
+            margin-bottom:
+                8px;
+
+        }
+
+
+        .qr-modal-subtitle {
+
+            color:
+                #8f8f8f;
+
+            font-size:
+                13px;
+
+            line-height:
+                1.5;
+
+            margin-bottom:
+                22px;
+
+        }
+
+
+        /* =====================================================
+           QR CODE
+        ===================================================== */
+
+        #qrcode {
+
+            display:
+                inline-block;
+
+            padding:
+                12px;
+
+            background:
+                #ffffff;
+
+            border-radius:
+                16px;
+
+            box-shadow:
+                0 12px 35px
+                rgba(0, 0, 0, 0.40);
+
+        }
+
+
+        #qrcode img {
+
+            display:
+                block;
 
         }
 
@@ -653,16 +1043,16 @@
                 center;
 
             color:
-                #aaa;
+                #a8a8a8;
 
             font-size:
                 12px;
 
-            margin-top:
-                10px;
+            line-height:
+                1.5;
 
-            padding:
-                0 25px;
+            margin:
+                12px 25px 0;
 
             display:
                 none;
@@ -670,57 +1060,7 @@
         }
 
 
-        /* =====================================================
-           QR CODE
-        ===================================================== */
-
-        .qr-section {
-
-            text-align:
-                center;
-
-            padding:
-                30px 25px 10px;
-
-        }
-
-
-        .qr-title {
-
-            font-size:
-                13px;
-
-            color:
-                #a5a5a5;
-
-            margin-bottom:
-                15px;
-
-        }
-
-
-        #qrcode {
-
-            display:
-                inline-block;
-
-            padding:
-                10px;
-
-            background:
-                #ffffff;
-
-            border-radius:
-                14px;
-
-            box-shadow:
-                0 10px 30px
-                rgba(0, 0, 0, 0.30);
-
-        }
-
-
-        #qrcode img {
+        .save-message.show {
 
             display:
                 block;
@@ -814,6 +1154,14 @@
 
             }
 
+
+            .main-button {
+
+                font-size:
+                    12px;
+
+            }
+
         }
 
     </style>
@@ -832,7 +1180,7 @@
 
 
         <!-- =================================================
-             BACKGROUND + LOGO
+             COVER
         ================================================== -->
 
         <div class="cover">
@@ -857,27 +1205,21 @@
 
         <div class="profile">
 
-
             <div class="avatar"></div>
-
 
             <div class="name">
                 Aleksandar Simanovic
             </div>
 
-
             <div class="position">
                 Guest Relations
             </div>
-
 
             <div class="company">
                 Esperanza Lake Resort
             </div>
 
-
             <div class="divider"></div>
-
 
         </div>
 
@@ -979,51 +1321,77 @@
 
 
         <!-- =================================================
-             SAVE CONTACT
+             MAIN BUTTONS
         ================================================== -->
 
-        <button
-            type="button"
-            class="save-contact"
-            onclick="saveContact()"
-        >
-
-            ＋&nbsp; Save Contact
-
-        </button>
+        <div class="main-actions">
 
 
-        <div
-            id="saveMessage"
-            class="save-message"
-        >
-            Your contact card is ready to save.
+            <!-- SAVE CONTACT -->
+
+            <button
+                type="button"
+                class="main-button save-button"
+                onclick="saveContact()"
+            >
+
+                ＋ Save Contact
+
+            </button>
+
+
+
+            <!-- SHARE -->
+
+            <button
+                type="button"
+                class="main-button share-button"
+                onclick="shareContact()"
+            >
+
+                ↗ Share Contact
+
+            </button>
+
+
         </div>
 
 
 
         <!-- =================================================
-             QR CODE
+             QR BUTTON
         ================================================== -->
 
-        <div class="qr-section">
+        <div class="qr-button-wrapper">
 
-            <div class="qr-title">
+            <button
+                type="button"
+                class="qr-button"
+                onclick="openQR()"
+            >
 
-                Scan to open digital business card
+                ▣ &nbsp; Show QR Code
 
-            </div>
-
-
-            <div id="qrcode"></div>
+            </button>
 
         </div>
+
+
+
+        <!-- =================================================
+             MESSAGE
+        ================================================== -->
+
+        <div
+            id="saveMessage"
+            class="save-message"
+        ></div>
 
 
 
         <!-- =================================================
              FOOTER
-        ================================================= -->
+        ================================================== -->
 
         <div class="footer">
 
@@ -1031,6 +1399,55 @@
 
         </div>
 
+
+    </div>
+
+
+
+    <!-- =====================================================
+         QR MODAL
+    ===================================================== -->
+
+    <div
+        id="qrModal"
+        class="qr-modal"
+        onclick="closeQR(event)"
+    >
+
+        <div
+            class="qr-modal-content"
+            onclick="event.stopPropagation()"
+        >
+
+
+            <button
+                type="button"
+                class="qr-close"
+                onclick="closeQR()"
+            >
+                ×
+            </button>
+
+
+            <div class="qr-modal-title">
+
+                Scan QR Code
+
+            </div>
+
+
+            <div class="qr-modal-subtitle">
+
+                Scan this QR code with your phone
+                to open the digital business card.
+
+            </div>
+
+
+            <div id="qrcode"></div>
+
+
+        </div>
 
     </div>
 
@@ -1049,9 +1466,9 @@
     <script>
 
 
-        /* =================================================
+        /* =====================================================
            CONTACT INFORMATION
-        ================================================= */
+        ===================================================== */
 
         const contact = {
 
@@ -1080,22 +1497,13 @@
 
 
 
-        /* =================================================
-           SAVE CONTACT
-        ================================================= */
+        /* =====================================================
+           CREATE VCARD
+        ===================================================== */
 
-        function saveContact() {
+        function createVCard() {
 
-
-            /*
-             * Standard vCard format.
-             *
-             * This creates a real contact file that
-             * iPhone and Android can recognize.
-             */
-
-            const vCard =
-`BEGIN:VCARD
+            return `BEGIN:VCARD
 VERSION:3.0
 N:${contact.lastName};${contact.firstName};;;
 FN:${contact.firstName} ${contact.lastName}
@@ -1106,9 +1514,59 @@ URL:${contact.website}
 ADR;TYPE=WORK:;;${contact.address};;;
 END:VCARD`;
 
+        }
+
+
+
+        /* =====================================================
+           SHOW MESSAGE
+        ===================================================== */
+
+        function showMessage(text) {
+
+            const message =
+                document.getElementById(
+                    "saveMessage"
+                );
+
+
+            message.textContent =
+                text;
+
+
+            message.classList.add(
+                "show"
+            );
+
+
+            setTimeout(
+                function () {
+
+                    message.classList.remove(
+                        "show"
+                    );
+
+                },
+                6000
+            );
+
+        }
+
+
+
+        /* =====================================================
+           SAVE CONTACT
+        ===================================================== */
+
+        async function saveContact() {
+
+
+            const vCard =
+                createVCard();
+
 
             /*
-             * Create contact file
+             * Create .vcf file
              */
 
             const blob =
@@ -1121,20 +1579,91 @@ END:VCARD`;
                 );
 
 
+            const file =
+                new File(
+                    [blob],
+                    "Aleksandar_Simanovic.vcf",
+                    {
+                        type:
+                            "text/vcard"
+                    }
+                );
+
+
             /*
-             * Create temporary URL
+             * First try the modern
+             * iPhone / Android Share API.
+             */
+
+            if (
+                navigator.share &&
+                navigator.canShare
+            ) {
+
+                try {
+
+                    if (
+                        navigator.canShare({
+                            files: [file]
+                        })
+                    ) {
+
+                        await navigator.share({
+
+                            files:
+                                [file],
+
+                            title:
+                                "Save Contact",
+
+                            text:
+                                "Aleksandar Simanovic - Esperanza Lake Resort"
+
+                        });
+
+                        return;
+
+                    }
+
+                }
+
+                catch (error) {
+
+                    /*
+                     * User cancelled Share window.
+                     * Do nothing.
+                     */
+
+                    if (
+                        error.name ===
+                        "AbortError"
+                    ) {
+
+                        return;
+
+                    }
+
+                }
+
+            }
+
+
+
+            /*
+             * Fallback:
+             * create downloadable VCF file.
              */
 
             const url =
-                URL.createObjectURL(blob);
+                URL.createObjectURL(
+                    blob
+                );
 
-
-            /*
-             * Create download link
-             */
 
             const link =
-                document.createElement("a");
+                document.createElement(
+                    "a"
+                );
 
 
             link.href =
@@ -1142,96 +1671,157 @@ END:VCARD`;
 
 
             link.download =
-                `${contact.firstName}_${contact.lastName}.vcf`;
+                "Aleksandar_Simanovic.vcf";
 
 
-            /*
-             * Add link to page
-             */
-
-            document.body.appendChild(link);
+            link.style.display =
+                "none";
 
 
-            /*
-             * Start download/open
-             */
+            document.body.appendChild(
+                link
+            );
+
 
             link.click();
 
 
-            /*
-             * Remove temporary link
-             */
+            document.body.removeChild(
+                link
+            );
 
-            document.body.removeChild(link);
-
-
-            /*
-             * Clean temporary URL
-             */
 
             setTimeout(
                 function () {
 
-                    URL.revokeObjectURL(url);
+                    URL.revokeObjectURL(
+                        url
+                    );
 
                 },
                 1000
             );
 
 
-            /*
-             * Show message
-             */
-
-            const message =
-                document.getElementById(
-                    "saveMessage"
-                );
-
-
-            message.style.display =
-                "block";
-
-
-            /*
-             * Hide message after 5 seconds
-             */
-
-            setTimeout(
-                function () {
-
-                    message.style.display =
-                        "none";
-
-                },
-                5000
+            showMessage(
+                "The contact file has been prepared. Open it and choose Add to Contacts."
             );
 
         }
 
 
 
-        /* =================================================
-           GENERATE QR CODE
-        ================================================= */
+        /* =====================================================
+           SHARE CONTACT
+        ===================================================== */
 
-        document.addEventListener(
-            "DOMContentLoaded",
-            function () {
+        async function shareContact() {
 
 
-                const qrContainer =
-                    document.getElementById(
-                        "qrcode"
+            const shareData = {
+
+                title:
+                    "Aleksandar Simanovic",
+
+                text:
+                    "Aleksandar Simanovic - Guest Relations, Esperanza Lake Resort",
+
+                url:
+                    window.location.href
+
+            };
+
+
+            /*
+             * Native iPhone / Android Share
+             */
+
+            if (
+                navigator.share
+            ) {
+
+                try {
+
+                    await navigator.share(
+                        shareData
                     );
 
+                }
+
+                catch (error) {
+
+                    /*
+                     * User cancelled.
+                     */
+
+                    if (
+                        error.name !==
+                        "AbortError"
+                    ) {
+
+                        console.log(
+                            error
+                        );
+
+                    }
+
+                }
+
+            }
+
+            else {
+
+                /*
+                 * Browser doesn't support
+                 * native sharing.
+                 */
+
+                showMessage(
+                    "Sharing is not supported by this browser."
+                );
+
+            }
+
+        }
+
+
+
+        /* =====================================================
+           OPEN QR CODE
+        ===================================================== */
+
+        function openQR() {
+
+
+            const modal =
+                document.getElementById(
+                    "qrModal"
+                );
+
+
+            modal.classList.add(
+                "active"
+            );
+
+
+            /*
+             * Generate QR only once.
+             */
+
+            const qrContainer =
+                document.getElementById(
+                    "qrcode"
+                );
+
+
+            if (
+                qrContainer.innerHTML.trim() === ""
+            ) {
 
                 if (
-                    typeof QRCode !== "undefined" &&
-                    qrContainer
+                    typeof QRCode !==
+                    "undefined"
                 ) {
-
 
                     new QRCode(
 
@@ -1239,18 +1829,14 @@ END:VCARD`;
 
                         {
 
-                            /*
-                             * Current page URL
-                             */
-
                             text:
                                 window.location.href,
 
                             width:
-                                150,
+                                200,
 
                             height:
-                                150,
+                                200,
 
                             colorDark:
                                 "#111111",
@@ -1264,6 +1850,66 @@ END:VCARD`;
                         }
 
                     );
+
+                }
+
+            }
+
+        }
+
+
+
+        /* =====================================================
+           CLOSE QR CODE
+        ===================================================== */
+
+        function closeQR(event) {
+
+
+            /*
+             * If clicked outside modal,
+             * close it.
+             */
+
+            if (
+                event &&
+                event.target !==
+                event.currentTarget
+            ) {
+
+                return;
+
+            }
+
+
+            const modal =
+                document.getElementById(
+                    "qrModal"
+                );
+
+
+            modal.classList.remove(
+                "active"
+            );
+
+        }
+
+
+
+        /* =====================================================
+           ESC KEY CLOSES QR
+        ===================================================== */
+
+        document.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.key ===
+                    "Escape"
+                ) {
+
+                    closeQR();
 
                 }
 
