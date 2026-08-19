@@ -61,20 +61,15 @@
                 ),
                 #080808;
 
-            color:
-                #ffffff;
+            color: #ffffff;
 
-            display:
-                flex;
+            display: flex;
 
-            justify-content:
-                center;
+            justify-content: center;
 
-            align-items:
-                center;
+            align-items: center;
 
-            padding:
-                20px;
+            padding: 20px;
 
         }
 
@@ -85,11 +80,9 @@
 
         .card {
 
-            width:
-                100%;
+            width: 100%;
 
-            max-width:
-                440px;
+            max-width: 440px;
 
             background:
                 #141414;
@@ -252,6 +245,9 @@
 
             object-fit:
                 contain;
+
+            opacity:
+                1;
 
             filter:
                 drop-shadow(
@@ -541,7 +537,7 @@
 
             border:
                 1px solid
-                rgba(201, 185, 138, 0.15);
+                rgba(201, 185, 138, 0.12);
 
             display:
                 flex;
@@ -555,31 +551,8 @@
             margin-right:
                 13px;
 
-        }
-
-
-        .icon svg {
-
-            width:
-                19px;
-
-            height:
-                19px;
-
-            stroke:
-                #c9b98a;
-
-            stroke-width:
-                1.7;
-
-            fill:
-                none;
-
-            stroke-linecap:
-                round;
-
-            stroke-linejoin:
-                round;
+            font-size:
+                18px;
 
         }
 
@@ -640,16 +613,27 @@
 
 
         /* =====================================================
-           SHARE BUTTON
+           MAIN ACTION BUTTONS
         ===================================================== */
 
-        .share-button {
+        .main-actions {
 
-            margin:
+            display:
+                grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap:
+                11px;
+
+            padding:
                 22px 25px 0;
 
-            width:
-                calc(100% - 50px);
+        }
+
+
+        .main-button {
 
             border:
                 none;
@@ -658,20 +642,10 @@
                 15px;
 
             padding:
-                16px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #dac68f,
-                    #a9925d
-                );
-
-            color:
-                #111111;
+                15px 10px;
 
             font-size:
-                15px;
+                13px;
 
             font-weight:
                 700;
@@ -681,10 +655,6 @@
 
             transition:
                 all 0.25s ease;
-
-            box-shadow:
-                0 8px 25px
-                rgba(201, 185, 138, 0.16);
 
             display:
                 flex;
@@ -696,38 +666,35 @@
                 center;
 
             gap:
-                9px;
+                7px;
 
         }
 
 
-        .share-button svg {
+        /* =====================================================
+           SAVE BUTTON
+        ===================================================== */
 
-            width:
-                18px;
+        .save-button {
 
-            height:
-                18px;
+            background:
+                linear-gradient(
+                    135deg,
+                    #dac68f,
+                    #a9925d
+                );
 
-            stroke:
+            color:
                 #111111;
 
-            stroke-width:
-                2;
-
-            fill:
-                none;
-
-            stroke-linecap:
-                round;
-
-            stroke-linejoin:
-                round;
+            box-shadow:
+                0 8px 25px
+                rgba(201, 185, 138, 0.16);
 
         }
 
 
-        .share-button:hover {
+        .save-button:hover {
 
             transform:
                 translateY(-2px);
@@ -739,10 +706,35 @@
         }
 
 
-        .share-button:active {
+        /* =====================================================
+           SHARE BUTTON
+        ===================================================== */
+
+        .share-button {
+
+            background:
+                rgba(255, 255, 255, 0.06);
+
+            color:
+                #ffffff;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.10);
+
+        }
+
+
+        .share-button:hover {
 
             transform:
-                translateY(0);
+                translateY(-2px);
+
+            background:
+                rgba(255, 255, 255, 0.10);
+
+            border-color:
+                rgba(201, 185, 138, 0.45);
 
         }
 
@@ -791,44 +783,6 @@
 
             transition:
                 all 0.25s ease;
-
-            display:
-                flex;
-
-            justify-content:
-                center;
-
-            align-items:
-                center;
-
-            gap:
-                8px;
-
-        }
-
-
-        .qr-button svg {
-
-            width:
-                17px;
-
-            height:
-                17px;
-
-            stroke:
-                #c9b98a;
-
-            stroke-width:
-                1.7;
-
-            fill:
-                none;
-
-            stroke-linecap:
-                round;
-
-            stroke-linejoin:
-                round;
 
         }
 
@@ -961,7 +915,7 @@
 
 
         /* =====================================================
-           QR CLOSE
+           QR CLOSE BUTTON
         ===================================================== */
 
         .qr-close {
@@ -1047,34 +1001,69 @@
 
 
         /* =====================================================
-           QR IMAGE
+           QR CODE
         ===================================================== */
 
-        .qr-image {
-
-            width:
-                220px;
-
-            height:
-                220px;
-
-            object-fit:
-                contain;
+        #qrcode {
 
             display:
-                block;
+                inline-block;
 
-            margin:
-                0 auto;
+            padding:
+                12px;
 
             background:
                 #ffffff;
 
-            padding:
-                10px;
-
             border-radius:
                 16px;
+
+            box-shadow:
+                0 12px 35px
+                rgba(0, 0, 0, 0.40);
+
+        }
+
+
+        #qrcode img {
+
+            display:
+                block;
+
+        }
+
+
+        /* =====================================================
+           SAVE MESSAGE
+        ===================================================== */
+
+        .save-message {
+
+            text-align:
+                center;
+
+            color:
+                #a8a8a8;
+
+            font-size:
+                12px;
+
+            line-height:
+                1.5;
+
+            margin:
+                12px 25px 0;
+
+            display:
+                none;
+
+        }
+
+
+        .save-message.show {
+
+            display:
+                block;
 
         }
 
@@ -1165,6 +1154,14 @@
 
             }
 
+
+            .main-button {
+
+                font-size:
+                    12px;
+
+            }
+
         }
 
     </style>
@@ -1190,13 +1187,11 @@
 
             <div class="cover-glow"></div>
 
-
             <img
                 src="./logo.png"
                 class="logo"
                 alt="Esperanza Lake Resort Logo"
             >
-
 
             <div class="cover-line"></div>
 
@@ -1210,27 +1205,21 @@
 
         <div class="profile">
 
-
             <div class="avatar"></div>
 
-
             <div class="name">
-                Aleksandar Simanovic
+                Aleksandar Simonovic
             </div>
-
 
             <div class="position">
-                Guest Relations
+                Guest Relations Manager
             </div>
-
 
             <div class="company">
                 Esperanza Lake Resort
             </div>
 
-
             <div class="divider"></div>
-
 
         </div>
 
@@ -1238,14 +1227,12 @@
 
         <!-- =================================================
              CONTACT INFORMATION
-        ================================================= -->
+        ================================================== -->
 
         <div class="actions">
 
 
-            <!-- =================================================
-                 PHONE
-            ================================================= -->
+            <!-- PHONE -->
 
             <a
                 class="action"
@@ -1253,31 +1240,8 @@
             >
 
                 <div class="icon">
-
-                    <svg
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
-                    >
-
-                        <path
-                            d="M22 16.92v3a2 2 0 0 1-2.18 2
-                               19.79 19.79 0 0 1-8.63-3.07
-                               19.5 19.5 0 0 1-6-6
-                               19.79 19.79 0 0 1-3.07-8.67
-                               A2 2 0 0 1 4.11 2h3
-                               a2 2 0 0 1 2 1.72
-                               12.84 12.84 0 0 0 .7 2.81
-                               2 2 0 0 1-.45 2.11L8.09 9.91
-                               a16 16 0 0 0 6 6l1.27-1.27
-                               a2 2 0 0 1 2.11-.45
-                               12.84 12.84 0 0 0 2.81.7
-                               A2 2 0 0 1 22 16.92z"
-                        />
-
-                    </svg>
-
+                    📞
                 </div>
-
 
                 <div class="action-text">
 
@@ -1295,9 +1259,7 @@
 
 
 
-            <!-- =================================================
-                 WEBSITE
-            ================================================== -->
+            <!-- WEBSITE -->
 
             <a
                 class="action"
@@ -1307,36 +1269,8 @@
             >
 
                 <div class="icon">
-
-                    <svg
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
-                    >
-
-                        <circle
-                            cx="12"
-                            cy="12"
-                            r="10"
-                        />
-
-                        <line
-                            x1="2"
-                            y1="12"
-                            x2="22"
-                            y2="12"
-                        />
-
-                        <path
-                            d="M12 2a15.3 15.3 0 0 1 4 10
-                               15.3 15.3 0 0 1-4 10
-                               15.3 15.3 0 0 1-4-10
-                               15.3 15.3 0 0 1 4-10z"
-                        />
-
-                    </svg>
-
+                    🌐
                 </div>
-
 
                 <div class="action-text">
 
@@ -1354,9 +1288,7 @@
 
 
 
-            <!-- =================================================
-                 LOCATION
-            ================================================== -->
+            <!-- LOCATION -->
 
             <a
                 class="action"
@@ -1366,27 +1298,8 @@
             >
 
                 <div class="icon">
-
-                    <svg
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
-                    >
-
-                        <path
-                            d="M20 10c0 5-8 12-8 12
-                               S4 15 4 10a8 8 0 1 1 16 0z"
-                        />
-
-                        <circle
-                            cx="12"
-                            cy="10"
-                            r="2.5"
-                        />
-
-                    </svg>
-
+                    📍
                 </div>
-
 
                 <div class="action-text">
 
@@ -1408,57 +1321,40 @@
 
 
         <!-- =================================================
-             SHARE CONTACT
+             MAIN BUTTONS
         ================================================== -->
 
-        <button
-            type="button"
-            class="share-button"
-            onclick="shareContact()"
-        >
+        <div class="main-actions">
 
-            <svg
-                viewBox="0 0 24 24"
-                aria-hidden="true"
+
+            <!-- SAVE CONTACT -->
+
+            <button
+                type="button"
+                class="main-button save-button"
+                onclick="saveContact()"
             >
 
-                <circle
-                    cx="18"
-                    cy="5"
-                    r="3"
-                />
+                ＋ Save Contact
 
-                <circle
-                    cx="6"
-                    cy="12"
-                    r="3"
-                />
+            </button>
 
-                <circle
-                    cx="18"
-                    cy="19"
-                    r="3"
-                />
 
-                <line
-                    x1="8.59"
-                    y1="13.51"
-                    x2="15.42"
-                    y2="17.49"
-                />
 
-                <line
-                    x1="15.41"
-                    y1="6.51"
-                    x2="8.59"
-                    y2="10.49"
-                />
+            <!-- SHARE -->
 
-            </svg>
+            <button
+                type="button"
+                class="main-button share-button"
+                onclick="shareContact()"
+            >
 
-            Share Contact
+                ↗ Share Contact
 
-        </button>
+            </button>
+
+
+        </div>
 
 
 
@@ -1474,58 +1370,22 @@
                 onclick="openQR()"
             >
 
-                <svg
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                >
-
-                    <rect
-                        x="3"
-                        y="3"
-                        width="6"
-                        height="6"
-                        rx="1"
-                    />
-
-                    <rect
-                        x="15"
-                        y="3"
-                        width="6"
-                        height="6"
-                        rx="1"
-                    />
-
-                    <rect
-                        x="3"
-                        y="15"
-                        width="6"
-                        height="6"
-                        rx="1"
-                    />
-
-                    <path
-                        d="M15 15h3v3h-3z"
-                    />
-
-                    <path
-                        d="M18 18h3v3h-3z"
-                    />
-
-                    <path
-                        d="M21 15h-3"
-                    />
-
-                    <path
-                        d="M15 21h3"
-                    />
-
-                </svg>
-
-                Show QR Code
+                ▣ &nbsp; Show QR Code
 
             </button>
 
         </div>
+
+
+
+        <!-- =================================================
+             MESSAGE
+        ================================================== -->
+
+        <div
+            id="saveMessage"
+            class="save-message"
+        ></div>
 
 
 
@@ -1565,9 +1425,7 @@
                 class="qr-close"
                 onclick="closeQR()"
             >
-
                 ×
-
             </button>
 
 
@@ -1586,13 +1444,7 @@
             </div>
 
 
-            <!-- YOUR QR CODE -->
-
-            <img
-                src="./qr1.jpg"
-                class="qr-image"
-                alt="Digital Business Card QR Code"
-            >
+            <div id="qrcode"></div>
 
 
         </div>
@@ -1601,7 +1453,262 @@
 
 
 
+    <!-- =====================================================
+         QR CODE LIBRARY
+    ===================================================== -->
+
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js">
+    </script>
+
+
+
     <script>
+
+
+        /* =====================================================
+           CONTACT INFORMATION
+        ===================================================== */
+
+        const contact = {
+
+            firstName:
+                "Aleksandar",
+
+            lastName:
+                "Simonovic",
+
+            jobTitle:
+                "Guest Relations Manager",
+
+            company:
+                "Esperanza Lake Resort",
+
+            phone:
+                "+37060000000",
+
+            website:
+                "https://www.esperanzaresort.lt",
+
+            address:
+                "Esperanza Lake Resort, Lithuania"
+
+        };
+
+
+
+        /* =====================================================
+           CREATE VCARD
+        ===================================================== */
+
+        function createVCard() {
+
+            return `BEGIN:VCARD
+VERSION:3.0
+N:${contact.lastName};${contact.firstName};;;
+FN:${contact.firstName} ${contact.lastName}
+ORG:${contact.company}
+TITLE:${contact.jobTitle}
+TEL;TYPE=CELL:${contact.phone}
+URL:${contact.website}
+ADR;TYPE=WORK:;;${contact.address};;;
+END:VCARD`;
+
+        }
+
+
+
+        /* =====================================================
+           SHOW MESSAGE
+        ===================================================== */
+
+        function showMessage(text) {
+
+            const message =
+                document.getElementById(
+                    "saveMessage"
+                );
+
+
+            message.textContent =
+                text;
+
+
+            message.classList.add(
+                "show"
+            );
+
+
+            setTimeout(
+                function () {
+
+                    message.classList.remove(
+                        "show"
+                    );
+
+                },
+                6000
+            );
+
+        }
+
+
+
+        /* =====================================================
+           SAVE CONTACT
+        ===================================================== */
+
+        async function saveContact() {
+
+
+            const vCard =
+                createVCard();
+
+
+            /*
+             * Create .vcf file
+             */
+
+            const blob =
+                new Blob(
+                    [vCard],
+                    {
+                        type:
+                            "text/vcard;charset=utf-8"
+                    }
+                );
+
+
+            const file =
+                new File(
+                    [blob],
+                    "Aleksandar_Simonovic.vcf",
+                    {
+                        type:
+                            "text/vcard"
+                    }
+                );
+
+
+            /*
+             * First try the modern
+             * iPhone / Android Share API.
+             */
+
+            if (
+                navigator.share &&
+                navigator.canShare
+            ) {
+
+                try {
+
+                    if (
+                        navigator.canShare({
+                            files: [file]
+                        })
+                    ) {
+
+                        await navigator.share({
+
+                            files:
+                                [file],
+
+                            title:
+                                "Save Contact",
+
+                            text:
+                                "Aleksandar Simonovic - Esperanza Lake Resort"
+
+                        });
+
+                        return;
+
+                    }
+
+                }
+
+                catch (error) {
+
+                    /*
+                     * User cancelled Share window.
+                     * Do nothing.
+                     */
+
+                    if (
+                        error.name ===
+                        "AbortError"
+                    ) {
+
+                        return;
+
+                    }
+
+                }
+
+            }
+
+
+
+            /*
+             * Fallback:
+             * create downloadable VCF file.
+             */
+
+            const url =
+                URL.createObjectURL(
+                    blob
+                );
+
+
+            const link =
+                document.createElement(
+                    "a"
+                );
+
+
+            link.href =
+                url;
+
+
+            link.download =
+                "Aleksandar_Simonovic.vcf";
+
+
+            link.style.display =
+                "none";
+
+
+            document.body.appendChild(
+                link
+            );
+
+
+            link.click();
+
+
+            document.body.removeChild(
+                link
+            );
+
+
+            setTimeout(
+                function () {
+
+                    URL.revokeObjectURL(
+                        url
+                    );
+
+                },
+                1000
+            );
+
+
+            showMessage(
+                "The contact file has been prepared. Open it and choose Add to Contacts."
+            );
+
+        }
+
 
 
         /* =====================================================
@@ -1614,10 +1721,10 @@
             const shareData = {
 
                 title:
-                    "Aleksandar Simanovic",
+                    "Aleksandar Simonovic",
 
                 text:
-                    "Aleksandar Simanovic - Guest Relations, Esperanza Lake Resort",
+                    "Aleksandar Simonovic - Guest Relations Manager, Esperanza Lake Resort",
 
                 url:
                     window.location.href
@@ -1626,7 +1733,7 @@
 
 
             /*
-             * Native phone sharing
+             * Native iPhone / Android Share
              */
 
             if (
@@ -1644,8 +1751,7 @@
                 catch (error) {
 
                     /*
-                     * User pressed Cancel.
-                     * No message needed.
+                     * User cancelled.
                      */
 
                     if (
@@ -1653,8 +1759,7 @@
                         "AbortError"
                     ) {
 
-                        console.error(
-                            "Share failed:",
+                        console.log(
                             error
                         );
 
@@ -1667,30 +1772,13 @@
             else {
 
                 /*
-                 * Fallback for browsers
-                 * without native sharing.
+                 * Browser doesn't support
+                 * native sharing.
                  */
 
-                try {
-
-                    await navigator.clipboard.writeText(
-                        window.location.href
-                    );
-
-
-                    alert(
-                        "Link copied to clipboard."
-                    );
-
-                }
-
-                catch (error) {
-
-                    alert(
-                        "Please copy the page link manually."
-                    );
-
-                }
+                showMessage(
+                    "Sharing is not supported by this browser."
+                );
 
             }
 
@@ -1704,6 +1792,7 @@
 
         function openQR() {
 
+
             const modal =
                 document.getElementById(
                     "qrModal"
@@ -1715,8 +1804,56 @@
             );
 
 
-            document.body.style.overflow =
-                "hidden";
+            /*
+             * Generate QR only once.
+             */
+
+            const qrContainer =
+                document.getElementById(
+                    "qrcode"
+                );
+
+
+            if (
+                qrContainer.innerHTML.trim() === ""
+            ) {
+
+                if (
+                    typeof QRCode !==
+                    "undefined"
+                ) {
+
+                    new QRCode(
+
+                        qrContainer,
+
+                        {
+
+                            text:
+                                window.location.href,
+
+                            width:
+                                200,
+
+                            height:
+                                200,
+
+                            colorDark:
+                                "#111111",
+
+                            colorLight:
+                                "#ffffff",
+
+                            correctLevel:
+                                QRCode.CorrectLevel.H
+
+                        }
+
+                    );
+
+                }
+
+            }
 
         }
 
@@ -1728,6 +1865,11 @@
 
         function closeQR(event) {
 
+
+            /*
+             * If clicked outside modal,
+             * close it.
+             */
 
             if (
                 event &&
@@ -1750,16 +1892,12 @@
                 "active"
             );
 
-
-            document.body.style.overflow =
-                "";
-
         }
 
 
 
         /* =====================================================
-           ESC KEY
+           ESC KEY CLOSES QR
         ===================================================== */
 
         document.addEventListener(
