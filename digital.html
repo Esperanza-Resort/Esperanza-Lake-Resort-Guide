@@ -143,11 +143,6 @@
 
             overflow: hidden;
 
-            /*
-                background.jpg turi būti tame pačiame
-                aplanke kaip index.html
-            */
-
             background-image:
                 linear-gradient(
                     to bottom,
@@ -649,6 +644,33 @@
 
 
         /* =====================================================
+           SAVE MESSAGE
+        ===================================================== */
+
+        .save-message {
+
+            text-align:
+                center;
+
+            color:
+                #aaa;
+
+            font-size:
+                12px;
+
+            margin-top:
+                10px;
+
+            padding:
+                0 25px;
+
+            display:
+                none;
+
+        }
+
+
+        /* =====================================================
            QR CODE
         ===================================================== */
 
@@ -895,33 +917,6 @@
 
 
 
-            <!-- EMAIL -->
-
-            <a
-                class="action"
-                href="mailto:john.smith@example.com"
-            >
-
-                <div class="icon">
-                    ✉️
-                </div>
-
-                <div class="action-text">
-
-                    <span class="action-label">
-                        Email
-                    </span>
-
-                    <span class="action-value">
-                        john.smith@example.com
-                    </span>
-
-                </div>
-
-            </a>
-
-
-
             <!-- WEBSITE -->
 
             <a
@@ -998,6 +993,14 @@
         </button>
 
 
+        <div
+            id="saveMessage"
+            class="save-message"
+        >
+            Your contact card is ready to save.
+        </div>
+
+
 
         <!-- =================================================
              QR CODE
@@ -1020,7 +1023,7 @@
 
         <!-- =================================================
              FOOTER
-        ================================================== -->
+        ================================================= -->
 
         <div class="footer">
 
@@ -1053,10 +1056,10 @@
         const contact = {
 
             firstName:
-                "Aleksandr",
+                "Aleksandar",
 
             lastName:
-                "Simanovič",
+                "Simanovic",
 
             jobTitle:
                 "Guest Relations",
@@ -1066,9 +1069,6 @@
 
             phone:
                 "+37060000000",
-
-            email:
-                "john.smith@example.com",
 
             website:
                 "https://www.esperanzaresort.lt",
@@ -1081,10 +1081,18 @@
 
 
         /* =================================================
-           SAVE CONTACT AS VCARD
+           SAVE CONTACT
         ================================================= */
 
         function saveContact() {
+
+
+            /*
+             * Standard vCard format.
+             *
+             * This creates a real contact file that
+             * iPhone and Android can recognize.
+             */
 
             const vCard =
 `BEGIN:VCARD
@@ -1094,11 +1102,14 @@ FN:${contact.firstName} ${contact.lastName}
 ORG:${contact.company}
 TITLE:${contact.jobTitle}
 TEL;TYPE=CELL:${contact.phone}
-EMAIL;TYPE=WORK:${contact.email}
 URL:${contact.website}
 ADR;TYPE=WORK:;;${contact.address};;;
 END:VCARD`;
 
+
+            /*
+             * Create contact file
+             */
 
             const blob =
                 new Blob(
@@ -1110,9 +1121,17 @@ END:VCARD`;
                 );
 
 
+            /*
+             * Create temporary URL
+             */
+
             const url =
                 URL.createObjectURL(blob);
 
+
+            /*
+             * Create download link
+             */
 
             const link =
                 document.createElement("a");
@@ -1126,18 +1145,67 @@ END:VCARD`;
                 `${contact.firstName}_${contact.lastName}.vcf`;
 
 
+            /*
+             * Add link to page
+             */
+
             document.body.appendChild(link);
 
+
+            /*
+             * Start download/open
+             */
 
             link.click();
 
 
+            /*
+             * Remove temporary link
+             */
+
             document.body.removeChild(link);
 
 
+            /*
+             * Clean temporary URL
+             */
+
             setTimeout(
-                () => URL.revokeObjectURL(url),
+                function () {
+
+                    URL.revokeObjectURL(url);
+
+                },
                 1000
+            );
+
+
+            /*
+             * Show message
+             */
+
+            const message =
+                document.getElementById(
+                    "saveMessage"
+                );
+
+
+            message.style.display =
+                "block";
+
+
+            /*
+             * Hide message after 5 seconds
+             */
+
+            setTimeout(
+                function () {
+
+                    message.style.display =
+                        "none";
+
+                },
+                5000
             );
 
         }
@@ -1152,8 +1220,11 @@ END:VCARD`;
             "DOMContentLoaded",
             function () {
 
+
                 const qrContainer =
-                    document.getElementById("qrcode");
+                    document.getElementById(
+                        "qrcode"
+                    );
 
 
                 if (
@@ -1161,11 +1232,16 @@ END:VCARD`;
                     qrContainer
                 ) {
 
+
                     new QRCode(
 
                         qrContainer,
 
                         {
+
+                            /*
+                             * Current page URL
+                             */
 
                             text:
                                 window.location.href,
