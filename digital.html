@@ -61,15 +61,20 @@
                 ),
                 #080808;
 
-            color: #ffffff;
+            color:
+                #ffffff;
 
-            display: flex;
+            display:
+                flex;
 
-            justify-content: center;
+            justify-content:
+                center;
 
-            align-items: center;
+            align-items:
+                center;
 
-            padding: 20px;
+            padding:
+                20px;
 
         }
 
@@ -80,9 +85,11 @@
 
         .card {
 
-            width: 100%;
+            width:
+                100%;
 
-            max-width: 440px;
+            max-width:
+                440px;
 
             background:
                 #141414;
@@ -245,9 +252,6 @@
 
             object-fit:
                 contain;
-
-            opacity:
-                1;
 
             filter:
                 drop-shadow(
@@ -613,7 +617,7 @@
 
 
         /* =====================================================
-           MAIN ACTION BUTTONS
+           MAIN BUTTONS
         ===================================================== */
 
         .main-actions {
@@ -672,7 +676,7 @@
 
 
         /* =====================================================
-           SAVE BUTTON
+           SAVE CONTACT
         ===================================================== */
 
         .save-button {
@@ -707,7 +711,7 @@
 
 
         /* =====================================================
-           SHARE BUTTON
+           SHARE
         ===================================================== */
 
         .share-button {
@@ -915,7 +919,7 @@
 
 
         /* =====================================================
-           QR CLOSE BUTTON
+           CLOSE
         ===================================================== */
 
         .qr-close {
@@ -1001,34 +1005,34 @@
 
 
         /* =====================================================
-           QR CODE
+           QR IMAGE
         ===================================================== */
 
-        #qrcode {
+        .qr-image {
+
+            width:
+                220px;
+
+            height:
+                220px;
+
+            object-fit:
+                contain;
 
             display:
-                inline-block;
+                block;
 
-            padding:
-                12px;
+            margin:
+                0 auto;
 
             background:
                 #ffffff;
 
+            padding:
+                10px;
+
             border-radius:
                 16px;
-
-            box-shadow:
-                0 12px 35px
-                rgba(0, 0, 0, 0.40);
-
-        }
-
-
-        #qrcode img {
-
-            display:
-                block;
 
         }
 
@@ -1341,7 +1345,7 @@
 
 
 
-            <!-- SHARE -->
+            <!-- SHARE CONTACT -->
 
             <button
                 type="button"
@@ -1425,7 +1429,9 @@
                 class="qr-close"
                 onclick="closeQR()"
             >
+
                 ×
+
             </button>
 
 
@@ -1444,22 +1450,18 @@
             </div>
 
 
-            <div id="qrcode"></div>
+            <!-- YOUR QR CODE -->
+
+            <img
+                src="./qr1.jpg"
+                class="qr-image"
+                alt="Digital Business Card QR Code"
+            >
 
 
         </div>
 
     </div>
-
-
-
-    <!-- =====================================================
-         QR CODE LIBRARY
-    ===================================================== -->
-
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js">
-    </script>
 
 
 
@@ -1565,10 +1567,6 @@ END:VCARD`;
                 createVCard();
 
 
-            /*
-             * Create .vcf file
-             */
-
             const blob =
                 new Blob(
                     [vCard],
@@ -1591,8 +1589,10 @@ END:VCARD`;
 
 
             /*
-             * First try the modern
-             * iPhone / Android Share API.
+             * iPhone / Android
+             *
+             * Use native Share menu
+             * with the contact file.
              */
 
             if (
@@ -1602,10 +1602,15 @@ END:VCARD`;
 
                 try {
 
-                    if (
+                    const canShareFile =
                         navigator.canShare({
-                            files: [file]
-                        })
+                            files:
+                                [file]
+                        });
+
+
+                    if (
+                        canShareFile
                     ) {
 
                         await navigator.share({
@@ -1614,10 +1619,7 @@ END:VCARD`;
                                 [file],
 
                             title:
-                                "Save Contact",
-
-                            text:
-                                "Aleksandar Simanovic - Esperanza Lake Resort"
+                                "Save Contact"
 
                         });
 
@@ -1628,11 +1630,6 @@ END:VCARD`;
                 }
 
                 catch (error) {
-
-                    /*
-                     * User cancelled Share window.
-                     * Do nothing.
-                     */
 
                     if (
                         error.name ===
@@ -1648,10 +1645,9 @@ END:VCARD`;
             }
 
 
-
             /*
-             * Fallback:
-             * create downloadable VCF file.
+             * Fallback for browsers
+             * that don't support file sharing.
              */
 
             const url =
@@ -1672,10 +1668,6 @@ END:VCARD`;
 
             link.download =
                 "Aleksandar_Simanovic.vcf";
-
-
-            link.style.display =
-                "none";
 
 
             document.body.appendChild(
@@ -1704,7 +1696,7 @@ END:VCARD`;
 
 
             showMessage(
-                "The contact file has been prepared. Open it and choose Add to Contacts."
+                "Open the downloaded contact file and choose Add to Contacts."
             );
 
         }
@@ -1732,10 +1724,6 @@ END:VCARD`;
             };
 
 
-            /*
-             * Native iPhone / Android Share
-             */
-
             if (
                 navigator.share
             ) {
@@ -1749,10 +1737,6 @@ END:VCARD`;
                 }
 
                 catch (error) {
-
-                    /*
-                     * User cancelled.
-                     */
 
                     if (
                         error.name !==
@@ -1771,11 +1755,6 @@ END:VCARD`;
 
             else {
 
-                /*
-                 * Browser doesn't support
-                 * native sharing.
-                 */
-
                 showMessage(
                     "Sharing is not supported by this browser."
                 );
@@ -1792,7 +1771,6 @@ END:VCARD`;
 
         function openQR() {
 
-
             const modal =
                 document.getElementById(
                     "qrModal"
@@ -1802,58 +1780,6 @@ END:VCARD`;
             modal.classList.add(
                 "active"
             );
-
-
-            /*
-             * Generate QR only once.
-             */
-
-            const qrContainer =
-                document.getElementById(
-                    "qrcode"
-                );
-
-
-            if (
-                qrContainer.innerHTML.trim() === ""
-            ) {
-
-                if (
-                    typeof QRCode !==
-                    "undefined"
-                ) {
-
-                    new QRCode(
-
-                        qrContainer,
-
-                        {
-
-                            text:
-                                window.location.href,
-
-                            width:
-                                200,
-
-                            height:
-                                200,
-
-                            colorDark:
-                                "#111111",
-
-                            colorLight:
-                                "#ffffff",
-
-                            correctLevel:
-                                QRCode.CorrectLevel.H
-
-                        }
-
-                    );
-
-                }
-
-            }
 
         }
 
@@ -1865,11 +1791,6 @@ END:VCARD`;
 
         function closeQR(event) {
 
-
-            /*
-             * If clicked outside modal,
-             * close it.
-             */
 
             if (
                 event &&
@@ -1897,7 +1818,7 @@ END:VCARD`;
 
 
         /* =====================================================
-           ESC KEY CLOSES QR
+           ESC KEY
         ===================================================== */
 
         document.addEventListener(
