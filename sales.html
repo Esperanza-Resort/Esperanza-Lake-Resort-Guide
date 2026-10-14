@@ -52,7 +52,7 @@
       max-width: 450px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 12px;
       opacity: 0;
       transform: translateY(20px);
     }
@@ -61,16 +61,16 @@
       align-items: center;
       justify-content: center;
       background: transparent;
-      border-radius: 16px;
-      padding: 18px 24px;
-      border: 1px solid rgba(255,255,255,0.25);
-      box-shadow: 0 4px 18px rgba(0,0,0,0.3);
+      border-radius: 14px;
+      padding: 14px 20px;
+      border: 1px solid rgba(255,255,255,0.2);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
       cursor: pointer;
       transition: transform 0.25s ease, box-shadow 0.25s ease;
       color: #fff;
       font-weight: 600;
-      font-size: 1.2rem;
-      letter-spacing: 0.8px;
+      font-size: 1.1rem;
+      letter-spacing: 0.5px;
       text-align: center;
       text-decoration: none;
       opacity: 0;
@@ -80,7 +80,6 @@
       will-change: transform, box-shadow;
       position: relative;
       overflow: hidden;
-      min-height: 58px;
       user-select: none;
     }
     .pdf-item::before {
@@ -90,20 +89,20 @@
       left: -10px;
       right: -10px;
       bottom: -10px;
-      background: rgba(255,255,255,0.13);
-      backdrop-filter: blur(16px) saturate(160%);
-      -webkit-backdrop-filter: blur(16px) saturate(160%);
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(15px) saturate(160%);
+      -webkit-backdrop-filter: blur(15px) saturate(160%);
       z-index: -1;
       pointer-events: none;
-      border-radius: 22px;
+      border-radius: 20px;
       transition: background 0.25s ease;
     }
     .pdf-item:active {
       transform: scale(0.97);
     }
     .pdf-item:hover {
-      transform: scale(1.03) translate3d(0, -3px, 0);
-      box-shadow: 0 8px 26px rgba(0,0,0,0.4);
+      transform: scale(1.02) translate3d(0, -3px, 0);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
     }
     .pdf-item:hover::before {
       background: rgba(255,255,255,0.22);
@@ -182,7 +181,7 @@
       background: rgba(255,255,255,0.35);
       transform: scale(0.92);
     }
-    /* --- Mobile optimizacija --- */
+    /* --- Mobile --- */
     .mobile-mode header {
       margin-top: 28px;
       width: 88%;
@@ -195,14 +194,12 @@
     .mobile-mode .pdf-list {
       margin-top: 36px;
       width: 90%;
-      gap: 18px;
+      gap: 12px;
     }
     .mobile-mode .pdf-item {
-      font-size: 1.25rem;
-      padding: 20px 22px;
-      min-height: 64px;
-      border-radius: 18px;
-      letter-spacing: 1px;
+      font-size: 1.05rem;
+      padding: 13px 18px;
+      border-radius: 14px;
     }
     @keyframes fadeInBackground {
       from { opacity: 0; }
@@ -253,13 +250,12 @@
       .pdf-list {
         margin-top: 36px;
         width: 90%;
-        gap: 18px;
+        gap: 12px;
       }
       .pdf-item {
-        font-size: 1.25rem;
-        padding: 20px 22px;
-        min-height: 64px;
-        border-radius: 18px;
+        font-size: 1.05rem;
+        padding: 13px 18px;
+        border-radius: 14px;
       }
       #pdf-modal {
         width: 100%;
@@ -288,12 +284,10 @@
   </header>
 
   <div class="pdf-list">
-    <!-- VIDEO – ant telefono atsidaro toje pačioje kortelėje (lengva grįžti) -->
     <a class="pdf-item" id="video-btn" href="https://drive.google.com/file/d/1ns_RlMJBPm42vLiaO4C4xmVgX1BQUh7j/view?usp=sharing">
       VIDEO
     </a>
 
-    <!-- PDF -->
     <a class="pdf-item" href="Brochure.pdf" onclick="openPDF(event, 'Brochure.pdf', 'BROCHURE')">
       PDF
     </a>
@@ -336,12 +330,9 @@
     }
 
     function openPDF(event, file, title) {
-      // Ant telefono – atidarome toje pačioje kortelėje (lengva grįžti su „Atgal“)
       if (isMobile()) {
-        // nieko neblokuojame – leidžiame natūralų navigavimą
         return;
       }
-      // Kompiuteryje – modalas
       event.preventDefault();
       overlay.style.display = 'flex';
       document.body.style.overflow = 'hidden';
@@ -369,13 +360,8 @@
       }, 500);
     }
 
-    // VIDEO elgsena
     videoBtn.addEventListener('click', function(e) {
-      if (isMobile()) {
-        // Ant telefono – atidarome toje pačioje kortelėje (lengva grįžti)
-        // nieko nedarome papildomai
-      } else {
-        // Kompiuteryje – naujame lange
+      if (!isMobile()) {
         e.preventDefault();
         window.open(this.href, '_blank', 'noopener,noreferrer');
       }
@@ -385,7 +371,6 @@
       if (e.target === overlay) closePDF();
     });
 
-    // Uždaryti su Escape
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape' && overlay.style.display === 'flex') {
         closePDF();
@@ -416,7 +401,6 @@
       }, 900);
     });
 
-    // Jei pasikeičia orientacija
     window.addEventListener('resize', () => {
       if (window.innerWidth <= 600) {
         document.body.classList.add('mobile-mode');
