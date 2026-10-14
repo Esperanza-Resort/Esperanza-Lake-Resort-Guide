@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Esperanza Lake Resort</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      color: #fff;
+      background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+                  url('esperanzabackround.jpg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+    .mobile-mode {
+      background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+                  url('backgroundmobile.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+    header {
+      margin-top: 60px;
+      background: linear-gradient(135deg, rgba(25,15,10,0.85), rgba(50,30,20,0.7));
+      backdrop-filter: blur(14px) saturate(180%);
+      -webkit-backdrop-filter: blur(14px) saturate(180%);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 22px 100px;
+      border-radius: 25px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+      text-align: center;
+      opacity: 0;
+      transform: translateY(-50px);
+    }
+    header img {
+      max-width: 300px;
+      height: auto;
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    .pdf-list {
+      margin-top: 50px;
+      width: 85%;
+      max-width: 450px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .pdf-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border-radius: 14px;
+      padding: 16px 22px;
+      border: 1px solid rgba(255,255,255,0.2);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      color: #fff;
+      font-weight: 600;
+      font-size: 1.15rem;
+      letter-spacing: 0.6px;
+      text-align: center;
+      text-decoration: none;
+      opacity: 0;
+      transform: translate3d(-30px, 0, 0);
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      will-change: transform, box-shadow;
+      -webkit-transform: translateZ(0);
+      position: relative;
+      overflow: hidden;
+    }
+    .pdf-item::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(15px) saturate(160%);
+      -webkit-backdrop-filter: blur(15px) saturate(160%);
+      z-index: -1;
+      pointer-events: none;
+      border-radius: 20px;
+      transition: background 0.3s ease;
+    }
+    .pdf-item:hover {
+      transform: scale(1.02) translate3d(0, -3px, 0);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      -webkit-transform: translateZ(0);
+    }
+    .pdf-item:hover::before {
+      background: rgba(255,255,255,0.22);
+    }
+    /* --- Modal PDF viewer --- */
+    #overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      animation: fadeIn 0.6s ease forwards;
+      overflow: hidden;
+    }
+    #overlay.closing {
+      animation: fadeOut 0.6s ease forwards;
+    }
+    #pdf-modal {
+      width: 95%;
+      max-width: 950px;
+      height: 90vh;
+      background: linear-gradient(135deg, rgba(30,20,10,0.85), rgba(50,30,20,0.7));
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: 0 10px 50px rgba(255,255,255,0.15);
+      position: relative;
+      transform: scale(0.8) rotateX(10deg);
+      opacity: 0;
+      animation: modalPop 0.7s ease forwards;
+      backdrop-filter: blur(14px) saturate(200%);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    #pdf-modal.closing {
+      animation: modalPopOut 0.7s ease forwards;
+    }
+    #pdf-title {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      padding: 12px 20px;
+      font-size: 1.2rem;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      animation: slideDown 0.5s ease forwards;
+    }
+    #pdf-title.closing {
+      animation: slideUp 0.5s ease forwards;
+    }
+    #pdf-viewer {
+      width: 100%;
+      height: calc(100% - 48px);
+      border: none;
+      animation: fadeIn 0.8s ease forwards;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #pdf-viewer.closing {
+      animation: fadeOut 0.6s ease forwards;
+    }
+    #close-btn {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      border: none;
+      font-size: 1.2rem;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+      z-index: 20;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+      animation: bounceIn 0.6s ease forwards;
+    }
+    #close-btn.closing {
+      animation: bounceOut 0.6s ease forwards;
+    }
+    #close-btn:hover {
+      background: rgba(255,255,255,0.3);
+      transform: rotate(90deg) scale(1.1);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+    }
+    .mobile-mode header {
+      margin-top: 30px;
+      width: 85%;
+      max-width: 290px;
+      padding: 14px 16px;
+    }
+    .mobile-mode header img {
+      max-width: 205px;
+    }
+    @keyframes fadeInBackground {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideInFromTop {
+      from { opacity: 0; transform: translateY(-50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes zoomIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideInFromLeft {
+      from { opacity: 0; transform: translate3d(-30px, 0, 0); }
+      to { opacity: 1; transform: translate3d(0, 0, 0); }
+    }
+    @keyframes modalPop {
+      from { transform: scale(0.8) rotateX(10deg); opacity: 0; }
+      to { transform: scale(1) rotateX(0); opacity: 1; }
+    }
+    @keyframes modalPopOut {
+      from { transform: scale(1) rotateX(0); opacity: 1; }
+      to { transform: scale(0.8) rotateX(10deg); opacity: 0; }
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideUp {
+      from { opacity: 1; transform: translateY(0); }
+      to { opacity: 0; transform: translateY(-20px); }
+    }
+    @keyframes bounceIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      50% { transform: scale(1.2); opacity: 0.7; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes bounceOut {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0.7; }
+      100% { transform: scale(0.5); opacity: 0; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+    @media (max-width: 600px) {
+      header {
+        margin-top: 30px;
+        width: 85%;
+        max-width: 290px;
+        padding: 14px 16px;
+      }
+      header img {
+        max-width: 205px;
+      }
+      .pdf-item {
+        font-size: 1.05rem;
+        padding: 14px 18px;
+      }
+      #pdf-modal {
+        width: 98%;
+        height: 80vh;
+        border-radius: 15px;
+      }
+      #pdf-title {
+        font-size: 1rem;
+        padding: 10px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo2.png" alt="">
+  </header>
+
+  <div class="pdf-list">
+    <!-- VIDEO mygtukas – atidaro Google Drive video naujame lange -->
+    <a class="pdf-item" href="https://drive.google.com/file/d/1ns_RlMJBPm42vLiaO4C4xmVgX1BQUh7j/view?usp=sharing" target="_blank" rel="noopener noreferrer" style="--index: 0;">
+      VIDEO
+    </a>
+
+    <!-- PDF mygtukas – atidaro Brochure.pdf -->
+    <a class="pdf-item" href="Brochure.pdf" onclick="openPDF(event, 'Brochure.pdf', 'BROCHURE')" style="--index: 1;">
+      PDF
+    </a>
+  </div>
+
+  <div id="overlay">
+    <div id="pdf-modal">
+      <div id="pdf-title"></div>
+      <button id="close-btn" onclick="closePDF()">✖</button>
+      <div id="pdf-viewer"></div>
+    </div>
+  </div>
+
+  <script>
+    const overlay = document.getElementById('overlay');
+    const viewer = document.getElementById('pdf-viewer');
+    const pdfTitle = document.getElementById('pdf-title');
+    const pdfModal = document.getElementById('pdf-modal');
+    const closeBtn = document.getElementById('close-btn');
+
+    function isMobile() {
+      return document.body.classList.contains('mobile-mode');
+    }
+
+    function loadViewer(file) {
+      viewer.innerHTML = '';
+      const oldViewer = document.querySelector('#pdf-viewer embed, #pdf-viewer iframe');
+      if (oldViewer) {
+        oldViewer.src = '';
+        oldViewer.remove();
+      }
+      const cacheBust = '?_=' + Date.now();
+      const iframe = document.createElement('iframe');
+      iframe.src = file + cacheBust + '#toolbar=0&navpanes=0&scrollbar=0&page=1';
+      iframe.style.width = '100%';
+      iframe.style.height = '100%';
+      iframe.style.border = 'none';
+      iframe.frameBorder = '0';
+      viewer.appendChild(iframe);
+    }
+
+    function openPDF(event, file, title) {
+      // Ant mobilaus tiesiogiai atidaryti PDF
+      if (isMobile()) {
+        return;
+      }
+      event.preventDefault();
+      if (overlay.style.display !== 'flex') {
+        overlay.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+      loadViewer(file);
+      pdfTitle.textContent = title;
+      overlay.classList.remove('closing');
+      pdfModal.classList.remove('closing');
+      pdfTitle.classList.remove('closing');
+      viewer.classList.remove('closing');
+      closeBtn.classList.remove('closing');
+    }
+
+    function closePDF() {
+      overlay.classList.add('closing');
+      pdfModal.classList.add('closing');
+      pdfTitle.classList.add('closing');
+      viewer.classList.add('closing');
+      closeBtn.classList.add('closing');
+      setTimeout(() => {
+        overlay.style.display = 'none';
+        const oldViewer = document.querySelector('#pdf-viewer embed, #pdf-viewer iframe');
+        if (oldViewer) {
+          oldViewer.src = '';
+          oldViewer.remove();
+        }
+        viewer.innerHTML = '';
+        pdfTitle.textContent = '';
+        document.body.style.overflow = 'auto';
+        overlay.classList.remove('closing');
+        pdfModal.classList.remove('closing');
+        pdfTitle.classList.remove('closing');
+        viewer.classList.remove('closing');
+        closeBtn.classList.remove('closing');
+      }, 800);
+    }
+
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) closePDF();
+    });
+
+    window.addEventListener('load', function() {
+      if (window.innerWidth <= 600) {
+        document.body.classList.add('mobile-mode');
+      }
+      document.body.style.animation = 'fadeInBackground 1.5s ease forwards';
+      setTimeout(() => {
+        document.querySelector('header').style.animation = 'slideInFromTop 1.2s ease forwards';
+      }, 100);
+      setTimeout(() => {
+        document.querySelector('header img').style.animation = 'zoomIn 1.5s ease forwards';
+      }, 400);
+      setTimeout(() => {
+        document.querySelector('.pdf-list').style.animation = 'fadeInUp 1.2s ease forwards';
+      }, 700);
+      setTimeout(() => {
+        document.querySelectorAll('.pdf-item').forEach((item, index) => {
+          setTimeout(() => {
+            item.style.animation = 'slideInFromLeft 0.8s ease forwards';
+          }, index * 120);
+        });
+      }, 1000);
+    });
+  </script>
+</body>
+</html>
