@@ -20,6 +20,7 @@
       min-height: 100vh;
       overflow-x: hidden;
       position: relative;
+      -webkit-tap-highlight-color: transparent;
     }
     .mobile-mode {
       background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
@@ -51,7 +52,7 @@
       max-width: 450px;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 16px;
       opacity: 0;
       transform: translateY(20px);
     }
@@ -60,16 +61,16 @@
       align-items: center;
       justify-content: center;
       background: transparent;
-      border-radius: 14px;
-      padding: 16px 22px;
-      border: 1px solid rgba(255,255,255,0.2);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      border-radius: 16px;
+      padding: 18px 24px;
+      border: 1px solid rgba(255,255,255,0.25);
+      box-shadow: 0 4px 18px rgba(0,0,0,0.3);
       cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
       color: #fff;
       font-weight: 600;
-      font-size: 1.15rem;
-      letter-spacing: 0.6px;
+      font-size: 1.2rem;
+      letter-spacing: 0.8px;
       text-align: center;
       text-decoration: none;
       opacity: 0;
@@ -77,9 +78,10 @@
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
       will-change: transform, box-shadow;
-      -webkit-transform: translateZ(0);
       position: relative;
       overflow: hidden;
+      min-height: 58px;
+      user-select: none;
     }
     .pdf-item::before {
       content: '';
@@ -88,116 +90,119 @@
       left: -10px;
       right: -10px;
       bottom: -10px;
-      background: rgba(255,255,255,0.12);
-      backdrop-filter: blur(15px) saturate(160%);
-      -webkit-backdrop-filter: blur(15px) saturate(160%);
+      background: rgba(255,255,255,0.13);
+      backdrop-filter: blur(16px) saturate(160%);
+      -webkit-backdrop-filter: blur(16px) saturate(160%);
       z-index: -1;
       pointer-events: none;
-      border-radius: 20px;
-      transition: background 0.3s ease;
+      border-radius: 22px;
+      transition: background 0.25s ease;
+    }
+    .pdf-item:active {
+      transform: scale(0.97);
     }
     .pdf-item:hover {
-      transform: scale(1.02) translate3d(0, -3px, 0);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-      -webkit-transform: translateZ(0);
+      transform: scale(1.03) translate3d(0, -3px, 0);
+      box-shadow: 0 8px 26px rgba(0,0,0,0.4);
     }
     .pdf-item:hover::before {
       background: rgba(255,255,255,0.22);
     }
-    /* --- Modal PDF viewer --- */
+    /* --- Modal --- */
     #overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.75);
-      backdrop-filter: blur(8px);
+      background: rgba(0,0,0,0.82);
+      backdrop-filter: blur(10px);
       display: none;
       align-items: center;
       justify-content: center;
-      z-index: 10;
-      animation: fadeIn 0.6s ease forwards;
+      z-index: 100;
+      animation: fadeIn 0.5s ease forwards;
       overflow: hidden;
     }
     #overlay.closing {
-      animation: fadeOut 0.6s ease forwards;
+      animation: fadeOut 0.5s ease forwards;
     }
     #pdf-modal {
-      width: 95%;
+      width: 96%;
       max-width: 950px;
-      height: 90vh;
-      background: linear-gradient(135deg, rgba(30,20,10,0.85), rgba(50,30,20,0.7));
-      border-radius: 30px;
+      height: 92vh;
+      background: linear-gradient(135deg, rgba(30,20,10,0.9), rgba(50,30,20,0.8));
+      border-radius: 24px;
       overflow: hidden;
-      box-shadow: 0 10px 50px rgba(255,255,255,0.15);
+      box-shadow: 0 12px 50px rgba(0,0,0,0.5);
       position: relative;
-      transform: scale(0.8) rotateX(10deg);
+      transform: scale(0.85);
       opacity: 0;
-      animation: modalPop 0.7s ease forwards;
-      backdrop-filter: blur(14px) saturate(200%);
-      border: 1px solid rgba(255,255,255,0.2);
+      animation: modalPop 0.55s ease forwards;
+      border: 1px solid rgba(255,255,255,0.18);
     }
     #pdf-modal.closing {
-      animation: modalPopOut 0.7s ease forwards;
+      animation: modalPopOut 0.5s ease forwards;
     }
     #pdf-title {
       background: rgba(255,255,255,0.1);
       color: #fff;
-      padding: 12px 20px;
-      font-size: 1.2rem;
+      padding: 14px 20px;
+      font-size: 1.15rem;
       text-align: center;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
-      animation: slideDown 0.5s ease forwards;
-    }
-    #pdf-title.closing {
-      animation: slideUp 0.5s ease forwards;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
     }
     #pdf-viewer {
       width: 100%;
-      height: calc(100% - 48px);
+      height: calc(100% - 52px);
       border: none;
-      animation: fadeIn 0.8s ease forwards;
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-    #pdf-viewer.closing {
-      animation: fadeOut 0.6s ease forwards;
     }
     #close-btn {
       position: absolute;
       top: 10px;
       right: 12px;
-      background: rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.18);
       color: #fff;
       border: none;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       border-radius: 50%;
-      width: 40px;
-      height: 40px;
+      width: 44px;
+      height: 44px;
       cursor: pointer;
-      transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
       z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       box-shadow: 0 2px 12px rgba(0,0,0,0.4);
-      animation: bounceIn 0.6s ease forwards;
     }
-    #close-btn.closing {
-      animation: bounceOut 0.6s ease forwards;
+    #close-btn:active {
+      background: rgba(255,255,255,0.35);
+      transform: scale(0.92);
     }
-    #close-btn:hover {
-      background: rgba(255,255,255,0.3);
-      transform: rotate(90deg) scale(1.1);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.5);
-    }
+    /* --- Mobile optimizacija --- */
     .mobile-mode header {
-      margin-top: 30px;
-      width: 85%;
-      max-width: 290px;
-      padding: 14px 16px;
+      margin-top: 28px;
+      width: 88%;
+      max-width: 320px;
+      padding: 14px 18px;
     }
     .mobile-mode header img {
-      max-width: 205px;
+      max-width: 210px;
+    }
+    .mobile-mode .pdf-list {
+      margin-top: 36px;
+      width: 90%;
+      gap: 18px;
+    }
+    .mobile-mode .pdf-item {
+      font-size: 1.25rem;
+      padding: 20px 22px;
+      min-height: 64px;
+      border-radius: 18px;
+      letter-spacing: 1px;
     }
     @keyframes fadeInBackground {
       from { opacity: 0; }
@@ -220,30 +225,12 @@
       to { opacity: 1; transform: translate3d(0, 0, 0); }
     }
     @keyframes modalPop {
-      from { transform: scale(0.8) rotateX(10deg); opacity: 0; }
-      to { transform: scale(1) rotateX(0); opacity: 1; }
+      from { transform: scale(0.85); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
     @keyframes modalPopOut {
-      from { transform: scale(1) rotateX(0); opacity: 1; }
-      to { transform: scale(0.8) rotateX(10deg); opacity: 0; }
-    }
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes slideUp {
-      from { opacity: 1; transform: translateY(0); }
-      to { opacity: 0; transform: translateY(-20px); }
-    }
-    @keyframes bounceIn {
-      0% { transform: scale(0.5); opacity: 0; }
-      50% { transform: scale(1.2); opacity: 0.7; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-    @keyframes bounceOut {
-      0% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.2); opacity: 0.7; }
-      100% { transform: scale(0.5); opacity: 0; }
+      from { transform: scale(1); opacity: 1; }
+      to { transform: scale(0.85); opacity: 0; }
     }
     @keyframes fadeIn {
       from { opacity: 0; }
@@ -255,26 +242,42 @@
     }
     @media (max-width: 600px) {
       header {
-        margin-top: 30px;
-        width: 85%;
-        max-width: 290px;
-        padding: 14px 16px;
-      }
-      header img {
-        max-width: 205px;
-      }
-      .pdf-item {
-        font-size: 1.05rem;
+        margin-top: 28px;
+        width: 88%;
+        max-width: 320px;
         padding: 14px 18px;
       }
+      header img {
+        max-width: 210px;
+      }
+      .pdf-list {
+        margin-top: 36px;
+        width: 90%;
+        gap: 18px;
+      }
+      .pdf-item {
+        font-size: 1.25rem;
+        padding: 20px 22px;
+        min-height: 64px;
+        border-radius: 18px;
+      }
       #pdf-modal {
-        width: 98%;
-        height: 80vh;
-        border-radius: 15px;
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        max-width: none;
       }
       #pdf-title {
-        font-size: 1rem;
-        padding: 10px 15px;
+        font-size: 1.05rem;
+        padding: 16px 18px;
+        padding-right: 60px;
+      }
+      #close-btn {
+        width: 48px;
+        height: 48px;
+        top: 12px;
+        right: 12px;
+        font-size: 1.4rem;
       }
     }
   </style>
@@ -285,13 +288,13 @@
   </header>
 
   <div class="pdf-list">
-    <!-- VIDEO mygtukas – atidaro Google Drive video naujame lange -->
-    <a class="pdf-item" href="https://drive.google.com/file/d/1ns_RlMJBPm42vLiaO4C4xmVgX1BQUh7j/view?usp=sharing" target="_blank" rel="noopener noreferrer" style="--index: 0;">
+    <!-- VIDEO – ant telefono atsidaro toje pačioje kortelėje (lengva grįžti) -->
+    <a class="pdf-item" id="video-btn" href="https://drive.google.com/file/d/1ns_RlMJBPm42vLiaO4C4xmVgX1BQUh7j/view?usp=sharing">
       VIDEO
     </a>
 
-    <!-- PDF mygtukas – atidaro Brochure.pdf -->
-    <a class="pdf-item" href="Brochure.pdf" onclick="openPDF(event, 'Brochure.pdf', 'BROCHURE')" style="--index: 1;">
+    <!-- PDF -->
+    <a class="pdf-item" href="Brochure.pdf" onclick="openPDF(event, 'Brochure.pdf', 'BROCHURE')">
       PDF
     </a>
   </div>
@@ -310,96 +313,116 @@
     const pdfTitle = document.getElementById('pdf-title');
     const pdfModal = document.getElementById('pdf-modal');
     const closeBtn = document.getElementById('close-btn');
+    const videoBtn = document.getElementById('video-btn');
 
     function isMobile() {
-      return document.body.classList.contains('mobile-mode');
+      return window.innerWidth <= 600 || document.body.classList.contains('mobile-mode');
     }
 
     function loadViewer(file) {
       viewer.innerHTML = '';
-      const oldViewer = document.querySelector('#pdf-viewer embed, #pdf-viewer iframe');
-      if (oldViewer) {
-        oldViewer.src = '';
-        oldViewer.remove();
+      const old = viewer.querySelector('iframe');
+      if (old) {
+        old.src = '';
+        old.remove();
       }
-      const cacheBust = '?_=' + Date.now();
       const iframe = document.createElement('iframe');
-      iframe.src = file + cacheBust + '#toolbar=0&navpanes=0&scrollbar=0&page=1';
+      iframe.src = file + '?_=' + Date.now() + '#toolbar=0&navpanes=0&scrollbar=0&page=1';
       iframe.style.width = '100%';
       iframe.style.height = '100%';
       iframe.style.border = 'none';
-      iframe.frameBorder = '0';
+      iframe.setAttribute('allowfullscreen', '');
       viewer.appendChild(iframe);
     }
 
     function openPDF(event, file, title) {
-      // Ant mobilaus tiesiogiai atidaryti PDF
+      // Ant telefono – atidarome toje pačioje kortelėje (lengva grįžti su „Atgal“)
       if (isMobile()) {
+        // nieko neblokuojame – leidžiame natūralų navigavimą
         return;
       }
+      // Kompiuteryje – modalas
       event.preventDefault();
-      if (overlay.style.display !== 'flex') {
-        overlay.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-      }
+      overlay.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
       loadViewer(file);
       pdfTitle.textContent = title;
       overlay.classList.remove('closing');
       pdfModal.classList.remove('closing');
-      pdfTitle.classList.remove('closing');
-      viewer.classList.remove('closing');
-      closeBtn.classList.remove('closing');
     }
 
     function closePDF() {
       overlay.classList.add('closing');
       pdfModal.classList.add('closing');
-      pdfTitle.classList.add('closing');
-      viewer.classList.add('closing');
-      closeBtn.classList.add('closing');
       setTimeout(() => {
         overlay.style.display = 'none';
-        const oldViewer = document.querySelector('#pdf-viewer embed, #pdf-viewer iframe');
-        if (oldViewer) {
-          oldViewer.src = '';
-          oldViewer.remove();
+        const old = viewer.querySelector('iframe');
+        if (old) {
+          old.src = '';
+          old.remove();
         }
         viewer.innerHTML = '';
         pdfTitle.textContent = '';
         document.body.style.overflow = 'auto';
         overlay.classList.remove('closing');
         pdfModal.classList.remove('closing');
-        pdfTitle.classList.remove('closing');
-        viewer.classList.remove('closing');
-        closeBtn.classList.remove('closing');
-      }, 800);
+      }, 500);
     }
+
+    // VIDEO elgsena
+    videoBtn.addEventListener('click', function(e) {
+      if (isMobile()) {
+        // Ant telefono – atidarome toje pačioje kortelėje (lengva grįžti)
+        // nieko nedarome papildomai
+      } else {
+        // Kompiuteryje – naujame lange
+        e.preventDefault();
+        window.open(this.href, '_blank', 'noopener,noreferrer');
+      }
+    });
 
     overlay.addEventListener('click', e => {
       if (e.target === overlay) closePDF();
+    });
+
+    // Uždaryti su Escape
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && overlay.style.display === 'flex') {
+        closePDF();
+      }
     });
 
     window.addEventListener('load', function() {
       if (window.innerWidth <= 600) {
         document.body.classList.add('mobile-mode');
       }
-      document.body.style.animation = 'fadeInBackground 1.5s ease forwards';
+
+      document.body.style.animation = 'fadeInBackground 1.4s ease forwards';
       setTimeout(() => {
-        document.querySelector('header').style.animation = 'slideInFromTop 1.2s ease forwards';
-      }, 100);
+        document.querySelector('header').style.animation = 'slideInFromTop 1.1s ease forwards';
+      }, 80);
       setTimeout(() => {
-        document.querySelector('header img').style.animation = 'zoomIn 1.5s ease forwards';
-      }, 400);
+        document.querySelector('header img').style.animation = 'zoomIn 1.3s ease forwards';
+      }, 350);
       setTimeout(() => {
-        document.querySelector('.pdf-list').style.animation = 'fadeInUp 1.2s ease forwards';
-      }, 700);
+        document.querySelector('.pdf-list').style.animation = 'fadeInUp 1.1s ease forwards';
+      }, 650);
       setTimeout(() => {
         document.querySelectorAll('.pdf-item').forEach((item, index) => {
           setTimeout(() => {
-            item.style.animation = 'slideInFromLeft 0.8s ease forwards';
-          }, index * 120);
+            item.style.animation = 'slideInFromLeft 0.7s ease forwards';
+          }, index * 110);
         });
-      }, 1000);
+      }, 900);
+    });
+
+    // Jei pasikeičia orientacija
+    window.addEventListener('resize', () => {
+      if (window.innerWidth <= 600) {
+        document.body.classList.add('mobile-mode');
+      } else {
+        document.body.classList.remove('mobile-mode');
+      }
     });
   </script>
 </body>
