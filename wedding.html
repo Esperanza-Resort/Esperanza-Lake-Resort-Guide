@@ -282,20 +282,18 @@
   <header>
     <img src="logo2.png" alt="">
   </header>
-
   <div class="pdf-list">
-    <a class="pdf-item" id="video-btn" href="https://drive.google.com/file/d/1S-Di6P0f3x9MgdAeoW51GMVt-BBNnRf4/view?usp=drive_link">
+    <!-- Pakeisti į /preview linkus + target="_blank" -->
+    <a class="pdf-item" href="https://drive.google.com/file/d/1S-Di6P0f3x9MgdAeoW51GMVt-BBNnRf4/preview" target="_blank" rel="noopener noreferrer">
       ESPERANZA WEDDING VIDEO
     </a>
-    <a class="pdf-item" id="video-btn" href="https://drive.google.com/file/d/1Lbu6gG6pzzi478q9Vp3orXxjrlXyn95o/view?usp=drive_link">
+    <a class="pdf-item" href="https://drive.google.com/file/d/1Lbu6gG6pzzi478q9Vp3orXxjrlXyn95o/preview" target="_blank" rel="noopener noreferrer">
       ESPERANZA WEDDING VIDEO 2
     </a>
-
     <a class="pdf-item" href="WEDDING Brochure.pdf" onclick="openPDF(event, 'WEDDING Brochure.pdf', 'WEDDING BROCHURE')">
       ESPERANZA WEDDING BROCHURE
     </a>
   </div>
-
   <div id="overlay">
     <div id="pdf-modal">
       <div id="pdf-title"></div>
@@ -303,14 +301,11 @@
       <div id="pdf-viewer"></div>
     </div>
   </div>
-
   <script>
     const overlay = document.getElementById('overlay');
     const viewer = document.getElementById('pdf-viewer');
     const pdfTitle = document.getElementById('pdf-title');
     const pdfModal = document.getElementById('pdf-modal');
-    const closeBtn = document.getElementById('close-btn');
-    const videoBtn = document.getElementById('video-btn');
 
     function isMobile() {
       return window.innerWidth <= 600 || document.body.classList.contains('mobile-mode');
@@ -334,7 +329,7 @@
 
     function openPDF(event, file, title) {
       if (isMobile()) {
-        return;
+        return; // mobilėje tiesiog atidaro PDF
       }
       event.preventDefault();
       overlay.style.display = 'flex';
@@ -363,13 +358,6 @@
       }, 500);
     }
 
-    videoBtn.addEventListener('click', function(e) {
-      if (!isMobile()) {
-        e.preventDefault();
-        window.open(this.href, '_blank', 'noopener,noreferrer');
-      }
-    });
-
     overlay.addEventListener('click', e => {
       if (e.target === overlay) closePDF();
     });
@@ -384,7 +372,6 @@
       if (window.innerWidth <= 600) {
         document.body.classList.add('mobile-mode');
       }
-
       document.body.style.animation = 'fadeInBackground 1.4s ease forwards';
       setTimeout(() => {
         document.querySelector('header').style.animation = 'slideInFromTop 1.1s ease forwards';
